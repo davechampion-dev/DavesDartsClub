@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DavesDartsClub.Infrastructu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DavesDartsClub.Application", "DavesDartsClub.Application\DavesDartsClub.Application.csproj", "{7E2D7D98-118B-4E20-9FCB-930566DC6682}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DavesDartsClub.Website", "DavesDartsClub.Website\DavesDartsClub.Website.csproj", "{63365794-6842-B025-DFAD-A51130733EC8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{7E2D7D98-118B-4E20-9FCB-930566DC6682}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E2D7D98-118B-4E20-9FCB-930566DC6682}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E2D7D98-118B-4E20-9FCB-930566DC6682}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63365794-6842-B025-DFAD-A51130733EC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63365794-6842-B025-DFAD-A51130733EC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63365794-6842-B025-DFAD-A51130733EC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63365794-6842-B025-DFAD-A51130733EC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

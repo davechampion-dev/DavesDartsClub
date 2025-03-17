@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DavesDartsClub.WebApi\DavesDartsClub.WebApi.csproj" />
+    <ProjectReference Include="..\DavesDartsClub.Website\DavesDartsClub.Website.csproj" />
   </ItemGroup>
 
 </Project>
