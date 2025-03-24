@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DavesDartsClub.Application\DavesDartsClub.Application.csproj" />
     <ProjectReference Include="..\DavesDartsClub.Aspire.ServiceDefaults\DavesDartsClub.Aspire.ServiceDefaults.csproj" />
   </ItemGroup>
 
