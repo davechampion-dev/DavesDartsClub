@@ -1,0 +1,39 @@
+---
+title: Project Dependency Graph
+---
+flowchart TD
+    %% https://mermaid.js.org/intro/
+
+    
+Application["DavesDartsClub.Application"]
+AppHost["DavesDartsClub.Aspire.AppHost"]
+ServiceDefaults["DavesDartsClub.Aspire.ServiceDefaults"]
+Domain["DavesDartsClub.Domain"]
+Infrastructure["DavesDartsClub.Infrastructure"]
+IntegrationTests["DavesDartsClub.IntegrationTests"]
+UnitTests["DavesDartsClub.UnitTests"]
+WebApi["DavesDartsClub.WebApi"]
+Website["DavesDartsClub.Website"]
+%% Moo@{ shape: rounded, label: "I am a Moo"}
+
+Application --> Domain
+
+AppHost --> WebApi 
+AppHost --> Website
+
+Infrastructure --> Domain
+
+IntegrationTests --> AppHost
+
+UnitTests --> Application
+UnitTests --> Domain
+UnitTests --> Infrastructure
+UnitTests --> WebApi
+UnitTests --> Website
+
+WebApi --> Application
+WebApi --> ServiceDefaults
+
+Website --> Application
+Website --> ServiceDefaults
+ 
