@@ -1,6 +1,7 @@
 using MudBlazor.Services;
 using DavesDartsClub.Website.Components;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Cors;
 
 var builder = WebApplication.CreateBuilder(args);
 
