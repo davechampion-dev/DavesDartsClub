@@ -10,7 +10,7 @@
         "tags": [
           "Member"
         ],
-        "operationId": "Create Member",
+        "operationId": "CreateMember",
         "requestBody": {
           "content": {
             "application/json": {
@@ -61,7 +61,7 @@
         "tags": [
           "Member"
         ],
-        "operationId": "Get Member",
+        "operationId": "GetMemberById",
         "parameters": [
           {
             "name": "memberId",
