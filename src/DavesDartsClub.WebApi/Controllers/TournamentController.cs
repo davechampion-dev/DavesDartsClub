@@ -30,14 +30,3 @@ public class TournamentController : ControllerBase
         return Ok(result);
     }
 }
-
-public class TournamentRequest
-{
-    public string TournamentName { get; set; } = string.Empty;
-}
-
-public class TournamentResponse
-{
-    public Guid TournamentId { get; set; }
-    public string TournamentName { get; set; } = string.Empty;
-}
