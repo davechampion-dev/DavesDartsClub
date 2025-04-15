@@ -1,0 +1,31 @@
+@BaseAddress=https://localhost:7114
+ 
+###
+
+POST {{BaseAddress}}/Member
+content-type: application/json
+
+{
+  "memberName": "string"
+}
+
+### GetMemberById
+
+GET {{BaseAddress}}/Member/3fa85f64-5717-4562-b3fc-2c963f66afa6
+content-type: application/json
+
+### DeleteMember
+
+DELETE {{BaseAddress}}/Member/3fa85f64-5717-4562-b3fc-2c963f66afa6
+content-type: application/json
+
+
+### GetMemberByName
+
+GET {{BaseAddress}}/Member?name=bib
+content-type: application/json
+
+### This is how you debug ...
+
+# GET https://localhost:7114/NotFound
+# x-BaseAddress: {{BaseAddress}}
