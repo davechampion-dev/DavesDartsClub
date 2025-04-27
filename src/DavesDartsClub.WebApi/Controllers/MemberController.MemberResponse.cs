@@ -2,6 +2,6 @@
 
 public class MemberResponse
 {
-    public Guid MemberId { get; set; }
-    public string MemberName { get; set; } = string.Empty;
+    public Guid MemberId { get; init; }
+    public string MemberName { get; init; } = string.Empty;
 }

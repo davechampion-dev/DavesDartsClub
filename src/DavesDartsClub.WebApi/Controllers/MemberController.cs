@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DavesDartsClub.Application;
+using DavesDartsClub.Domain;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Net.Http;
 using System.Xml.Linq;
@@ -9,6 +11,13 @@ namespace DavesDartsClub.WebApi.Controllers;
 [Route("[controller]")]
 public class MemberController : ControllerBase
 {
+    private readonly IMemberService _memberService;
+
+    public MemberController(IMemberService memberService)
+    {
+        _memberService = memberService;
+    }
+
     [HttpPost(Name = nameof(CreateMember))]
     [ProducesResponseType(((int)HttpStatusCode.Created))]
     public ActionResult<Guid> CreateMember([FromBody] MemberRequest memberRequest)
@@ -22,22 +31,32 @@ public class MemberController : ControllerBase
     [ProducesResponseType(((int)HttpStatusCode.NotFound))]
     public ActionResult<MemberResponse> GetMemberById(Guid memberId)
     {
+        var member = _memberService.GetMemberById(memberId);
         var result = new MemberResponse()
         {
-            MemberId = memberId,
-            MemberName = "Bob The Frog"
+            MemberId = member.MemberId,
+            MemberName = member.MemberName
         };
-
+        
         return Ok(result);
     }
 
-    [HttpGet(Name = nameof(GetMemberByName))]
+    [HttpGet(Name = nameof(GetMemberSearch))]
     [ProducesResponseType(((int)HttpStatusCode.OK))]
-    public ActionResult<IEnumerable<MemberResponse>> GetMemberByName([FromQuery] string name)
+        
+    public ActionResult<IEnumerable<MemberResponse>> GetMemberSearch([FromBody] MemberSearchRequest memberSearchRequest)
     {
-        var result = new List<MemberResponse> 
+        // todo: Update to return list of members and take search term
+        var member = _memberService.GetMemberByName(memberSearchRequest.MemberName);
+
+        // todo: Switch to linq expression
+        var result = new List<MemberResponse>
         {
-           
+            new MemberResponse()  
+            {
+                MemberId = member.MemberId,
+                MemberName = member.MemberName
+            }
         };
 
         return Ok(result);

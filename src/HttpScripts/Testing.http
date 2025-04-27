@@ -1,6 +1,6 @@
 @BaseAddress=https://localhost:7114
  
-###
+############### Member ################################
 
 POST {{BaseAddress}}/Member
 content-type: application/json
@@ -25,7 +25,57 @@ content-type: application/json
 GET {{BaseAddress}}/Member?name=bib
 content-type: application/json
 
+###
+
+GET {{BaseAddress}}/Member?name=
+content-type: application/json
+
+
 ### This is how you debug ...
 
 # GET https://localhost:7114/NotFound
 # x-BaseAddress: {{BaseAddress}}
+
+
+############### Tournament ################################
+
+### Create Tournament
+
+POST {{BaseAddress}}/Tournament
+content-type: application/json
+
+{
+  "tournamentName": "string"
+}
+
+### GetTournamentById
+
+GET {{BaseAddress}}/Tournament/3fa85f64-5717-4562-b3fc-2c963f66afa6
+content-type: application/json
+
+### DeleteTournament
+
+DELETE {{BaseAddress}}/Tournament/3fa85f64-5717-4562-b3fc-2c963f66afa6
+content-type: application/json
+
+
+### GetTournamentByName
+
+GET {{BaseAddress}}/Tournament?name=bib
+content-type: application/json
+
+############### Player ################################
+
+### Create Player
+
+POST {{BaseAddress}}/Player
+content-type: application/json
+
+{
+  "playerName": "string"
+}
+
+### GetPlayerById
+
+GET {{BaseAddress}}/Player/3fa85f64-5717-4562-b3fc-2c963f66afa6
+content-type: application/json

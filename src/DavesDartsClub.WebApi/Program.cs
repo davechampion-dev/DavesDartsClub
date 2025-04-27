@@ -1,3 +1,6 @@
+using DavesDartsClub.Application;
+using DavesDartsClub.Domain;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
@@ -7,6 +10,8 @@ builder.AddServiceDefaults();
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddScoped<IMemberService,MemberService>();
 
 var app = builder.Build();
 
