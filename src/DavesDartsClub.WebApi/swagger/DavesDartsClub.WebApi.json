@@ -61,16 +61,27 @@
         "tags": [
           "Member"
         ],
-        "operationId": "GetMemberByName",
-        "parameters": [
-          {
-            "name": "name",
-            "in": "query",
-            "schema": {
-              "type": "string"
+        "operationId": "GetMemberSearch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberSearchRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberSearchRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberSearchRequest"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -548,6 +559,14 @@
             "type": "string",
             "format": "uuid"
           },
+          "memberName": {
+            "type": "string"
+          }
+        }
+      },
+      "MemberSearchRequest": {
+        "type": "object",
+        "properties": {
           "memberName": {
             "type": "string"
           }

@@ -1,9 +1,11 @@
 using DavesDartsClub.Application;
 using DavesDartsClub.Domain;
+using DavesDartsClub.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
+builder.AddSqlServerInfrastructure();
 
 // Add services to the container.
 
