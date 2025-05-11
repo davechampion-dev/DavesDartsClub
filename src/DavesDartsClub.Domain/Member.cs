@@ -1,8 +1,9 @@
-﻿
-namespace DavesDartsClub.Domain;
+﻿namespace DavesDartsClub.Domain;
 
 public class Member
 {
-    public Guid MemberId { get; set; }
+    public const int MemberNameMaxLength = 50;
+
+    public Guid MemberId { get; init; }
     public string MemberName { get; set; }
 }

@@ -5,7 +5,7 @@ using DavesDartsClub.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
-builder.AddSqlServerInfrastructure();
+builder.AddDavesDarstClubAppDbContext();
 
 // Add services to the container.
 

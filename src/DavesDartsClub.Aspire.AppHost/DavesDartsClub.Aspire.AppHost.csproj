@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DavesDartsClub.DatabaseMigrationService\DavesDartsClub.DatabaseMigrationService.csproj" />
     <ProjectReference Include="..\DavesDartsClub.WebApi\DavesDartsClub.WebApi.csproj" />
     <ProjectReference Include="..\DavesDartsClub.Website\DavesDartsClub.Website.csproj" />
   </ItemGroup>
