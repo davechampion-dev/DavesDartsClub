@@ -1,6 +1,5 @@
 using DavesDartsClub.DatabaseMigrationService;
 using DavesDartsClub.Infrastructure;
-using DavesDartsClub.Infrastructure.EntityFramework;
 
 var builder = Host.CreateApplicationBuilder(args);
 builder.AddServiceDefaults();

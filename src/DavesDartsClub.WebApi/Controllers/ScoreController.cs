@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Net.Http;
-using System.Xml.Linq;
 
 namespace DavesDartsClub.WebApi.Controllers;
 
@@ -27,8 +24,8 @@ public class ScoreController : ControllerBase
     }
 }
 
-    
-    
+
+
 
 
 

@@ -1,6 +1,3 @@
-using Projects;
-using Microsoft.AspNetCore.Cors;
-
 var builder = DistributedApplication.CreateBuilder(args);
 
 

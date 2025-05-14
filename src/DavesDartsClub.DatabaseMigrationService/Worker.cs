@@ -1,11 +1,9 @@
 namespace DavesDartsClub.DatabaseMigrationService;
 
-using System.Diagnostics;
 using DavesDartsClub.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
 using OpenTelemetry.Trace;
+using System.Diagnostics;
 
 public class Worker(
     IServiceProvider serviceProvider,
@@ -23,8 +21,8 @@ public class Worker(
             using var scope = serviceProvider.CreateScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-           // await RunMigrationAsync(dbContext, cancellationToken);
-           // await SeedDataAsync(dbContext, cancellationToken);
+            // await RunMigrationAsync(dbContext, cancellationToken);
+            // await SeedDataAsync(dbContext, cancellationToken);
         }
         catch (Exception ex)
         {

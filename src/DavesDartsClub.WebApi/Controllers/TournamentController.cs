@@ -1,8 +1,6 @@
 ﻿using DavesDartsClub.Application;
-using DavesDartsClub.Domain;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using System.Net.Http;
 
 namespace DavesDartsClub.WebApi.Controllers;
 

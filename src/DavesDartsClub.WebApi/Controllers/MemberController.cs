@@ -1,9 +1,6 @@
 ﻿using DavesDartsClub.Application;
-using DavesDartsClub.Domain;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using System.Net.Http;
-using System.Xml.Linq;
 
 namespace DavesDartsClub.WebApi.Controllers;
 
@@ -37,13 +34,13 @@ public class MemberController : ControllerBase
             MemberId = member.MemberId,
             MemberName = member.MemberName
         };
-        
+
         return Ok(result);
     }
 
     [HttpGet(Name = nameof(GetMemberSearch))]
     [ProducesResponseType(((int)HttpStatusCode.OK))]
-        
+
     public ActionResult<IEnumerable<MemberResponse>> GetMemberSearch([FromBody] MemberSearchRequest memberSearchRequest)
     {
         // todo: Update to return list of members and take search term
@@ -52,7 +49,7 @@ public class MemberController : ControllerBase
         // todo: Switch to linq expression
         var result = new List<MemberResponse>
         {
-            new MemberResponse()  
+            new MemberResponse()
             {
                 MemberId = member.MemberId,
                 MemberName = member.MemberName
@@ -67,13 +64,13 @@ public class MemberController : ControllerBase
     [ProducesResponseType(((int)HttpStatusCode.NotFound))]
     public ActionResult DeleteMember(Guid memberId)
     {
-        var memberExists = true; 
+        var memberExists = true;
 
         if (!memberExists)
         {
-            return NotFound();  
+            return NotFound();
         }
-                
+
         return NoContent();
     }
 }

@@ -4,13 +4,13 @@ namespace DavesDartsClub.Application;
 
 public class TournamentService : ITournamentService
 {
-    
+
     public Tournament GetTournamentById(Guid tournamentId)
     {
         return new Tournament()
         {
             TournamentId = tournamentId,
-            TournamentName = "Champions League"
+            TournamentName = "Champions Cup"
         };
     }
 
@@ -19,7 +19,7 @@ public class TournamentService : ITournamentService
         return new Tournament()
         {
             TournamentId = Guid.NewGuid(),
-            TournamentName = "Champions League"
+            TournamentName = "Champions Cup"
         };
     }
 }

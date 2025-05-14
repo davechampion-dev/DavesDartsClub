@@ -1,5 +1,4 @@
 using DavesDartsClub.Application;
-using DavesDartsClub.Domain;
 using DavesDartsClub.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,8 +12,9 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddScoped<IMemberService,MemberService>();
+builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<ITournamentService, TournamentService>();
+builder.Services.AddScoped<ILeagueService, LeagueService>();
 
 var app = builder.Build();
 
@@ -27,7 +27,7 @@ if (app.Environment.IsDevelopment())
     {
         options.SwaggerEndpoint("/openapi/v1.json", "v1");
     });
-     
+
 }
 
 app.UseHttpsRedirection();

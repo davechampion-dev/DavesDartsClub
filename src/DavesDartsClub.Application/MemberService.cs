@@ -4,7 +4,7 @@ namespace DavesDartsClub.Application;
 
 public class MemberService : IMemberService
 {
-    
+
     public Member GetMemberById(Guid memberId)
     {
         return new Member()

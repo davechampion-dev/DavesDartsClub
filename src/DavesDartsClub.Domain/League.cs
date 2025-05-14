@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DavesDartsClub.Domain
+﻿namespace DavesDartsClub.Domain
 {
-    class League
+    public class League
     {
+        public const int LeagueNameMaxLength = 50;
+        public Guid LeagueId { get; init; }
+        public string LeagueName { get; set; }
     }
 }
