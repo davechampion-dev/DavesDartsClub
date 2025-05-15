@@ -28,7 +28,7 @@ public partial class LeagueController : ControllerBase
     [ProducesResponseType(((int)HttpStatusCode.NotFound))]
     public ActionResult<LeagueResponse> GetLeagueById(Guid leagueId)
     {
-        var tournament = ILeagueService.GetLeagueById(leagueId);
+        var league = _leagueService.GetLeagueById(leagueId);
         var result = new LeagueResponse()
         {
             LeagueId = league.LeagueId,
@@ -42,7 +42,7 @@ public partial class LeagueController : ControllerBase
     [ProducesResponseType(((int)HttpStatusCode.OK))]
     public ActionResult<IEnumerable<LeagueResponse>> GetLeagueSearch([FromBody] LeagueSearchRequest leagueSearchRequest)
     {
-        var league = ILeagueService.GetLeagueByName(leagueSearchRequest.LeagueName);
+        var league = _leagueService.GetLeagueByName(leagueSearchRequest.LeagueName);
 
         var result = new List<LeagueResponse>
         {
