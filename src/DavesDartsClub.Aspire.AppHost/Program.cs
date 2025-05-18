@@ -15,6 +15,8 @@ var website = builder.AddProject<Projects.DavesDartsClub_Website>("Website")
     .WithReference(api)
     .WaitFor(api);
 
-builder.AddProject<Projects.DavesDartsClub_DatabaseMigrationService>("davesdartsclub-databasemigrationservice");
+builder.AddProject<Projects.DavesDartsClub_DatabaseMigrationService>("davesdartsclub-databasemigrationservice")
+    .WithReference(db)
+    .WaitFor(db);
 
 builder.Build().Run();

@@ -20,9 +20,9 @@ public class Worker(
         {
             using var scope = serviceProvider.CreateScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-            // await RunMigrationAsync(dbContext, cancellationToken);
-            // await SeedDataAsync(dbContext, cancellationToken);
+                        
+            await dbContext.Database.CreateExecutionStrategy().ExecuteAsync(async () 
+                => await dbContext.Database.MigrateAsync(cancellationToken));
         }
         catch (Exception ex)
         {
@@ -31,25 +31,5 @@ public class Worker(
         }
 
         hostApplicationLifetime.StopApplication();
-    }
-
-    private static async Task RunMigrationAsync(AppDbContext dbContext, CancellationToken cancellationToken)
-    {
-        var strategy = dbContext.Database.CreateExecutionStrategy();
-        await strategy.ExecuteAsync(async () =>
-        {
-            // Run migration in a transaction to avoid partial migration if it fails.
-            await dbContext.Database.MigrateAsync(cancellationToken);
-            //todo: pickup from here next week - This may be in the wrong place or stuff may have the wrong names
-            //await dbContext.EnsureDatabaseAsync(stoppingToken);
-            //await dbContext.RunMigrationAsync(stoppingToken);
-            //await dbContext.SeedDataAsync(stoppingToken); 
-        });
-    }
-
-    private static async Task SeedDataAsync(AppDbContext dbContext, CancellationToken cancellationToken)
-    {
-        //todo: add seeding logic here
-
-    }
+    }     
 }

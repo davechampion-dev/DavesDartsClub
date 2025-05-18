@@ -15,12 +15,20 @@
     <PackageReference Include="Aspire.Hosting.AppHost" Version="9.2.1" />
     <PackageReference Include="Aspire.Hosting.SqlServer" Version="9.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DavesDartsClub.DatabaseMigrationService\DavesDartsClub.DatabaseMigrationService.csproj" />
     <ProjectReference Include="..\DavesDartsClub.WebApi\DavesDartsClub.WebApi.csproj" />
     <ProjectReference Include="..\DavesDartsClub.Website\DavesDartsClub.Website.csproj" />
+    <ProjectReference Include="..\DavesDartsClub.Infrastructure\DavesDartsClub.Infrastructure.csproj">
+      <IsAspireProjectResource>false</IsAspireProjectResource>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>
