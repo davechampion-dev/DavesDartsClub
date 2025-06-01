@@ -3,7 +3,7 @@ using DavesDartsClub.Infrastructure;
 
 var builder = Host.CreateApplicationBuilder(args);
 builder.AddServiceDefaults();
-builder.AddDavesDarstClubAppDbContext();
+builder.AddDavesDarstClubAppDbContextForMigration();
 
 builder.Services.AddHostedService<Worker>();
 

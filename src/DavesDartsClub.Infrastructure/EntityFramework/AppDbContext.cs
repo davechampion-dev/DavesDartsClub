@@ -36,4 +36,9 @@ public class AppDbContext : DbContext
 
         base.OnModelCreating(modelBuilder);
     }
+
+    public static void SeedData(DbContext context)
+    {
+
+    }
 }
