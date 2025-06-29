@@ -1,7 +1,5 @@
 ﻿using DavesDartsClub.Infrastructure.EntityFramework;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using System.Diagnostics;
 
 namespace DavesDartsClub.Infrastructure;
 
@@ -19,7 +17,7 @@ public static class Extensions
             "DavesDartsClubDatabase",
             configureDbContextOptions: options =>
             options.UseSeeding((context, _) =>
-            { 
+            {
                 if (!context.Set<MemberEntity>().Any())
                 {
                     AppDbContext.SeedData(context);

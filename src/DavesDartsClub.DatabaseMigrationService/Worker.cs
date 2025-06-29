@@ -20,8 +20,8 @@ public class Worker(
         {
             using var scope = serviceProvider.CreateScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                        
-            await dbContext.Database.CreateExecutionStrategy().ExecuteAsync(async () 
+
+            await dbContext.Database.CreateExecutionStrategy().ExecuteAsync(async ()
                 => await dbContext.Database.MigrateAsync(cancellationToken));
         }
         catch (Exception ex)
@@ -31,5 +31,5 @@ public class Worker(
         }
 
         hostApplicationLifetime.StopApplication();
-    }     
+    }
 }

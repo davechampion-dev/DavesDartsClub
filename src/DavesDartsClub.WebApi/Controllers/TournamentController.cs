@@ -24,18 +24,24 @@ public partial class TournamentController : ControllerBase
     }
 
     [HttpGet("{tournamentId}", Name = nameof(GetTournamentById))]
-    [ProducesResponseType(((int)HttpStatusCode.OK))]
-    [ProducesResponseType(((int)HttpStatusCode.NotFound))]
+    [ProducesResponseType(typeof(TournamentResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType((int)HttpStatusCode.NotFound)]
     public ActionResult<TournamentResponse> GetTournamentById(Guid tournamentId)
     {
         var tournament = _tournamentService.GetTournamentById(tournamentId);
-        var result = new TournamentResponse()
+
+        if (tournament == null)
+        {
+            return NotFound();
+        }
+
+        var tournamentResponse = new TournamentResponse
         {
             TournamentId = tournament.TournamentId,
             TournamentName = tournament.TournamentName
         };
 
-        return Ok(result);
+        return Ok(tournamentResponse);
     }
 
     [HttpGet(Name = nameof(GetTournamentSearch))]
