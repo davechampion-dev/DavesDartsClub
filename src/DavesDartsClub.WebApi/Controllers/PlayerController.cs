@@ -1,12 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DavesDartsClub.Application;
+using DavesDartsClub.Domain;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace DavesDartsClub.WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public partial class PlayerController : ControllerBase
+public class PlayerController : ControllerBase
 {
+    private readonly IPlayerService _playererService;
+
     [HttpPost(Name = nameof(CreatePlayer))]
     [ProducesResponseType(((int)HttpStatusCode.Created))]
     public ActionResult<Guid> CreatePlayer([FromBody] PlayerRequest playerRequest)
@@ -20,6 +24,7 @@ public partial class PlayerController : ControllerBase
     [ProducesResponseType(((int)HttpStatusCode.NotFound))]
     public ActionResult<PlayerResponse> GetPlayerById(Guid playerId)
     {
+        var player = _playererService.GetPlayerById(playerId);
         var result = new PlayerResponse()
         {
             PlayerId = playerId,

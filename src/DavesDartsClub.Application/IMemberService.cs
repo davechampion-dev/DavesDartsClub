@@ -1,5 +1,4 @@
-﻿
-using DavesDartsClub.Domain;
+﻿using DavesDartsClub.Domain;
 
 namespace DavesDartsClub.Application;
 
