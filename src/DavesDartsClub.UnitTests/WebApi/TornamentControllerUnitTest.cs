@@ -10,7 +10,7 @@ namespace DavesDartsClub.UnitTests.WebApi;
 public class TornamentControllerUnitTest
 {
     [Fact]
-    public void CreateTournament_Should_ReturnNewId_Given_AValidTournamentRequest()
+    public void CreateTournament_Should_ReturnNewId_Given_AValid_TournamentRequest()
     {
         //Arrange
         var mockTournamentService = new Mock<ITournamentService>();
