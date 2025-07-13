@@ -22,4 +22,9 @@ public class TournamentService : ITournamentService
             TournamentName = "Champions Cup"
         };
     }
+
+    public void SaveTournament(Tournament tournament)
+    {
+        throw new NotImplementedException();
+    }
 }

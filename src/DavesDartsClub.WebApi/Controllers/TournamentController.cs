@@ -1,4 +1,5 @@
 ﻿using DavesDartsClub.Application;
+using DavesDartsClub.Domain;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -19,6 +20,8 @@ public partial class TournamentController : ControllerBase
     [ProducesResponseType(((int)HttpStatusCode.Created))]
     public ActionResult<Guid> CreateTournament(TournamentRequest tournamentRequest)
     {
+        var tournament = new Tournament();
+        _tournamentService.SaveTournament(tournament);
         var id = Guid.NewGuid();
         return CreatedAtRoute(nameof(GetTournamentById), new { tournamentId = id }, id);
     }

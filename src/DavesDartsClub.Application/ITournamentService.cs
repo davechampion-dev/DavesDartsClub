@@ -5,6 +5,7 @@ namespace DavesDartsClub.Application;
 
 public interface ITournamentService
 {
-    Tournament GetTournamentById(Guid tournamentId);
-    Tournament GetTournamentByName(string name);
+    Tournament? GetTournamentById(Guid tournamentId);
+    Tournament? GetTournamentByName(string name);
+    void SaveTournament(Tournament tournament);
 }
