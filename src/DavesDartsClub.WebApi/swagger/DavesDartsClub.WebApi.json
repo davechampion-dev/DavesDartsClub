@@ -619,20 +619,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "string",
-                  "format": "uuid"
+                  "$ref": "#/components/schemas/TournamentResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "string",
-                  "format": "uuid"
+                  "$ref": "#/components/schemas/TournamentResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "string",
-                  "format": "uuid"
+                  "$ref": "#/components/schemas/TournamentResponse"
                 }
               }
             }

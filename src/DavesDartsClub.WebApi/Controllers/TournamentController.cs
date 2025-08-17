@@ -17,13 +17,23 @@ public partial class TournamentController : ControllerBase
     }
 
     [HttpPost(Name = nameof(CreateTournament))]
-    [ProducesResponseType(((int)HttpStatusCode.Created))]
-    public ActionResult<Guid> CreateTournament(TournamentRequest tournamentRequest)
+    [ProducesResponseType((int)HttpStatusCode.Created)]
+    public ActionResult<TournamentResponse> CreateTournament(TournamentRequest tournamentRequest)
     {
-        var tournament = new Tournament();
-        _tournamentService.SaveTournament(tournament);
-        var id = Guid.NewGuid();
-        return CreatedAtRoute(nameof(GetTournamentById), new { tournamentId = id }, id);
+        var newTournament = new Tournament
+        {
+            TournamentName = tournamentRequest.TournamentName
+        };
+
+        var savedTournament = _tournamentService.SaveTournament(newTournament);
+
+        var tournamentResponse = new TournamentResponse
+        {
+            TournamentId = savedTournament.TournamentId,
+            TournamentName = savedTournament.TournamentName
+        };
+
+        return CreatedAtRoute(nameof(GetTournamentById),new { tournamentId = savedTournament.TournamentId },tournamentResponse);
     }
 
     [HttpGet("{tournamentId}", Name = nameof(GetTournamentById))]

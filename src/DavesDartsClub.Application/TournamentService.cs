@@ -5,7 +5,7 @@ namespace DavesDartsClub.Application;
 public class TournamentService : ITournamentService
 {
 
-    public Tournament GetTournamentById(Guid tournamentId)
+    public Tournament? GetTournamentById(Guid tournamentId)
     {
         return new Tournament()
         {
@@ -14,7 +14,7 @@ public class TournamentService : ITournamentService
         };
     }
 
-    public Tournament GetTournamentByName(string name)
+    public Tournament? GetTournamentByName(string name)
     {
         return new Tournament()
         {
@@ -23,7 +23,7 @@ public class TournamentService : ITournamentService
         };
     }
 
-    public void SaveTournament(Tournament tournament)
+    public Tournament SaveTournament(Tournament tournament)
     {
         throw new NotImplementedException();
     }

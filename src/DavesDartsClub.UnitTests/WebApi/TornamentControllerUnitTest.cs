@@ -2,8 +2,6 @@
 using DavesDartsClub.Domain;
 using DavesDartsClub.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using Moq;
-using Shouldly;
 
 namespace DavesDartsClub.UnitTests.WebApi;
 
@@ -13,16 +11,34 @@ public class TornamentControllerUnitTest
     public void CreateTournament_Should_ReturnNewId_Given_AValid_TournamentRequest()
     {
         //Arrange
-        //var tournament = new Tournament();
+        var newId = Guid.NewGuid();
+        var tournament = new Tournament
+        {
+            TournamentId = newId
+        };
         var mockTournamentService = new Mock<ITournamentService>();
+        mockTournamentService.Setup(x => x.SaveTournament(It.IsAny<Tournament>()))
+           .Returns(tournament);
         var tournamentController = new TournamentController(mockTournamentService.Object);
         var tournamentRequest = new TournamentRequest();
 
+
         //Act
-        var result = tournamentController.CreateTournament(tournamentRequest);
+        var response = tournamentController.CreateTournament(tournamentRequest);
 
         //Assert
-        result.ShouldNotBeNull();
+        response.ShouldNotBeNull();
+        response.Value.ShouldBeNull();
+        response.Result.ShouldNotBeNull();
+        response.Result.ShouldBeOfType<CreatedAtRouteResult>();
+
+        var result = (CreatedAtRouteResult)response.Result!;
+        result.Value.ShouldNotBeNull();
+        result.Value.ShouldBeAssignableTo<TournamentResponse>();
+
+        var value = (TournamentResponse)result.Value!;
+        value.TournamentId.ShouldBe(newId);
+        //value.TournamentName.ShouldBe(newId);
         mockTournamentService.Verify(x => x.SaveTournament(It.IsAny<Tournament>()), Times.Once);
     }
 
