@@ -1,9 +1,16 @@
 ﻿using DavesDartsClub.Domain;
+using FluentValidation;
 
 namespace DavesDartsClub.Application;
 
 public class TournamentService : ITournamentService
 {
+    private readonly IValidator<Tournament> _tournamentValidator;
+
+    public TournamentService(IValidator<Tournament> tournamentValidator)
+    {
+        _tournamentValidator = tournamentValidator;
+    }
 
     public Tournament? GetTournamentById(Guid tournamentId)
     {
@@ -23,8 +30,10 @@ public class TournamentService : ITournamentService
         };
     }
 
-    public Tournament SaveTournament(Tournament tournament)
+    public Tournament CreateTournament(Tournament tournament)
     {
-        throw new NotImplementedException();
+        return tournament;
     }
+
 }
+
