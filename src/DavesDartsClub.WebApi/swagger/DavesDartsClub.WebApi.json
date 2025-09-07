@@ -18,11 +18,6 @@
                 "$ref": "#/components/schemas/LeagueRequest"
               }
             },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LeagueRequest"
-              }
-            },
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/LeagueRequest"
@@ -35,19 +30,7 @@
           "201": {
             "description": "Created",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "type": "string",
                   "format": "uuid"
@@ -69,11 +52,6 @@
                 "$ref": "#/components/schemas/LeagueSearchRequest"
               }
             },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LeagueSearchRequest"
-              }
-            },
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/LeagueSearchRequest"
@@ -86,23 +64,7 @@
           "200": {
             "description": "OK",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/LeagueResponse"
-                  }
-                }
-              },
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/LeagueResponse"
-                  }
-                }
-              },
-              "text/json": {
                 "schema": {
                   "type": "array",
                   "items": {
@@ -136,17 +98,7 @@
           "200": {
             "description": "OK",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/LeagueResponse"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LeagueResponse"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/LeagueResponse"
                 }
@@ -156,17 +108,7 @@
           "404": {
             "description": "Not Found",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetails"
                 }
@@ -198,17 +140,7 @@
           "404": {
             "description": "Not Found",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetails"
                 }
@@ -231,11 +163,6 @@
                 "$ref": "#/components/schemas/MemberRequest"
               }
             },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MemberRequest"
-              }
-            },
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/MemberRequest"
@@ -248,19 +175,7 @@
           "201": {
             "description": "Created",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "type": "string",
                   "format": "uuid"
@@ -282,11 +197,6 @@
                 "$ref": "#/components/schemas/MemberSearchRequest"
               }
             },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MemberSearchRequest"
-              }
-            },
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/MemberSearchRequest"
@@ -299,23 +209,7 @@
           "200": {
             "description": "OK",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/MemberResponse"
-                  }
-                }
-              },
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/MemberResponse"
-                  }
-                }
-              },
-              "text/json": {
                 "schema": {
                   "type": "array",
                   "items": {
@@ -349,17 +243,7 @@
           "200": {
             "description": "OK",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/MemberResponse"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/MemberResponse"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/MemberResponse"
                 }
@@ -369,17 +253,7 @@
           "404": {
             "description": "Not Found",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetails"
                 }
@@ -411,17 +285,7 @@
           "404": {
             "description": "Not Found",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetails"
                 }
@@ -444,11 +308,6 @@
                 "$ref": "#/components/schemas/PlayerRequest"
               }
             },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PlayerRequest"
-              }
-            },
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/PlayerRequest"
@@ -461,19 +320,7 @@
           "201": {
             "description": "Created",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "type": "string",
                   "format": "uuid"
@@ -505,17 +352,7 @@
           "200": {
             "description": "OK",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/PlayerResponse"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PlayerResponse"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/PlayerResponse"
                 }
@@ -525,17 +362,7 @@
           "404": {
             "description": "Not Found",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetails"
                 }
@@ -563,11 +390,6 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "text/json": {
               "schema": {
                 "type": "string"
               }
@@ -600,11 +422,6 @@
                 "$ref": "#/components/schemas/TournamentRequest"
               }
             },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TournamentRequest"
-              }
-            },
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/TournamentRequest"
@@ -617,19 +434,29 @@
           "201": {
             "description": "Created",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/TournamentResponse"
-                }
-              },
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TournamentResponse"
                 }
-              },
-              "text/json": {
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TournamentResponse"
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -648,11 +475,6 @@
                 "$ref": "#/components/schemas/TournamentSearchRequest"
               }
             },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TournamentSearchRequest"
-              }
-            },
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/TournamentSearchRequest"
@@ -665,23 +487,7 @@
           "200": {
             "description": "OK",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TournamentResponse"
-                  }
-                }
-              },
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TournamentResponse"
-                  }
-                }
-              },
-              "text/json": {
                 "schema": {
                   "type": "array",
                   "items": {
@@ -715,17 +521,7 @@
           "200": {
             "description": "OK",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/TournamentResponse"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TournamentResponse"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TournamentResponse"
                 }
@@ -735,17 +531,7 @@
           "404": {
             "description": "Not Found",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetails"
                 }
@@ -784,17 +570,7 @@
           "404": {
             "description": "Not Found",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetails"
                 }

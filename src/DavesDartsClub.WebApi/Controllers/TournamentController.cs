@@ -18,6 +18,8 @@ public partial class TournamentController : ControllerBase
 
     [HttpPost(Name = nameof(CreateTournament))]
     [ProducesResponseType((int)HttpStatusCode.Created)]
+    [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
     public ActionResult<TournamentResponse> CreateTournament(TournamentRequest tournamentRequest)
     {
         var newTournament = new Tournament
@@ -25,7 +27,7 @@ public partial class TournamentController : ControllerBase
             TournamentName = tournamentRequest.TournamentName
         };
 
-        var savedTournament = _tournamentService.SaveTournament(newTournament);
+        var savedTournament = _tournamentService.CreateTournament(newTournament);
 
         var tournamentResponse = new TournamentResponse
         {
