@@ -1,4 +1,5 @@
-﻿using DavesDartsClub.Domain;
+﻿using Ardalis.Result;
+using DavesDartsClub.Domain;
 using FluentValidation;
 
 namespace DavesDartsClub.Application;
@@ -21,12 +22,12 @@ public class TournamentService : ITournamentService
         };
     }
 
-    public Tournament? GetTournamentByName(string name)
+    public Tournament? GetTournamentByName(string tournamentName)
     {
         return new Tournament()
         {
             TournamentId = Guid.NewGuid(),
-            TournamentName = "Champions Cup"
+            TournamentName = tournamentName
         };
     }
 
@@ -35,5 +36,9 @@ public class TournamentService : ITournamentService
         return tournament;
     }
 
+    Result<Tournament> ITournamentService.CreateTournament(Tournament tournament)
+    {
+        return CreateTournament(tournament);
+    }
 }
 

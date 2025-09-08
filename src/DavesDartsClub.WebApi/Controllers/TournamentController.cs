@@ -27,7 +27,14 @@ public partial class TournamentController : ControllerBase
             TournamentName = tournamentRequest.TournamentName
         };
 
-        var savedTournament = _tournamentService.CreateTournament(newTournament);
+        var result = _tournamentService.CreateTournament(newTournament);
+
+        if (!result.IsSuccess || result.Value == null)
+        {
+            return BadRequest();
+        }
+
+        var savedTournament = result.Value;
 
         var tournamentResponse = new TournamentResponse
         {
@@ -35,7 +42,7 @@ public partial class TournamentController : ControllerBase
             TournamentName = savedTournament.TournamentName
         };
 
-        return CreatedAtRoute(nameof(GetTournamentById),new { tournamentId = savedTournament.TournamentId },tournamentResponse);
+        return CreatedAtRoute(nameof(GetTournamentById), new { tournamentId = savedTournament.TournamentId }, tournamentResponse);
     }
 
     [HttpGet("{tournamentId}", Name = nameof(GetTournamentById))]
@@ -59,23 +66,27 @@ public partial class TournamentController : ControllerBase
         return Ok(tournamentResponse);
     }
 
-    [HttpGet(Name = nameof(GetTournamentSearch))]
-    [ProducesResponseType(((int)HttpStatusCode.OK))]
-    public ActionResult<IEnumerable<TournamentResponse>> GetTournamentSearch([FromBody] TournamentSearchRequest tournamentSearchRequest)
+    [HttpGet("search", Name = nameof(GetTournamentSearch))]
+    [ProducesResponseType((int)HttpStatusCode.OK)]
+    public ActionResult<IEnumerable<TournamentResponse>> GetTournamentSearch([FromQuery] string tournamentName)
     {
-        var tournament = _tournamentService.GetTournamentByName(tournamentSearchRequest.TournamentName);
+        var tournament = _tournamentService.GetTournamentByName(tournamentName);
+
+        if (tournament == null)
+        {
+            return NotFound(); 
+        }
 
         var result = new List<TournamentResponse>
+    {
+        new TournamentResponse
         {
-            new TournamentResponse()
-            {
-                 TournamentId = tournament.TournamentId,
-                 TournamentName = tournament.TournamentName
-            }
+            TournamentId = tournament.TournamentId,
+            TournamentName = tournament.TournamentName
+        }
+    };
 
-        };
-
-        return Ok(result);
+        return Ok(result); 
     }
 
     [HttpDelete("{tournamentId}", Name = nameof(DeleteTournament))]

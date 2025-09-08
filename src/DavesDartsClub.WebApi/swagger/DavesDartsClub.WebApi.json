@@ -462,42 +462,6 @@
             }
           }
         }
-      },
-      "get": {
-        "tags": [
-          "Tournament"
-        ],
-        "operationId": "GetTournamentSearch",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TournamentSearchRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/TournamentSearchRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TournamentResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/Tournament/{tournamentId}": {
@@ -573,6 +537,38 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Tournament/search": {
+      "get": {
+        "tags": [
+          "Tournament"
+        ],
+        "operationId": "GetTournamentSearch",
+        "parameters": [
+          {
+            "name": "tournamentName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TournamentResponse"
+                  }
                 }
               }
             }
@@ -700,14 +696,6 @@
             "type": "string",
             "format": "uuid"
           },
-          "tournamentName": {
-            "type": "string"
-          }
-        }
-      },
-      "TournamentSearchRequest": {
-        "type": "object",
-        "properties": {
           "tournamentName": {
             "type": "string"
           }

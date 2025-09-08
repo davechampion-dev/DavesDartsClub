@@ -7,6 +7,6 @@ namespace DavesDartsClub.Application;
 public interface ITournamentService
 {
     Tournament? GetTournamentById(Guid tournamentId);
-    Tournament? GetTournamentByName(string name);
-    Tournament CreateTournament(Tournament tournament);
+    Tournament? GetTournamentByName(string tournamentName);
+    Result<Tournament> CreateTournament(Tournament tournament);
 }
