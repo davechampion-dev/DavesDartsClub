@@ -1,4 +1,5 @@
 ﻿using Ardalis.Result;
+using Ardalis.Result.FluentValidation;
 using DavesDartsClub.Domain;
 using FluentValidation;
 
@@ -31,14 +32,15 @@ public class TournamentService : ITournamentService
         };
     }
 
-    public Tournament CreateTournament(Tournament tournament)
+    public Result<Tournament> CreateTournament(Tournament tournament)
     {
+        var validationResult = _tournamentValidator.Validate(tournament);
+        if (!validationResult.IsValid)
+        {
+            return Result.Invalid(validationResult.AsErrors());
+        }
+            
         return tournament;
-    }
-
-    Result<Tournament> ITournamentService.CreateTournament(Tournament tournament)
-    {
-        return CreateTournament(tournament);
     }
 }
 
