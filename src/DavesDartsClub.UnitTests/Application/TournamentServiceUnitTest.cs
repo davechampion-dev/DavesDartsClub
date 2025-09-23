@@ -10,12 +10,12 @@ namespace DavesDartsClub.UnitTests.Application;
 
 public class TournamentServiceUnitTest
 {
-    private readonly Mock<IValidator<Tournament>> mockTournamentValidator = new Mock<IValidator<Tournament>>();
-    private readonly TournamentService tournamentService; 
+    private readonly Mock<IValidator<Tournament>> _mockTournamentValidator = new Mock<IValidator<Tournament>>();
+    private readonly TournamentService _tournamentService; 
 
     public TournamentServiceUnitTest()
     {
-        tournamentService = new TournamentService(mockTournamentValidator.Object);
+        _tournamentService = new TournamentService(_mockTournamentValidator.Object);
     }
 
     [Fact]
@@ -46,11 +46,11 @@ public class TournamentServiceUnitTest
         var tournament = new Tournament();
         var validationResult = new ValidationResult();
         validationResult.Errors.Add(new ValidationFailure("TournamentId", "TournamentId is required"));
-        mockTournamentValidator.Setup(x=> x.Validate(tournament))
+        _mockTournamentValidator.Setup(x=> x.Validate(tournament))
             .Returns(validationResult);
 
         //Act
-        var response = tournamentService.CreateTournament(tournament);
+        var response = _tournamentService.CreateTournament(tournament);
 
         //Assert
         response.ShouldNotBeNull();
