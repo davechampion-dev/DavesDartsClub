@@ -12,16 +12,11 @@ public class TornamentControllerUnitTest
     {
         //Arrange
         var newId = Guid.NewGuid();
-        var tournament = new Tournament
-        {
-            TournamentId = newId
-        };
         var mockTournamentService = new Mock<ITournamentService>();
         mockTournamentService.Setup(x => x.CreateTournament(It.IsAny<Tournament>()))
-           .Returns(tournament);
+           .Returns(new Tournament { TournamentId = newId });
         var tournamentController = new TournamentController(mockTournamentService.Object);
         var tournamentRequest = new TournamentRequest();
-
 
         //Act
         var response = tournamentController.CreateTournament(tournamentRequest);
@@ -38,7 +33,6 @@ public class TornamentControllerUnitTest
 
         var value = (TournamentResponse)result.Value!;
         value.TournamentId.ShouldBe(newId);
-        //value.TournamentName.ShouldBe(newId);
         mockTournamentService.Verify(x => x.CreateTournament(It.IsAny<Tournament>()), Times.Once);
     }
 
