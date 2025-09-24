@@ -511,19 +511,12 @@
         "operationId": "DeleteTournament",
         "parameters": [
           {
-            "name": "memberId",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
             "name": "tournamentId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],

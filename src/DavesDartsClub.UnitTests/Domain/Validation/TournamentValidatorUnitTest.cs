@@ -12,10 +12,10 @@ namespace DavesDartsClub.UnitTests.Domain.Validation;
 
 public class TournamentValidatorUnitTest
 {
-    private readonly TounamentValidator _tournamentValidator;
+    private readonly TournamentValidator _tournamentValidator;
     public TournamentValidatorUnitTest()
     {
-        _tournamentValidator = new TounamentValidator();
+        _tournamentValidator = new TournamentValidator();
     }
 
 
@@ -56,5 +56,25 @@ public class TournamentValidatorUnitTest
         response.Errors.ShouldHaveSingleItem();
         response.Errors[0].ErrorCode.ShouldBe("MaximumLengthValidator");
         response.Errors[0].PropertyName.ShouldBe("TournamentName");
+    }
+
+    [Fact]
+    public void Validate_Should_ReturnAValidationError_Given_ATournamentWithNoName()
+    {
+        //Arrange
+        var invalidTournament = new Tournament
+        {
+            TournamentId = Guid.NewGuid(),
+            TournamentName = ""
+
+        };
+
+        //Act
+        var response = _tournamentValidator.Validate(invalidTournament);
+
+        //Assert
+        response.IsValid.ShouldBeFalse();
+        response.Errors.ShouldNotBeEmpty();
+        response.Errors[0].ErrorMessage.ShouldBe("Tournament name can't be empty");
     }
 }

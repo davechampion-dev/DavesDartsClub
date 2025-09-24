@@ -26,7 +26,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<ITournamentService, TournamentService>();
 builder.Services.AddScoped<ILeagueService, LeagueService>();
-builder.Services.AddScoped<IValidator<Tournament>, TounamentValidator>();
+builder.Services.AddScoped<IValidator<Tournament>, TournamentValidator>();
 
 var app = builder.Build();
 

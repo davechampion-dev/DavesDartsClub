@@ -92,7 +92,7 @@ public partial class TournamentController : ControllerBase
     [HttpDelete("{tournamentId}", Name = nameof(DeleteTournament))]
     [ProducesResponseType(((int)HttpStatusCode.NoContent))]
     [ProducesResponseType(((int)HttpStatusCode.NotFound))]
-    public ActionResult DeleteTournament(Guid memberId)
+    public ActionResult DeleteTournament(Guid tournamentId)
     {
         var tournamentExists = true;
 
