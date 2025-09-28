@@ -23,13 +23,9 @@ builder.Services.AddControllers(opts =>
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddScoped<IMemberService, MemberService>();
-builder.Services.AddScoped<ITournamentService, TournamentService>();
-builder.Services.AddScoped<ILeagueService, LeagueService>();
-builder.Services.AddScoped<IValidator<Tournament>, TournamentValidator>();
-builder.Services.AddScoped<IValidator<League>, LeagueValidator>();
-builder.Services.AddScoped<IValidator<Player>, PlayerValidator>();
-builder.Services.AddScoped<IValidator<Member>, MemberValidator>();
+builder.Services.AddDavesDartClubDomain();
+builder.Services.AddDavesDartClubApplication();
+builder.Services.AddDavesDartClubInfrastructure();
 
 var app = builder.Build();
 

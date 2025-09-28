@@ -1,10 +1,18 @@
 ﻿using DavesDartsClub.Infrastructure.EntityFramework;
 using Microsoft.Extensions.Hosting;
 
-namespace DavesDartsClub.Infrastructure;
+using DavesDartsClub.Infrastructure;
+
+namespace Microsoft.Extensions.DependencyInjection;
 
 public static class Extensions
 {
+    public static IServiceCollection AddDavesDartClubInfrastructure(this IServiceCollection services)
+    {
+        
+        return services;
+    }
+
     // todo: constance to hold the connection string name
     public static void AddDavesDarstClubAppDbContext(this IHostApplicationBuilder builder)
         => builder.AddSqlServerDbContext<AppDbContext>("DavesDartsClubDatabase");
