@@ -16,8 +16,8 @@ public class PlayerControllerUnitTest
     public void CreatePlayer_Should_ReturnNewId_Given_AValid_PlayerRequest()
     {
         //Arrange
-        var mockPlayer = new Mock<IPlayerService>();
-        var playerController = new PlayerController();
+        var mockPlayerService = new Mock<IPlayerService>();
+        var playerController = new PlayerController(mockPlayerService.Object);
         var playerRequest = new PlayerRequest();
 
         //Act

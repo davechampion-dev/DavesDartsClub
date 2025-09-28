@@ -10,9 +10,11 @@ namespace DavesDartsClub.WebApi.Controllers;
 public class PlayerController : ControllerBase
 {
     private readonly IPlayerService _playerService;
-    private IPlayerService @object;
 
-
+    public PlayerController(IPlayerService playerService)
+    {
+        _playerService = playerService;
+    }
 
     [HttpPost(Name = nameof(CreatePlayer))]
     [ProducesResponseType(((int)HttpStatusCode.Created))]

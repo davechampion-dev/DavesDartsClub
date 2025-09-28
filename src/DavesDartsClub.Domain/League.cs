@@ -4,6 +4,6 @@
     {
         public const int LeagueNameMaxLength = 50;
         public Guid LeagueId { get; init; }
-        public string LeagueName { get; set; }
+        public string LeagueName { get; set; } = string.Empty;
     }
 }

@@ -6,5 +6,5 @@ public class Player
 
     public Guid PlayerId { get; init; }
 
-    public string PlayerName { get; init; }
+    public string PlayerName { get; init; } = string.Empty;
 }
