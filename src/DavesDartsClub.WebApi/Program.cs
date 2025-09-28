@@ -27,6 +27,9 @@ builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<ITournamentService, TournamentService>();
 builder.Services.AddScoped<ILeagueService, LeagueService>();
 builder.Services.AddScoped<IValidator<Tournament>, TournamentValidator>();
+builder.Services.AddScoped<IValidator<League>, LeagueValidator>();
+builder.Services.AddScoped<IValidator<Player>, PlayerValidator>();
+builder.Services.AddScoped<IValidator<Member>, MemberValidator>();
 
 var app = builder.Build();
 
@@ -49,5 +52,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
 
 
