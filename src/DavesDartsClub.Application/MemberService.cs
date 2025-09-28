@@ -1,9 +1,16 @@
 ﻿using DavesDartsClub.Domain;
+using FluentValidation;
 
 namespace DavesDartsClub.Application;
 
 public class MemberService : IMemberService
 {
+    private readonly IValidator<Member> _memberValidator;
+
+    public MemberService(IValidator<Member> memberValidator)
+    {
+        _memberValidator = memberValidator;
+    }
 
     public Member GetMemberById(Guid memberId)
     {
