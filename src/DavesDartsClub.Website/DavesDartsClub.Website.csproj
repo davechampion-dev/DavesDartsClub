@@ -11,8 +11,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.3.0" />
-		<PackageReference Include="MudBlazor" Version="8.*" />
+		<PackageReference Include="Microsoft.AspNetCore.Cors" />
+		<PackageReference Include="MudBlazor" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -11,13 +11,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.3.0" />
-		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.6" />
-		<PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="9.0.6">
+		<PackageReference Include="Microsoft.AspNetCore.Cors" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+		<PackageReference Include="Microsoft.Extensions.ApiDescription.Server">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" />
 	</ItemGroup>
 
 	<ItemGroup>
