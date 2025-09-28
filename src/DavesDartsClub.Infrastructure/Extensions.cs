@@ -30,7 +30,7 @@ public static class Extensions
     /// </summary>
     /// <remarks>
     /// This is a workaround for how aspire doesnt use seeding with core migration.
-    /// <seealso cref="https://juliocasal.com/blog/how-to-seed-data-with-ef-core-9-and-net-aspire"/>
+    /// See also - https://juliocasal.com/blog/how-to-seed-data-with-ef-core-9-and-net-aspire.
     /// This method sets up the <see cref="AppDbContext"/> to use a SQL Server database with the 
     /// connection string named "DavesDartsClubDatabase". It also ensures that data seeding is  performed during
     /// migrations, both synchronously and asynchronously, if the database is empty.</remarks>

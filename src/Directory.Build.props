@@ -6,10 +6,10 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <LangVersion>latest</LangVersion>
-        <!--
+        
         <EnableNETAnalyzers>true</EnableNETAnalyzers>
         <AnalysisLevel>latest</AnalysisLevel>
-        -->
+        
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally><!--See: https://devblogs.microsoft.com/nuget/introducing-central-package-management/-->
         <UserSecretsId>b761978f-b4a0-4a71-b061-695946cc4d39</UserSecretsId>
 		<NoWarn>$(NoWarn);CS1591</NoWarn>
