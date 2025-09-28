@@ -9,7 +9,7 @@ namespace DavesDartsClub.WebApi.Controllers;
 [Route("[controller]")]
 public class PlayerController : ControllerBase
 {
-    private readonly IPlayerService _playererService;
+    private readonly IPlayerService _playerService;
     private IPlayerService @object;
 
 
@@ -27,7 +27,7 @@ public class PlayerController : ControllerBase
     [ProducesResponseType(((int)HttpStatusCode.NotFound))]
     public ActionResult<PlayerResponse> GetPlayerById(Guid playerId)
     {
-        var player = _playererService.GetPlayerById(playerId);
+        var player = _playerService.GetPlayerById(playerId);
         var result = new PlayerResponse()
         {
             PlayerId = playerId,
@@ -37,4 +37,41 @@ public class PlayerController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet(Name = nameof(GetPlayerSearch))]
+    [ProducesResponseType(((int)HttpStatusCode.OK))]
+
+    public ActionResult<IEnumerable<PlayerResponse>> GetPlayerSearch([FromBody] PlayerSearchRequest playerSearchRequest)
+    {
+        // todo: Update to return list of members and take search term
+        var player = _playerService.GetPlayerByName(playerSearchRequest.PlayerName);
+
+        // todo: Switch to linq expression
+        var result = new List<PlayerResponse>
+        {
+            new PlayerResponse()
+            {
+                PlayerId = player.PlayerId,
+                PlayerName = player.PlayerName
+            }
+        };
+        return Ok(result);
+    }
+
+    [HttpDelete("{playerId}", Name = nameof(DeletePlayer))]
+    [ProducesResponseType(((int)HttpStatusCode.NoContent))]
+    [ProducesResponseType(((int)HttpStatusCode.NotFound))]
+
+    public ActionResult DeletePlayer(Guid playerId)
+    {
+        var playerExists = true;
+
+        if (!playerExists)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
+    }
+
 }
+
