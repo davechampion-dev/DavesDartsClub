@@ -12,7 +12,7 @@ public class DataContextDesignTimeFactory : IDesignTimeDbContextFactory<AppDbCon
         var builder = DistributedApplication.CreateBuilder(args);
 
         var sql = builder.AddSqlServer("DavesDartsClubSql");
-        var db = sql.AddDatabase("DavesDartsClubMigrations");
+        sql.AddDatabase("DavesDartsClubMigrations");
 
         var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
         optionsBuilder.UseSqlServer("DavesDartsClubMigrations");

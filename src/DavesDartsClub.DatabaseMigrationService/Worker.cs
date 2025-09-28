@@ -12,7 +12,7 @@ public class Worker(
     public const string ActivitySourceName = "Migrations";
     private static readonly ActivitySource s_activitySource = new(ActivitySourceName);
 
-    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         using var activity = s_activitySource.StartActivity("Migrating database", ActivityKind.Client);
 
@@ -22,7 +22,7 @@ public class Worker(
             var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
             await dbContext.Database.CreateExecutionStrategy().ExecuteAsync(async ()
-                => await dbContext.Database.MigrateAsync(cancellationToken));
+                => await dbContext.Database.MigrateAsync(stoppingToken));
         }
         catch (Exception ex)
         {

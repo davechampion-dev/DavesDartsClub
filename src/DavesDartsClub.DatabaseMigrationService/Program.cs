@@ -11,4 +11,4 @@ builder.Services.AddOpenTelemetry()
     .WithTracing(tracing => tracing.AddSource(Worker.ActivitySourceName));
 
 var host = builder.Build();
-host.Run();
+await host.RunAsync();

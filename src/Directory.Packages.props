@@ -54,6 +54,7 @@
 	  <PackageVersion Include="Microsoft.AspNetCore.Cors" Version="2.3.0" />
 	  <PackageVersion Include="Ardalis.Result.FluentValidation" Version="10.1.0" />
 	  <PackageVersion Include="FluentValidation" Version="12.0.0" />
+	  <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.15.0.120848" />
       
   </ItemGroup>
 </Project>

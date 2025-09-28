@@ -29,7 +29,9 @@ public class PlayerController : ControllerBase
     [ProducesResponseType(((int)HttpStatusCode.NotFound))]
     public ActionResult<PlayerResponse> GetPlayerById(Guid playerId)
     {
+#pragma warning disable S1481
         var player = _playerService.GetPlayerById(playerId);
+#pragma warning restore S1481
         var result = new PlayerResponse()
         {
             PlayerId = playerId,

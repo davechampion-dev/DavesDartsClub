@@ -11,7 +11,7 @@ var api = builder.AddProject<Projects.DavesDartsClub_WebApi>("WebApi")
     .WithReference(db)
     .WaitFor(db);
 
-var website = builder.AddProject<Projects.DavesDartsClub_Website>("Website")
+builder.AddProject<Projects.DavesDartsClub_Website>("Website")
     .WithReference(api)
     .WaitFor(api);
 
@@ -19,4 +19,4 @@ builder.AddProject<Projects.DavesDartsClub_DatabaseMigrationService>("davesdarts
     .WithReference(db)
     .WaitFor(db);
 
-builder.Build().Run();
+await builder.Build().RunAsync();

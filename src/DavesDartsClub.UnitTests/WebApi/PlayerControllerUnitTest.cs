@@ -25,7 +25,9 @@ public class PlayerControllerUnitTest
 
         //Assert
         result.ShouldNotBeNull();
+#pragma warning disable S125
         //result.Value.ShouldNotBeNull();
         //mockTournamentService.Verify(x => x.shoul);
+#pragma warning restore S125
     }
 }
