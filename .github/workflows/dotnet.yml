@@ -29,12 +29,12 @@ jobs:
       run: dotnet build src/DavesDartsClub.sln --no-restore 
     
     - name: Run Tests
-      run: dotnet test src/DavesDartsClub.sln --no-build --logger "junit;LogFileName=test-results.xml"
+      run: dotnet test src/DavesDartsClub.sln --no-build --logger "trx;LogFileName=test-results.trx"
 
     - name: Publish Test Results
       uses: dorny/test-reporter@v1
       if: always()
       with:
         name: .NET Tests
-        path: '**/test-results.xml'
-        reporter: junit
+        path: '**/test-results.trx'
+        reporter: dotnet-trx
