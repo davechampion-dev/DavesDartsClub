@@ -1,60 +1,48 @@
 <Project>
   <ItemGroup>
-	  <!--Application Layer-->
-	  <!--None.-->
-	  
-	  <!--Aspire-->
-	  <PackageVersion Include="Aspire.Hosting.AppHost" Version="9.3.1" />
-	  <PackageVersion Include="Aspire.Hosting.SqlServer" Version="9.3.2" />
-	  
-	  <!--ServiceDefaults-->
-	  <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="9.6.0" />
-	  <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="9.3.1" />
-	  <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.12.0" />
-	  <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.12.0" />
-	  <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.12.0" />
-	  <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.12.0" />
-	  <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.12.0" />
-	  
-	  <!--DatabaseMigration-->
-	  <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.6" />
-	  
-	  <!--Domain-->
-	  <!--None.-->
-	  
-	  <!--Infrastructure-->
-	  <PackageVersion Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="9.3.1" />
-	  <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
-	  <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.6" />
-	  
-	  <!--CommonTestPackages-->
-	  <PackageVersion Include="xunit" Version="2.9.3" />
-	  <PackageVersion Include="xunit.analyzers" Version="1.22.0" />
-	  <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.1" />
-	  <PackageVersion Include="Moq" Version="4.20.72" />
-	  <PackageVersion Include="Shouldly" Version="4.3.0" />
-	  <PackageVersion Include="coverlet.collector" Version="6.0.4" />
-	  <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-	  
-	  <!--IntergrationTests-->
-	  <PackageVersion Include="Aspire.Hosting.Testing" Version="9.3.1" />
-	  
-	  <!--UnitTests-->
-	  <!--None.-->
-	  
-	  <!--WebApi-->
-	  <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.6" />
-	  <PackageVersion Include="Microsoft.Extensions.ApiDescription.Server" Version="9.0.6" />
-	  <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.1" />
-	  
-	  <!--WebApp-->
-	  <PackageVersion Include="MudBlazor" Version="8.12.0" />
-	  
-	  <!--Shared / Common-->
-	  <PackageVersion Include="Microsoft.AspNetCore.Cors" Version="2.3.0" />
-	  <PackageVersion Include="Ardalis.Result.FluentValidation" Version="10.1.0" />
-	  <PackageVersion Include="FluentValidation" Version="12.0.0" />
-	  <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.15.0.120848" />
-      
+    <!--Application Layer-->
+    <!--None.-->
+    <!--Aspire-->
+    <PackageVersion Include="Aspire.Hosting.AppHost" Version="9.3.1" />
+    <PackageVersion Include="Aspire.Hosting.SqlServer" Version="9.3.2" />
+    <!--ServiceDefaults-->
+    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="9.9.0" />
+    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="9.5.0" />
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.12.0" />
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.12.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.12.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.12.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.12.0" />
+    <!--DatabaseMigration-->
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
+    <!--Domain-->
+    <!--None.-->
+    <!--Infrastructure-->
+    <PackageVersion Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="9.3.1" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.9" />
+    <!--CommonTestPackages-->
+    <PackageVersion Include="xunit" Version="2.9.3" />
+    <PackageVersion Include="xunit.analyzers" Version="1.22.0" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.1" />
+    <PackageVersion Include="Moq" Version="4.20.72" />
+    <PackageVersion Include="Shouldly" Version="4.3.0" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
+    <!--IntergrationTests-->
+    <PackageVersion Include="Aspire.Hosting.Testing" Version="9.3.1" />
+    <!--UnitTests-->
+    <!--None.-->
+    <!--WebApi-->
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.ApiDescription.Server" Version="9.0.9" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.1" />
+    <!--WebApp-->
+    <PackageVersion Include="MudBlazor" Version="8.12.0" />
+    <!--Shared / Common-->
+    <PackageVersion Include="Microsoft.AspNetCore.Cors" Version="2.3.0" />
+    <PackageVersion Include="Ardalis.Result.FluentValidation" Version="10.1.0" />
+    <PackageVersion Include="FluentValidation" Version="12.0.0" />
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.15.0.120848" />
   </ItemGroup>
 </Project>
