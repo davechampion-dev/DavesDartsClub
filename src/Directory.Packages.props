@@ -5,6 +5,7 @@
     <!--Aspire-->
     <PackageVersion Include="Aspire.Hosting.AppHost" Version="9.5.1" />
     <PackageVersion Include="Aspire.Hosting.SqlServer" Version="9.5.1" />
+    <PackageVersion Include="Bogus" Version="35.6.4" />
     <!--ServiceDefaults-->
     <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="9.9.0" />
     <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="9.5.1" />
