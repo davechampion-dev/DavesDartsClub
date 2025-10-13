@@ -1,5 +1,4 @@
 ﻿using DavesDartsClub.Application;
-using DavesDartsClub.Domain;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -55,7 +54,7 @@ public class PlayerController : ControllerBase
             new PlayerResponse()
             {
                 PlayerId = player.PlayerId,
-                PlayerName = player.PlayerName
+                PlayerName = player.Nickname
             }
         };
         return Ok(result);

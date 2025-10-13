@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DavesDartsClub.Domain;
+﻿namespace DavesDartsClub.Domain;
 
 public class Tournament
 {

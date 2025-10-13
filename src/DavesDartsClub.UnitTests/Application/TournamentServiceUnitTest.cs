@@ -1,9 +1,6 @@
-﻿using Ardalis.Result;
-using DavesDartsClub.Application;
+﻿using DavesDartsClub.Application;
 using DavesDartsClub.Domain;
-using DavesDartsClub.WebApi.Controllers;
 using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
 using FluentValidation.Results;
 
 namespace DavesDartsClub.UnitTests.Application;
@@ -11,7 +8,7 @@ namespace DavesDartsClub.UnitTests.Application;
 public class TournamentServiceUnitTest
 {
     private readonly Mock<IValidator<Tournament>> _mockTournamentValidator = new Mock<IValidator<Tournament>>();
-    private readonly TournamentService _tournamentService; 
+    private readonly TournamentService _tournamentService;
 
     public TournamentServiceUnitTest()
     {
@@ -46,7 +43,7 @@ public class TournamentServiceUnitTest
         var tournament = new Tournament();
         var validationResult = new ValidationResult();
         validationResult.Errors.Add(new ValidationFailure("TournamentId", "TournamentId is required"));
-        _mockTournamentValidator.Setup(x=> x.Validate(tournament))
+        _mockTournamentValidator.Setup(x => x.Validate(tournament))
             .Returns(validationResult);
 
         //Act

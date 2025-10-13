@@ -1,12 +1,6 @@
-﻿using DavesDartsClub.Application;
-using DavesDartsClub.Domain;
+﻿using DavesDartsClub.Domain;
 using DavesDartsClub.Domain.Validation;
-using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DavesDartsClub.UnitTests.Fakers;
 
 namespace DavesDartsClub.UnitTests.Domain.Validation;
 
@@ -22,11 +16,8 @@ public class LeagueValidatorUnitTest
     public void Validate_Should_ReturnAValidResponseWithNoErrors_Given_AValidLeague()
     {
         //Arrange
-        var validLeague = new League
-        {
-            LeagueId = Guid.NewGuid(),
-            LeagueName = "Champions League"
-        };
+        var leagueFaker = new LeagueFaker();
+        var validLeague = leagueFaker.GenerateOne();
 
         //Act
         var response = _LeagueValidator.Validate(validLeague);

@@ -24,7 +24,7 @@ public class PlayerService : IPlayerService
     {
         return new Player()
         {
-            PlayerName = "Bob The Frog"
+            Nickname = "Bob The Frog"
         };
     }
 }

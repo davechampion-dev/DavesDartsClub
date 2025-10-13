@@ -1,12 +1,6 @@
-﻿using DavesDartsClub.Application;
-using DavesDartsClub.Domain;
+﻿using DavesDartsClub.Domain;
 using DavesDartsClub.Domain.Validation;
-using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DavesDartsClub.UnitTests.Fakers;
 
 namespace DavesDartsClub.UnitTests.Domain.Validation;
 
@@ -22,11 +16,8 @@ public class PlayerValidatorUnitTest
     public void Validate_Should_ReturnAValidResponseWithNoErrors_Given_AValidPlayer()
     {
         //Arrange
-        var validPlayer = new Player
-        {
-            PlayerId = Guid.NewGuid(),
-            PlayerName = "Bob the frog"
-        };
+        var playerFaker = new PlayerFaker();
+        var validPlayer = playerFaker.GenerateOne();
 
         //Act
         var response = _playerValidator.Validate(validPlayer);
@@ -34,5 +25,7 @@ public class PlayerValidatorUnitTest
         //Assert
         response.IsValid.ShouldBeTrue();
         response.Errors.ShouldBeEmpty();
+        validPlayer.Member.ShouldNotBeNull();
+        validPlayer.MemberId.ShouldBe(validPlayer.Member!.MemberId);
     }
 }

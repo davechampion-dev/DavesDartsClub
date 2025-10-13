@@ -1,8 +1,3 @@
-using DavesDartsClub.Application;
-using DavesDartsClub.Domain;
-using DavesDartsClub.Domain.Validation;
-using DavesDartsClub.Infrastructure;
-using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);

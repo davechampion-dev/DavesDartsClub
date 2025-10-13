@@ -39,7 +39,7 @@ public class TournamentService : ITournamentService
         {
             return Result.Invalid(validationResult.AsErrors());
         }
-            
+
         return tournament;
     }
 }

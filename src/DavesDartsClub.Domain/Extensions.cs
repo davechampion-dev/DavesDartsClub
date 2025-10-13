@@ -6,7 +6,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class Extensions
 {
-    public static IServiceCollection AddDavesDartClubDomain(this IServiceCollection services )
+    public static IServiceCollection AddDavesDartClubDomain(this IServiceCollection services)
     {
         services.AddScoped<IValidator<Tournament>, TournamentValidator>();
         services.AddScoped<IValidator<League>, LeagueValidator>();

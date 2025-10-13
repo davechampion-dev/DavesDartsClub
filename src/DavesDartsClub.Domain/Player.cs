@@ -6,5 +6,10 @@ public class Player
 
     public Guid PlayerId { get; init; }
 
-    public string PlayerName { get; init; } = string.Empty;
+    public Guid MemberId { get; set; }
+
+    public string? Nickname { get; init; } = string.Empty;
+
+    public Member? Member { get; set; }
+
 }
