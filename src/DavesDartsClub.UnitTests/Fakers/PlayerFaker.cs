@@ -17,15 +17,13 @@ namespace DavesDartsClub.UnitTests.Fakers
             return new Faker<Player>()
                 .CustomInstantiator(f =>
                 {
-                    // Generate a linked Member first
                     var member = _memberFaker.GenerateOne();
 
                     return new Player
                     {
-                        PlayerId = Guid.NewGuid(),
                         MemberId = member.MemberId,
-                        Member = member,
-                        Nickname = f.Random.Bool(0.6f) ? f.Internet.UserName() : null
+                        MemberName = member.MemberName,
+                        Nickname = "TestNickname"
                     };
                 });
         }

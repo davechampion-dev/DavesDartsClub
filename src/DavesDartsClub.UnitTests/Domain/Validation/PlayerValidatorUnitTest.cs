@@ -13,7 +13,7 @@ public class PlayerValidatorUnitTest
     }
 
     [Fact]
-    public void Validate_Should_ReturnAValidResponseWithNoErrors_Given_AValidPlayer()
+    public void Validate_Should_ReturnAValidResponse_Given_AValidMember_And_AValidPlayerWithNickname()
     {
         //Arrange
         var playerFaker = new PlayerFaker();
@@ -25,7 +25,6 @@ public class PlayerValidatorUnitTest
         //Assert
         response.IsValid.ShouldBeTrue();
         response.Errors.ShouldBeEmpty();
-        validPlayer.Member.ShouldNotBeNull();
-        validPlayer.MemberId.ShouldBe(validPlayer.Member!.MemberId);
+        validPlayer.Nickname.ShouldNotBeNull();
     }
 }

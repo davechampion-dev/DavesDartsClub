@@ -1,15 +1,11 @@
 ﻿namespace DavesDartsClub.Domain;
 
-public class Player
+public class Player : Member
 {
-    public const int PlayerNameMaxLength = 50;
-
-    public Guid PlayerId { get; init; }
-
-    public Guid MemberId { get; set; }
-
+    public const int PlayerNicknameMaxLength = 50;
+        
     public string? Nickname { get; init; } = string.Empty;
 
-    public Member? Member { get; set; }
+    
 
 }
