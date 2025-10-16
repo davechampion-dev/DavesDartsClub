@@ -20,13 +20,13 @@ public class PlayerController : ControllerBase
     public ActionResult<Guid> CreatePlayer([FromBody] PlayerRequest playerRequest)
     {
         var id = Guid.NewGuid();
-        return CreatedAtRoute(nameof(GetPlayerByMemberId), new { PlayerId = id }, id);
+        return CreatedAtRoute(nameof(GetPlayerByMemberId), new { memberId = id }, id);
     }
 
-    [HttpGet("{playerId}", Name = nameof(GetPlayerByMemberId))]
+    [HttpGet("{memberId}", Name = nameof(GetPlayerByMemberId))]
     [ProducesResponseType(((int)HttpStatusCode.OK))]
     [ProducesResponseType(((int)HttpStatusCode.NotFound))]
-    public ActionResult<PlayerResponse> GetPlayerByMemberId(Guid playerId)
+    public ActionResult<PlayerResponse> GetPlayerByMemberId(Guid memberId)
     {
 #pragma warning restore S1481
         var result = new PlayerResponse()
@@ -56,11 +56,11 @@ public class PlayerController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{playerId}", Name = nameof(DeletePlayer))]
+    [HttpDelete("{memberId}", Name = nameof(DeletePlayer))]
     [ProducesResponseType(((int)HttpStatusCode.NoContent))]
     [ProducesResponseType(((int)HttpStatusCode.NotFound))]
 
-    public ActionResult DeletePlayer(Guid playerId)
+    public ActionResult DeletePlayer(Guid memberId)
     {
         var playerExists = true;
 

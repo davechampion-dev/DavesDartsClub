@@ -8,7 +8,7 @@ public class PlayerValidator : AbstractValidator<Player>
     {
         RuleFor(x => x.Nickname)
             .NotEmpty()
-            .WithMessage("Player name can't be empty")
+            .WithMessage("Nickname can't be empty")
             .MaximumLength(Player.PlayerNicknameMaxLength);
     }
 }
