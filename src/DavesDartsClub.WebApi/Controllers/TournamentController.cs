@@ -74,7 +74,7 @@ public partial class TournamentController : ControllerBase
 
         if (tournament == null)
         {
-            return NotFound(); 
+            return NotFound();
         }
 
         var result = new List<TournamentResponse>
@@ -86,7 +86,7 @@ public partial class TournamentController : ControllerBase
         }
     };
 
-        return Ok(result); 
+        return Ok(result);
     }
 
     [HttpDelete("{tournamentId}", Name = nameof(DeleteTournament))]

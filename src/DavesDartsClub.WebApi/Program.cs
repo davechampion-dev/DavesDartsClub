@@ -1,8 +1,4 @@
 using DavesDartsClub.Application;
-using DavesDartsClub.Domain;
-using DavesDartsClub.Domain.Validation;
-using DavesDartsClub.Infrastructure;
-using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +22,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddDavesDartClubDomain();
 builder.Services.AddDavesDartClubApplication();
 builder.Services.AddDavesDartClubInfrastructure();
+builder.Services.AddScoped<IPlayerService, PlayerService>();
+
 
 var app = builder.Build();
 

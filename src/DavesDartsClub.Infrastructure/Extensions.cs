@@ -1,18 +1,16 @@
 ﻿using DavesDartsClub.Infrastructure.EntityFramework;
 using Microsoft.Extensions.Hosting;
 
-using DavesDartsClub.Infrastructure;
-
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static class Extensions
 {
     public static IServiceCollection AddDavesDartClubInfrastructure(this IServiceCollection services)
     {
-        
+
         return services;
     }
-    
+
     /// <summary>
     /// Configures the application to use the <see cref="AppDbContext"/> with a SQL Server database.
     /// </summary>

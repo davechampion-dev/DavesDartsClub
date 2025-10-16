@@ -11,20 +11,12 @@ public class PlayerService : IPlayerService
     {
         _playerValidator = playerValidator;
     }
-
-    public Player GetPlayerById(Guid playerId)
-    {
-        return new Player()
-        {
-            PlayerId = playerId,
-        };
-    }
-
+    
     public Player GetPlayerByName(string name)
     {
         return new Player()
         {
-            PlayerName = "Bob The Frog"
+            MemberName = "Edd the duck"
         };
     }
 }

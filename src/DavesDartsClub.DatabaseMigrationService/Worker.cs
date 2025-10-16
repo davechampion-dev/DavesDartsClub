@@ -2,7 +2,6 @@ namespace DavesDartsClub.DatabaseMigrationService;
 
 using DavesDartsClub.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
-using OpenTelemetry.Trace;
 using System.Diagnostics;
 
 public class Worker(

@@ -1,13 +1,7 @@
 ﻿using Bogus;
-using DavesDartsClub.Application;
 using DavesDartsClub.Domain;
 using DavesDartsClub.Domain.Validation;
-using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DavesDartsClub.UnitTests.Fakers;
 
 namespace DavesDartsClub.UnitTests.Domain.Validation;
 
@@ -23,11 +17,8 @@ public class MemberValidatorUnitTest
     public void Validate_Should_ReturnAValidResponseWithNoErrors_Given_AValidMember()
     {
         //Arrange
-        var fakeMemberGenerator = new Faker<Member>()
-            .RuleFor(x => x.MemberId, (f, x) => f.Random.Guid())
-            .RuleFor(x => x.MemberName, (f, x) => f.Name.FullName());
-
-        var validMember = fakeMemberGenerator.Generate();
+        var memberFaker = new MemberFaker();
+        var validMember = memberFaker.GenerateOne(); 
 
         //Act
         var response = _memberValidator.Validate(validMember);

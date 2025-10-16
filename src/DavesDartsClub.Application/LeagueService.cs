@@ -1,7 +1,6 @@
 ﻿using Ardalis.Result;
 using Ardalis.Result.FluentValidation;
 using DavesDartsClub.Domain;
-using DavesDartsClub.Domain.Validation;
 using FluentValidation;
 
 namespace DavesDartsClub.Application;

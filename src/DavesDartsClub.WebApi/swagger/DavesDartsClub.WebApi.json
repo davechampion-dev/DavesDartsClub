@@ -367,15 +367,15 @@
         }
       }
     },
-    "/Player/{playerId}": {
+    "/Player/{memberId}": {
       "get": {
         "tags": [
           "Player"
         ],
-        "operationId": "GetPlayerById",
+        "operationId": "GetPlayerByMemberId",
         "parameters": [
           {
-            "name": "playerId",
+            "name": "memberId",
             "in": "path",
             "required": true,
             "schema": {
@@ -414,7 +414,7 @@
         "operationId": "DeletePlayer",
         "parameters": [
           {
-            "name": "playerId",
+            "name": "memberId",
             "in": "path",
             "required": true,
             "schema": {
@@ -707,10 +707,6 @@
       "PlayerResponse": {
         "type": "object",
         "properties": {
-          "playerId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "playerName": {
             "type": "string"
           }

@@ -1,12 +1,5 @@
-﻿using DavesDartsClub.Application;
-using DavesDartsClub.Domain;
+﻿using DavesDartsClub.Domain;
 using DavesDartsClub.Domain.Validation;
-using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DavesDartsClub.UnitTests.Domain.Validation;
 
@@ -41,7 +34,7 @@ public class TournamentValidatorUnitTest
     public void Validate_Should_ReturnAValidationError_Given_ATournamentNameExcedingMaxLength()
     {
         //Arrange
-        var exampleTournamentNameExceedingMaxLength = new string('x', Tournament.TournamentNameMaxLength+10);
+        var exampleTournamentNameExceedingMaxLength = new string('x', Tournament.TournamentNameMaxLength + 10);
         var validTournament = new Tournament
         {
             TournamentId = Guid.NewGuid(),

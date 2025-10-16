@@ -1,6 +1,6 @@
 ﻿
-using DavesDartsClub.Domain;
 using Ardalis.Result;
+using DavesDartsClub.Domain;
 
 namespace DavesDartsClub.Application;
 

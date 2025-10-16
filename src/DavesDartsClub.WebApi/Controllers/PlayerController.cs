@@ -1,5 +1,4 @@
 ﻿using DavesDartsClub.Application;
-using DavesDartsClub.Domain;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -21,20 +20,17 @@ public class PlayerController : ControllerBase
     public ActionResult<Guid> CreatePlayer([FromBody] PlayerRequest playerRequest)
     {
         var id = Guid.NewGuid();
-        return CreatedAtRoute(nameof(GetPlayerById), new { PlayerId = id }, id);
+        return CreatedAtRoute(nameof(GetPlayerByMemberId), new { memberId = id }, id);
     }
 
-    [HttpGet("{playerId}", Name = nameof(GetPlayerById))]
+    [HttpGet("{memberId}", Name = nameof(GetPlayerByMemberId))]
     [ProducesResponseType(((int)HttpStatusCode.OK))]
     [ProducesResponseType(((int)HttpStatusCode.NotFound))]
-    public ActionResult<PlayerResponse> GetPlayerById(Guid playerId)
+    public ActionResult<PlayerResponse> GetPlayerByMemberId(Guid memberId)
     {
-#pragma warning disable S1481
-        var player = _playerService.GetPlayerById(playerId);
 #pragma warning restore S1481
         var result = new PlayerResponse()
         {
-            PlayerId = playerId,
             PlayerName = "Moo The Cow"
         };
 
@@ -51,21 +47,20 @@ public class PlayerController : ControllerBase
 
         // todo: Switch to linq expression
         var result = new List<PlayerResponse>
-        {
-            new PlayerResponse()
-            {
-                PlayerId = player.PlayerId,
-                PlayerName = player.PlayerName
-            }
-        };
+{
+    new PlayerResponse()
+    {
+        PlayerName = player.Nickname ?? string.Empty
+    }
+    };
         return Ok(result);
     }
 
-    [HttpDelete("{playerId}", Name = nameof(DeletePlayer))]
+    [HttpDelete("{memberId}", Name = nameof(DeletePlayer))]
     [ProducesResponseType(((int)HttpStatusCode.NoContent))]
     [ProducesResponseType(((int)HttpStatusCode.NotFound))]
 
-    public ActionResult DeletePlayer(Guid playerId)
+    public ActionResult DeletePlayer(Guid memberId)
     {
         var playerExists = true;
 
