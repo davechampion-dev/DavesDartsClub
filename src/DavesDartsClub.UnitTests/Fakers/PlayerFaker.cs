@@ -8,18 +8,18 @@ using DavesDartsClub.Domain;
 
 namespace DavesDartsClub.UnitTests.Fakers
 {
-    public class PlayerFaker : BaseFaker<Player>
+    public class PlayerFaker : BaseFaker<PlayerProfile>
     {
         private readonly MemberFaker _memberFaker = new MemberFaker();
 
-        public override Faker<Player> CreateFaker()
+        public override Faker<PlayerProfile> CreateFaker()
         {
-            return new Faker<Player>()
+            return new Faker<PlayerProfile>()
                 .CustomInstantiator(f =>
                 {
                     var member = _memberFaker.GenerateOne();
 
-                    return new Player
+                    return new PlayerProfile
                     {
                         MemberId = member.MemberId,
                         MemberName = member.MemberName,

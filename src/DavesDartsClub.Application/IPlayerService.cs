@@ -5,6 +5,6 @@ namespace DavesDartsClub.Application;
 public interface IPlayerService
 {
     
-    Player GetPlayerByName(string name);
+    PlayerProfile GetPlayerByName(string name);
 }
 
