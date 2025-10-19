@@ -38,10 +38,10 @@ public class MemberController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet(Name = nameof(GetMemberSearch))]
+    [HttpPost(Name = nameof(MemberSearch))]
     [ProducesResponseType(((int)HttpStatusCode.OK))]
 
-    public ActionResult<IEnumerable<MemberResponse>> GetMemberSearch([FromBody] MemberSearchRequest memberSearchRequest)
+    public ActionResult<IEnumerable<MemberResponse>> MemberSearch([FromBody] MemberSearchRequest memberSearchRequest)
     {
         // todo: Update to return list of members and take search term
         var member = _memberService.GetMemberByName(memberSearchRequest.MemberName);
