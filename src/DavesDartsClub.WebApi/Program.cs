@@ -1,5 +1,9 @@
 using DavesDartsClub.Application;
 using Microsoft.AspNetCore.Mvc;
+using DavesDartsClub.Infrastructure.EntityFramework;
+using DavesDartsClub.Infrastructure.Seeding;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,7 +43,11 @@ if (app.Environment.IsDevelopment())
 
     using (var scope = app.Services.CreateScope())
     {
-        var context = scope.ServiceProvider.GetRequiredService<DavesDartsClub.Infrastructure.EntityFramework.AppDbContext>();
+        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        await context.Database.MigrateAsync();
+
+        var seeder = new DataSeeder(context);
+        await seeder.SeedAllAsync();
         // Todo: Figure out how to do migrations within Aspire 
         //await context.EnsureDatabaseIsSetupAsync(); // https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/applying?tabs=dotnet-core-cli#apply-migrations-at-runtime            
     }
@@ -53,6 +61,3 @@ app.MapControllers();
 app.MapDefaultEndpoints();
 
 await app.RunAsync();
-
-
-

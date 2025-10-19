@@ -1,6 +1,6 @@
 ﻿using Bogus;
 
-namespace DavesDartsClub.UnitTests.Fakers
+namespace DavesDartsClub.Fakers
 {
     public abstract class BaseFaker<T> where T : class
     {

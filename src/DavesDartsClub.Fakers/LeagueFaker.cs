@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using DavesDartsClub.Domain;
 
-namespace DavesDartsClub.UnitTests.Fakers;
+namespace DavesDartsClub.Fakers;
 
 public class LeagueFaker : BaseFaker<League>
 {
@@ -10,13 +10,13 @@ public class LeagueFaker : BaseFaker<League>
         return new Faker<League>()
             .RuleFor(x => x.LeagueId, f => f.Random.Guid())
             .RuleFor(x => x.LeagueName, f => f.PickRandom(new[]
-{
-             "Premier League",
-             "League One",
-             "League Two",
-             "Champions League",
-             "Conference North",
-             "Conference South"
-     }));
+            {
+                "Premier League",
+                "League One",
+                "League Two",
+                "Champions League",
+                "Conference North",
+                "Conference South"
+            }));
     }
 }

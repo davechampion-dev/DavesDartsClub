@@ -1,7 +1,8 @@
 ﻿using Bogus;
 using DavesDartsClub.Domain;
 
-namespace DavesDartsClub.UnitTests.Fakers;
+namespace DavesDartsClub.Fakers;
+
 
 public class MemberFaker : BaseFaker<Member>
 {

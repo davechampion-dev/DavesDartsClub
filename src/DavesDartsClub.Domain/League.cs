@@ -1,4 +1,5 @@
 ﻿namespace DavesDartsClub.Domain
+
 {
     public class League
     {

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using Bogus;
 using DavesDartsClub.Domain;
 
-namespace DavesDartsClub.UnitTests.Fakers
-{
+namespace DavesDartsClub.Fakers;
+
+
     public class PlayerFaker : BaseFaker<PlayerProfile>
     {
         private readonly MemberFaker _memberFaker = new MemberFaker();
@@ -28,4 +29,3 @@ namespace DavesDartsClub.UnitTests.Fakers
                 });
         }
     }
-}

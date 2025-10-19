@@ -20,6 +20,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\DavesDartsClub.Domain\DavesDartsClub.Domain.csproj" />
+		<ProjectReference Include="..\DavesDartsClub.Fakers\DavesDartsClub.Fakers.csproj" />
 	</ItemGroup>
 
 </Project>

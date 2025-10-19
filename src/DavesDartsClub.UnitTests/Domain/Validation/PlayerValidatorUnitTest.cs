@@ -1,7 +1,6 @@
 ﻿using DavesDartsClub.Domain;
 using DavesDartsClub.Domain.Validation;
-using DavesDartsClub.UnitTests.Fakers;
-
+using DavesDartsClub.Fakers;
 namespace DavesDartsClub.UnitTests.Domain.Validation;
 
 public class PlayerValidatorUnitTest
