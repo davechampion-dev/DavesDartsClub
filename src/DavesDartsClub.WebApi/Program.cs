@@ -24,7 +24,6 @@ builder.Services.AddDavesDartClubApplication();
 builder.Services.AddDavesDartClubInfrastructure();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -37,6 +36,12 @@ if (app.Environment.IsDevelopment())
         //ToDo: Add versioning support 
         options.SwaggerEndpoint("/openapi/v1.json", "v1");
     });
+
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<DavesDartsClub.Infrastructure.EntityFramework.AppDbContext>();
+        await context.Database.EnsureCreatedAsync();
+    }
 }
 
 app.UseHttpsRedirection();
@@ -44,6 +49,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapDefaultEndpoints();
 
 await app.RunAsync();
 

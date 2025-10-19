@@ -1,4 +1,5 @@
 ﻿using DavesDartsClub.Infrastructure.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -19,40 +20,32 @@ public static class Extensions
     /// configured in the application's configuration file.</remarks>
     /// <param name="builder">The <see cref="IHostApplicationBuilder"/> used to configure the application's services.</param>
     public static void AddDavesDarstClubAppDbContext(this IHostApplicationBuilder builder)
-        => builder.AddSqlServerDbContext<AppDbContext>("DavesDartsClubDatabase");
-    // todo: constance to hold the connection string name
-
-    /// <summary>
-    /// Configures the application to use the <see cref="AppDbContext"/> with a SQL Server database  and applies data
-    /// seeding during migrations.
-    /// </summary>
-    /// <remarks>
-    /// This is a workaround for how aspire doesnt use seeding with core migration.
-    /// See also - https://juliocasal.com/blog/how-to-seed-data-with-ef-core-9-and-net-aspire.
-    /// This method sets up the <see cref="AppDbContext"/> to use a SQL Server database with the 
-    /// connection string named "DavesDartsClubDatabase". It also ensures that data seeding is  performed during
-    /// migrations, both synchronously and asynchronously, if the database is empty.</remarks>
-    /// <param name="builder">The <see cref="IHostApplicationBuilder"/> used to configure the application's services.</param>
-    public static void AddDavesDarstClubAppDbContextForMigration(this IHostApplicationBuilder builder)
-        => builder.AddSqlServerDbContext<AppDbContext>(
-            "DavesDartsClubDatabase",
-            configureDbContextOptions: options =>
-            options.UseSeeding((context, _) =>
+    {
+        builder.AddSqlServerDbContext<AppDbContext>("DavesDartsClubDatabase", configureDbContextOptions: options =>
+        {
+            if (builder.Environment.IsDevelopment())
             {
-                if (!context.Set<MemberEntity>().Any())
+                options.UseSeeding((context, _) =>
                 {
-                    AppDbContext.SeedData(context);
+                    //var testTicket = context.Set<SupportTicket>().FirstOrDefault(t => t.Title == "Test Ticket 1");
+                    //if (testTicket == null)
+                    //{
+                    //    context.Set<SupportTicket>().Add(new SupportTicket { Title = "Test Ticket 1", Description = "This is a test ticket" });
+                    //    context.SaveChanges();
+                    //}
 
-                    context.SaveChanges();
-                }
-            })
-            .UseAsyncSeeding(async (context, _, cancellationToken) =>
-            {
-                if (!context.Set<MemberEntity>().Any())
+                });
+
+                options.UseAsyncSeeding(async (context, _, cancellationToken) =>
                 {
-                    AppDbContext.SeedData(context);
-
-                    await context.SaveChangesAsync(cancellationToken);
-                }
-            }));
+                    //var testTicket = await context.Set<SupportTicket>().FirstOrDefaultAsync(t => t.Title == "Test Ticket 1", cancellationToken);
+                    //if (testTicket == null)
+                    //{
+                    //    context.Set<SupportTicket>().Add(new SupportTicket { Title = "Test Ticket 1", Description = "This is a test ticket" });
+                    //    await context.SaveChangesAsync(cancellationToken);
+                    //}
+                });
+            }
+        }); 
+    }
 }
