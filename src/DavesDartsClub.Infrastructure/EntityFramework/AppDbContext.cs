@@ -14,6 +14,9 @@ public class AppDbContext : DbContext
 
     public DbSet<TournamentEntity> Tournaments { get; set; }
 
+    public DbSet<PlayerProfileEntity> PlayerProfiles { get; set; }
+
+
     public async Task EnsureDatabaseIsSetupAsync(CancellationToken cancellationToken = default)
     {
         // https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/applying?tabs=dotnet-core-cli#apply-migrations-at-runtime
@@ -57,8 +60,13 @@ public class AppDbContext : DbContext
 
     private void OnPlayerModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<PlayerProfileEntity>().HasKey(x => x.PlayerId);
-        modelBuilder.Entity<PlayerProfileEntity>().HasKey(x => x.MemberId);
-        modelBuilder.Entity<PlayerProfileEntity>().Property(x => x.Nickname).IsRequired().HasMaxLength(Domain.PlayerProfile.PlayerNicknameMaxLength);
+        modelBuilder.Entity<PlayerProfileEntity>()
+            .ToTable("PlayerProfileEntity")  
+            .HasKey(x => x.MemberId);        
+
+        modelBuilder.Entity<PlayerProfileEntity>()
+            .Property(x => x.Nickname)
+            .IsRequired()
+            .HasMaxLength(Domain.PlayerProfile.PlayerNicknameMaxLength);
     }
 }

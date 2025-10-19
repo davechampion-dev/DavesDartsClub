@@ -69,7 +69,7 @@ namespace DavesDartsClub.Infrastructure.EntityFramework.Migrations
 
                     b.HasKey("MemberId");
 
-                    b.ToTable("PlayerProfileEntity");
+                    b.ToTable("PlayerProfiles");
                 });
 
             modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.TournamentEntity", b =>

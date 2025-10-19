@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DavesDartsClub.Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251019172444_002_additionaltables")]
-    partial class _002_additionaltables
+    [Migration("20251019231759_AddLatestEntities")]
+    partial class AddLatestEntities
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,7 +72,7 @@ namespace DavesDartsClub.Infrastructure.EntityFramework.Migrations
 
                     b.HasKey("MemberId");
 
-                    b.ToTable("PlayerProfileEntity");
+                    b.ToTable("PlayerProfiles");
                 });
 
             modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.TournamentEntity", b =>
