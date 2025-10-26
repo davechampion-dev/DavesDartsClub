@@ -5,9 +5,10 @@ var sql = builder.AddSqlServer("DavesDartsClubSql")
                  .WithDataVolume()
                  .WithEndpoint(port: 56045, targetPort: 1433, name: "ssms", isProxied: false)
                  .WithLifetime(ContainerLifetime.Persistent);
-                  
+
 
 var db = sql.AddDatabase("DavesDartsClubDatabase");
+//.WithParentRelationship();
 
 var api = builder.AddProject<Projects.DavesDartsClub_WebApi>("WebApi")
     .WithReference(db)

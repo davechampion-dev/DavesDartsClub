@@ -1,6 +1,7 @@
 ﻿using DavesDartsClub.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using Microsoft.VisualBasic;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -20,32 +21,5 @@ public static class Extensions
     /// configured in the application's configuration file.</remarks>
     /// <param name="builder">The <see cref="IHostApplicationBuilder"/> used to configure the application's services.</param>
     public static void AddDavesDarstClubAppDbContext(this IHostApplicationBuilder builder)
-    {
-        builder.AddSqlServerDbContext<AppDbContext>("DavesDartsClubDatabase", configureDbContextOptions: options =>
-        {
-            if (builder.Environment.IsDevelopment())
-            {
-                options.UseSeeding((context, _) =>
-                {
-                    //var testTicket = context.Set<SupportTicket>().FirstOrDefault(t => t.Title == "Test Ticket 1");
-                    //if (testTicket == null)
-                    //{
-                    //    context.Set<SupportTicket>().Add(new SupportTicket { Title = "Test Ticket 1", Description = "This is a test ticket" });
-                    //    context.SaveChanges();
-                    //}
-
-                });
-
-                options.UseAsyncSeeding(async (context, _, cancellationToken) =>
-                {
-                    //var testTicket = await context.Set<SupportTicket>().FirstOrDefaultAsync(t => t.Title == "Test Ticket 1", cancellationToken);
-                    //if (testTicket == null)
-                    //{
-                    //    context.Set<SupportTicket>().Add(new SupportTicket { Title = "Test Ticket 1", Description = "This is a test ticket" });
-                    //    await context.SaveChangesAsync(cancellationToken);
-                    //}
-                });
-            }
-        }); 
-    }
+        => builder.AddSqlServerDbContext<AppDbContext>("DavesDartsClubDatabase");
 }

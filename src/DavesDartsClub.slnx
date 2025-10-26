@@ -19,6 +19,10 @@
   </Folder>
   <Project Path="DavesDartsClub.Application/DavesDartsClub.Application.csproj" />
   <Project Path="DavesDartsClub.Aspire.AppHost/DavesDartsClub.Aspire.AppHost.csproj" />
+  <Project Path="DavesDartsClub.Aspire.DatabaseMigrationService/DavesDartsClub.Aspire.DatabaseMigrationService.csproj" Id="49680a63-f76e-4cea-8591-9b4cbc2600ee">
+    <BuildDependency Project="DavesDartsClub.Aspire.ServiceDefaults/DavesDartsClub.Aspire.ServiceDefaults.csproj" />
+    <BuildDependency Project="DavesDartsClub.Infrastructure/DavesDartsClub.Infrastructure.csproj" />
+  </Project>
   <Project Path="DavesDartsClub.Aspire.ServiceDefaults/DavesDartsClub.Aspire.ServiceDefaults.csproj" />
   <Project Path="DavesDartsClub.Domain/DavesDartsClub.Domain.csproj" />
   <Project Path="DavesDartsClub.Fakers/DavesDartsClub.Fakers.csproj" Id="f65822b7-cbed-4b91-92e0-2d29db4cfae4" />
