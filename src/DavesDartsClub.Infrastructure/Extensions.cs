@@ -1,7 +1,6 @@
-﻿using DavesDartsClub.Infrastructure.EntityFramework;
-using Microsoft.EntityFrameworkCore;
+﻿using DavesDartsClub.Domain;
+using DavesDartsClub.Infrastructure.EntityFramework;
 using Microsoft.Extensions.Hosting;
-using Microsoft.VisualBasic;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -21,5 +20,5 @@ public static class Extensions
     /// configured in the application's configuration file.</remarks>
     /// <param name="builder">The <see cref="IHostApplicationBuilder"/> used to configure the application's services.</param>
     public static void AddDavesDarstClubAppDbContext(this IHostApplicationBuilder builder)
-        => builder.AddSqlServerDbContext<AppDbContext>("DavesDartsClubDatabase");
+        => builder.AddSqlServerDbContext<AppDbContext>(Constants.DatabaseName);
 }

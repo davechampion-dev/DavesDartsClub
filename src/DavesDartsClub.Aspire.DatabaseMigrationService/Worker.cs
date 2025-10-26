@@ -1,9 +1,6 @@
-﻿using DavesDartsClub.Infrastructure.EntityFramework;
+﻿using DavesDartsClub.Fakers;
+using DavesDartsClub.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Options;
-using OpenTelemetry.Trace;
 using System.Diagnostics;
 
 
@@ -52,33 +49,54 @@ public class Worker(
         {
             // Seed the database
             await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
+            
+            if (!await dbContext.Leagues.AnyAsync(cancellationToken))
+            {
+                var leagueFaker = new LeagueFaker();
+                var leagues = leagueFaker.CreateFaker().Generate(5); // List<League>
 
-            //if (!await dbContext.Currencies.AnyAsync(cancellationToken))
-            //    await dbContext.Currencies.AddRangeAsync(CoreSchema.GetCurrencySeedData(), cancellationToken);
+                var leagueEntities = leagues.Select(l => new LeagueEntity
+                {
+                    LeagueId = Guid.NewGuid(), // EF primary key
+                    LeagueName = l.LeagueName
+                }).ToList();
 
-            //options.UseSeeding((context, _) =>
+                dbContext.Leagues.AddRange(leagueEntities);
+            }
+
+            if (!await dbContext.Set<MemberEntity>().AnyAsync(cancellationToken)) 
+            {
+                var memberFaker = new MemberFaker();
+                var members = memberFaker.CreateFaker().Generate(5); // List<Member> domain objects
+
+                var memberEntities = members.Select(m => new MemberEntity
+                {
+                    MemberId = Guid.NewGuid(),
+                    MemberName = m.MemberName
+                    // Map other properties here
+                }).ToList();
+
+                dbContext.Members.AddRange(memberEntities);
+            }
+
+            //if (!await dbContext.PlayerProfiles.AnyAsync(cancellationToken)) // ✅ plural matches AppDbContext
             //{
-            //    var testTicket = context.Set<SupportTicket>().FirstOrDefault(t => t.Title == "Test Ticket 1");
-            //    if (testTicket == null)
-            //    {
-            //        context.Set<SupportTicket>().Add(new SupportTicket { Title = "Test Ticket 1", Description = "This is a test ticket" });
-            //        context.SaveChanges();
-            //    }
+            //    var playerFaker = new PlayerFaker();
+            //    var players = playerFaker.GenerateMany(100); // List<PlayerProfile> domain objects
 
-            //});
-
-            //options.UseAsyncSeeding(async (context, _, cancellationToken) =>
-            //{
-            //    var testTicket = await context.Set<SupportTicket>().FirstOrDefaultAsync(t => t.Title == "Test Ticket 1", cancellationToken);
-            //    if (testTicket == null)
+            //    var playerEntities = players.Select(p => new PlayerProfileEntity
             //    {
-            //        context.Set<SupportTicket>().Add(new SupportTicket { Title = "Test Ticket 1", Description = "This is a test ticket" });
-            //        await context.SaveChangesAsync(cancellationToken);
-            //    }
-            //});
+            //        PlayerId = Guid.NewGuid(),      // EF primary key
+            //        MemberId = p.MemberId,          // map from domain object
+            //        Nickname = p.Nickname
+            //    }).ToList();
+
+            //    dbContext.PlayerProfiles.AddRange(playerEntities);
+            //}
 
             await dbContext.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
         });
     }
 }
+

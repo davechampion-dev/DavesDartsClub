@@ -1,5 +1,4 @@
-﻿using DavesDartsClub.Domain;
-using DavesDartsClub.Domain.Validation;
+﻿using DavesDartsClub.Domain.Validation;
 using DavesDartsClub.Fakers;
 namespace DavesDartsClub.UnitTests.Domain.Validation;
 

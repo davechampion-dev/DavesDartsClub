@@ -1,6 +1,4 @@
-﻿using Bogus;
-using DavesDartsClub.Domain;
-using DavesDartsClub.Domain.Validation;
+﻿using DavesDartsClub.Domain.Validation;
 using DavesDartsClub.Fakers;
 namespace DavesDartsClub.UnitTests.Domain.Validation;
 
@@ -17,7 +15,7 @@ public class MemberValidatorUnitTest
     {
         //Arrange
         var memberFaker = new MemberFaker();
-        var validMember = memberFaker.GenerateOne(); 
+        var validMember = memberFaker.GenerateOne();
 
         //Act
         var response = _memberValidator.Validate(validMember);

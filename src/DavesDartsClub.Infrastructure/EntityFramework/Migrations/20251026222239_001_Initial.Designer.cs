@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DavesDartsClub.Infrastructure.EntityFramework.Migrations
+namespace DavesDartsClub.EntityFramework.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251019231759_AddLatestEntities")]
-    partial class AddLatestEntities
+    [Migration("20251026222239_001_Initial")]
+    partial class _001_Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,7 +72,7 @@ namespace DavesDartsClub.Infrastructure.EntityFramework.Migrations
 
                     b.HasKey("MemberId");
 
-                    b.ToTable("PlayerProfiles");
+                    b.ToTable("PlayerProfileEntity", (string)null);
                 });
 
             modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.TournamentEntity", b =>

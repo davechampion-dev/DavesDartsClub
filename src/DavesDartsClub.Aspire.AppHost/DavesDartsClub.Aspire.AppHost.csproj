@@ -29,6 +29,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\DavesDartsClub.Aspire.DatabaseMigrationService\DavesDartsClub.Aspire.DatabaseMigrationService.csproj" />
 		<ProjectReference Include="..\DavesDartsClub.WebApi\DavesDartsClub.WebApi.csproj" />
 		<ProjectReference Include="..\DavesDartsClub.Website\DavesDartsClub.Website.csproj" />
 		<ProjectReference Include="..\DavesDartsClub.Infrastructure\DavesDartsClub.Infrastructure.csproj">

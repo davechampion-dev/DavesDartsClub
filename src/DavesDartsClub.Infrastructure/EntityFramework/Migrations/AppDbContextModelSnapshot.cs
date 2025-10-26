@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DavesDartsClub.Infrastructure.EntityFramework.Migrations
+namespace DavesDartsClub.EntityFramework.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -69,7 +69,7 @@ namespace DavesDartsClub.Infrastructure.EntityFramework.Migrations
 
                     b.HasKey("MemberId");
 
-                    b.ToTable("PlayerProfiles");
+                    b.ToTable("PlayerProfileEntity", (string)null);
                 });
 
             modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.TournamentEntity", b =>

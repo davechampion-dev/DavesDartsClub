@@ -11,7 +11,7 @@ public class PlayerService : IPlayerService
     {
         _playerValidator = playerValidator;
     }
-    
+
     public PlayerProfile GetPlayerByName(string name)
     {
         return new PlayerProfile()
