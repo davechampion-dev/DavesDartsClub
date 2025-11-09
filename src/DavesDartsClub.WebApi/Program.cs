@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
-builder.AddDavesDarstClubAppDbContext();
+builder.AddDavesDartsClubAppDbContext();
 
 // Add services to the container.
 builder.Services.AddProblemDetails();

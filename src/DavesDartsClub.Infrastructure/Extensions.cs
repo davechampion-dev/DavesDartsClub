@@ -19,6 +19,6 @@ public static class Extensions
     /// using a connection string named "DavesDartsClubDatabase". Ensure that the connection string  is properly
     /// configured in the application's configuration file.</remarks>
     /// <param name="builder">The <see cref="IHostApplicationBuilder"/> used to configure the application's services.</param>
-    public static void AddDavesDarstClubAppDbContext(this IHostApplicationBuilder builder)
+    public static void AddDavesDartsClubAppDbContext(this IHostApplicationBuilder builder)
         => builder.AddSqlServerDbContext<AppDbContext>(Constants.DatabaseName);
 }
