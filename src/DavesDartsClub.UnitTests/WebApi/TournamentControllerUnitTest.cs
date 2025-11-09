@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DavesDartsClub.UnitTests.WebApi;
 
-public class TornamentControllerUnitTest
+public class TournamentControllerUnitTest
 {
     [Fact]
     public void CreateTournament_Should_ReturnNewId_Given_AValid_TournamentRequest()
