@@ -43,7 +43,19 @@ public class AppDbContext : DbContext
             .HasForeignKey<PlayerProfileEntity>(x => x.MemberId)
             .IsRequired();
 
+        modelBuilder.Entity<MemberEntity>()
+        .Property(x => x.FirstName)
+        .IsRequired()
+        .HasMaxLength(50);
+
+        modelBuilder.Entity<MemberEntity>()
+            .Property(x => x.LastName)
+            .IsRequired()
+            .HasMaxLength(50);
+
         modelBuilder.Entity<MemberEntity>().Property(x => x.MemberName).IsRequired().HasMaxLength(Domain.Member.MemberNameMaxLength);
+        modelBuilder.Entity<MemberEntity>()
+        .HasIndex(x => new { x.LastName, x.FirstName });
     }
 
     private void OnLeagueModelCreating(ModelBuilder modelBuilder)
