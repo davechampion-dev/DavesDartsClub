@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<IsPackable>false</IsPackable>
 		<IsTestProject>true</IsTestProject>
+		<RootNamespace>DavesDartsClub.IntegrationTests</RootNamespace>
 		<DocumentationFile>DavesDartsClub.IntegrationTests.docs.xml</DocumentationFile>
 	</PropertyGroup>
 

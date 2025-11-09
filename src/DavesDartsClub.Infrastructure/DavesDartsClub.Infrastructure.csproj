@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+		<RootNamespace>DavesDartsClub.Infrastructure</RootNamespace>
 		<DocumentationFile>DavesDartsClub.Infrastructure.docs.xml</DocumentationFile>
 	</PropertyGroup>
 

@@ -1,5 +1,6 @@
 ﻿using DavesDartsClub.Application;
 using DavesDartsClub.Domain;
+using DavesDartsClub.SharedContracts.Tournament;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 

@@ -36,7 +36,7 @@ if (app.Environment.IsDevelopment())
 
     app.UseSwaggerUI(options =>
     {
-        //ToDo: Add versioning support 
+        //Todo: Add versioning support 
         options.SwaggerEndpoint("/openapi/v1.json", "v1");
     });
 }

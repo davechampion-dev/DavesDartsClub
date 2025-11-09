@@ -1,4 +1,5 @@
 ﻿@page "/counter"
+@inject DavesDartsClub.Website.ApiClient.ITournamentApiClient ApiClient;
 
 <PageTitle>Counter</PageTitle>
 
@@ -6,13 +7,27 @@
 
 <MudText Typo="Typo.body1" Class="mb-4">Current count: @currentCount</MudText>
 
-<MudButton Color="Color.Primary" Variant="Variant.Filled" @onclick="IncrementCount">Click me</MudButton>
+
+<MudButton Color="Color.Primary" Variant="Variant.Filled" @onclick="IncrementCount">Click me</MudButton><br />
+<br />
+<MudButton Color="Color.Primary" Variant="Variant.Filled" @onclick="GetTournament">Get Tournament</MudButton><br />
+<br />
+<MudText Typo="Typo.body1" Class="mb-4">Response Code: @httpResponseCode</MudText>
 
 @code {
     private int currentCount = 0;
+    private int httpResponseCode = 0;
 
     private void IncrementCount()
     {
         currentCount++;
     }
+
+    private async Task GetTournament()
+    {      
+        var response = await ApiClient.GetTournamentById(Guid.Empty);
+        httpResponseCode = (int)response.StatusCode;
+    }
+
+
 }

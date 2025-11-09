@@ -12,6 +12,8 @@ builder.Services.AddMudServices();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddDavesDartsClubApiClient();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

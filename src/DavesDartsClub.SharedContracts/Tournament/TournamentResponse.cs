@@ -1,4 +1,4 @@
-﻿namespace DavesDartsClub.WebApi.Controllers;
+﻿namespace DavesDartsClub.SharedContracts.Tournament;
 
 public class TournamentResponse
 {

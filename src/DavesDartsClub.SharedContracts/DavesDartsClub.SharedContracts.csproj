@@ -1,18 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<RootNamespace>DavesDartsClub.Domain</RootNamespace>
-		<DocumentationFile>DavesDartsClub.Domain.docs.xml</DocumentationFile>
+		<RootNamespace>DavesDartsClub.SharedContracts</RootNamespace>
+		<DocumentationFile>DavesDartsClub.SharedContracts.docs.xml</DocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Remove="DavesDartsClub.Domain.docs.xml" />
+		<None Remove="DavesDartsClub.SharedContracts.docs.xml" />
 		<None Include="..\.editorconfig" Link=".editorconfig" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="FluentValidation" />
-		<PackageReference Include="Microsoft.AspNetCore.Cors" />
 		<PackageReference Include="SonarAnalyzer.CSharp">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

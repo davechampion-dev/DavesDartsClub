@@ -1,5 +1,6 @@
 ﻿using DavesDartsClub.Application;
 using DavesDartsClub.Domain;
+using DavesDartsClub.SharedContracts.Tournament;
 using DavesDartsClub.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,7 @@ public class TournamentControllerUnitTest
         var mockTournamentService = new Mock<ITournamentService>();
         mockTournamentService.Setup(x => x.CreateTournament(It.IsAny<Tournament>()))
            .Returns(new Tournament { TournamentId = newId });
-        var tournamentController = new TournamentController(mockTournamentService.Object);
+        var tournamentController = new DavesDartsClub.WebApi.Controllers.TournamentController(mockTournamentService.Object);
         var tournamentRequest = new TournamentRequest();
 
         //Act

@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
 
 	<PropertyGroup>
+		<RootNamespace>DavesDartsClub.Aspire.DatabaseMigrationService</RootNamespace>
 		<DocumentationFile>DavesDartsClub.Aspire.DatabaseMigrationService.docs.xml</DocumentationFile>
 	</PropertyGroup>
 

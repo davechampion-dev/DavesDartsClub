@@ -16,6 +16,9 @@ public class TournamentService : ITournamentService
 
     public Tournament? GetTournamentById(Guid tournamentId)
     {
+        if (tournamentId == Guid.Empty)
+            return null;
+
         return new Tournament()
         {
             TournamentId = tournamentId,

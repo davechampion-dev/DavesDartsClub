@@ -28,6 +28,7 @@
   <Project Path="DavesDartsClub.Fakers/DavesDartsClub.Fakers.csproj" Id="f65822b7-cbed-4b91-92e0-2d29db4cfae4" />
   <Project Path="DavesDartsClub.Infrastructure/DavesDartsClub.Infrastructure.csproj" />
   <Project Path="DavesDartsClub.IntegrationTests/DavesDartsClub.IntegrationTests.csproj" />
+  <Project Path="DavesDartsClub.SharedContracts/DavesDartsClub.SharedContracts.csproj" Id="68e3811b-42cf-475a-a729-2400bc62bb61" />
   <Project Path="DavesDartsClub.UnitTests/DavesDartsClub.UnitTests.csproj" />
   <Project Path="DavesDartsClub.WebApi/DavesDartsClub.WebApi.csproj" />
   <Project Path="DavesDartsClub.Website/DavesDartsClub.Website.csproj" />
