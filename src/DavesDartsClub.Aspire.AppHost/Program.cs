@@ -1,5 +1,4 @@
 using DavesDartsClub.Domain;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 var builder = DistributedApplication.CreateBuilder(args);
 

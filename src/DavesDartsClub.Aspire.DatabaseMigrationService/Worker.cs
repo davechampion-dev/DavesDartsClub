@@ -49,7 +49,7 @@ public class Worker(
         {
             // Seed the database
             await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
-            
+
             if (!await dbContext.Leagues.AnyAsync(cancellationToken))
             {
                 var leagueFaker = new LeagueFaker();
@@ -64,7 +64,7 @@ public class Worker(
                 dbContext.Leagues.AddRange(leagueEntities);
             }
 
-            if (!await dbContext.Set<MemberEntity>().AnyAsync(cancellationToken)) 
+            if (!await dbContext.Set<MemberEntity>().AnyAsync(cancellationToken))
             {
                 var memberFaker = new MemberFaker();
                 var members = memberFaker.CreateFaker().Generate(5); // List<Member> domain objects

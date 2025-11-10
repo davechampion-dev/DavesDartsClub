@@ -1,7 +1,5 @@
 using DavesDartsClub.Application;
-using DavesDartsClub.Infrastructure.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,7 +34,7 @@ if (app.Environment.IsDevelopment())
 
     app.UseSwaggerUI(options =>
     {
-        //Todo: Add versioning support 
+        //ToDo: Add versioning support 
         options.SwaggerEndpoint("/openapi/v1.json", "v1");
     });
 }
