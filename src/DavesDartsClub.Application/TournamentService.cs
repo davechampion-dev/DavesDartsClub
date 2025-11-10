@@ -28,11 +28,16 @@ public class TournamentService : ITournamentService
 
     public Tournament? GetTournamentByName(string tournamentName)
     {
-        return new Tournament()
-        {
-            TournamentId = Guid.NewGuid(),
-            TournamentName = tournamentName
-        };
+
+        // TODO: implement real lookup when persistence is in place
+        return null;
+
+        //return new Tournament()
+        //{
+
+        //    TournamentId = Guid.NewGuid(),
+        //    TournamentName = tournamentName
+        //};
     }
 
     public Result<Tournament> CreateTournament(Tournament tournament)

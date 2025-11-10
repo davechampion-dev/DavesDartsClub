@@ -1,0 +1,228 @@
+﻿@page "/tournament"
+@using System.Text.Json
+@using DavesDartsClub.SharedContracts.Tournament
+@inject DavesDartsClub.Website.ApiClient.ITournamentApiClient ApiClient;
+
+<PageTitle>Tournament</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="mt-6">
+
+    <!-- Page header / main bar -->
+    <MudStack Spacing="1" Class="mb-3">
+        <MudText Typo="Typo.h4">
+            <MudIcon Icon="@Icons.Material.Filled.Flag" Class="mr-2" />
+            Tournament Lookup
+        </MudText>
+
+        <MudText Typo="Typo.body2" Class="mud-text-secondary">
+            Fetch a tournament by ID or search by name and see the API response.
+        </MudText>
+    </MudStack>
+
+    <!-- Card: Get single tournament (by id – currently Guid.Empty) -->
+    <MudCard Elevation="6" Class="mb-4">
+        <MudCardContent>
+            <MudStack Spacing="2">
+                <MudText Typo="Typo.subtitle2">
+                    Get tournament by ID
+                </MudText>
+
+                <MudText Typo="Typo.body2" Class="mud-text-secondary">
+                    Currently using
+                    <MudChip T="string" Color="Color.Info" Variant="Variant.Outlined">
+                        Guid.Empty
+                    </MudChip>
+                    (placeholder). Later you can replace this with a real ID or input field.
+                </MudText>
+
+                <MudButton Color="Color.Primary"
+                           Variant="Variant.Filled"
+                           StartIcon="@Icons.Material.Filled.Search"
+                           OnClick="GetTournament"
+                           Disabled="@isLoading">
+                    @(isLoading ? "Loading..." : "Get Tournament")
+                </MudButton>
+
+                @if (isLoading)
+                {
+                    <MudProgressCircular Indeterminate="true" Class="mt-2" />
+                }
+
+                @if (!string.IsNullOrWhiteSpace(errorMessage))
+                {
+                    <MudAlert Severity="Severity.Error" Class="mt-3">
+                        @errorMessage
+                    </MudAlert>
+                }
+
+                @if (httpResponseCode.HasValue)
+                {
+                    <MudDivider Class="my-3" />
+
+                    <MudText Typo="Typo.subtitle2">API Response</MudText>
+
+                    <MudChip T="string"
+                             Color="@GetStatusColor()"
+                             Variant="Variant.Filled">
+                        Status Code: @httpResponseCode
+                    </MudChip>
+                }
+            </MudStack>
+        </MudCardContent>
+
+        <MudCardActions Class="justify-end px-4 pb-3">
+            <MudText Typo="Typo.caption" Color="Color.Secondary">
+                Connected to: Tournament API
+            </MudText>
+        </MudCardActions>
+    </MudCard>
+
+    <!-- Card: Search tournaments by name -->
+    <MudCard Elevation="6">
+        <MudCardContent>
+            <MudStack Spacing="2">
+                <MudText Typo="Typo.subtitle2">
+                    Search tournaments by name
+                </MudText>
+
+                <MudTextField @bind-Value="tournamentName"
+                              Label="Tournament name"
+                              Variant="Variant.Outlined"
+                              Adornment="Adornment.Start"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              Immediate="true" />
+
+                <MudButton Color="Color.Primary"
+                           Variant="Variant.Filled"
+                           OnClick="SearchTournaments"
+                           Disabled="@IsSearchDisabled">
+                    @(isSearching ? "Searching..." : "Search")
+                </MudButton>
+
+                @if (isSearching)
+                {
+                    <MudProgressCircular Indeterminate="true" Class="mt-2" />
+                }
+
+                @if (!string.IsNullOrWhiteSpace(searchError))
+                {
+                    <MudAlert Severity="Severity.Error" Class="mt-3">
+                        @searchError
+                    </MudAlert>
+                }
+
+                @if (searchResults is not null)
+                {
+                    <MudDivider Class="my-3" />
+
+                    <MudText Typo="Typo.subtitle2">
+                        Results (@searchResults.Count())
+                    </MudText>
+
+                    @if (!searchResults.Any())
+                    {
+                        <MudText Typo="Typo.body2" Class="mud-text-secondary">
+                            No tournaments found.
+                        </MudText>
+                    }
+                    else
+                    {
+                        <MudTable Items="searchResults" Dense="true">
+                            <HeaderContent>
+                                <MudTh>Name</MudTh>
+                                <MudTh>Id</MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd>@context.TournamentName</MudTd>
+                                <MudTd>@context.TournamentId</MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    }
+                }
+
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+</MudContainer>
+
+@code {
+    // Single-tournament lookup
+    private int? httpResponseCode;
+    private bool isLoading;
+    private string? errorMessage;
+
+    // Search
+    private string tournamentName = string.Empty;
+    private bool isSearching;
+    private string? searchError;
+    private IEnumerable<TournamentResponse>? searchResults;
+
+    private async Task GetTournament()
+    {
+        isLoading = true;
+        errorMessage = null;
+        httpResponseCode = null;
+
+        try
+        {
+            var response = await ApiClient.GetTournamentById(Guid.Empty);
+            httpResponseCode = (int)response.StatusCode;
+        }
+        catch (Exception)
+        {
+            errorMessage = "Something went wrong while calling the tournament API.";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task SearchTournaments()
+    {
+        isSearching = true;
+        searchError = null;
+        searchResults = null;
+
+        try
+        {
+            var response = await ApiClient.GetTournamentSearch(tournamentName);
+
+            if (response.IsSuccessStatusCode && response.Content is not null)
+            {
+                searchResults = response.Content;
+            }
+            else
+            {
+                searchError = $"Search failed with status code {(int)response.StatusCode}.";
+            }
+        }
+        catch (Exception)
+        {
+            searchError = "Something went wrong while searching for tournaments.";
+        }
+        finally
+        {
+            isSearching = false;
+        }
+    }
+
+    private Color GetStatusColor()
+    {
+        if (!httpResponseCode.HasValue)
+            return Color.Default;
+
+        var code = httpResponseCode.Value;
+
+        if (code >= 200 && code < 300)
+            return Color.Success;   // green for OK
+        if (code >= 300 && code < 400)
+            return Color.Warning;   // amber for redirects
+        if (code >= 400)
+            return Color.Error;     // red for errors
+
+        return Color.Default;
+    }
+    private bool IsSearchDisabled => isSearching || string.IsNullOrWhiteSpace(tournamentName);
+
+}
