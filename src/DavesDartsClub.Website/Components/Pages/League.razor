@@ -1,0 +1,228 @@
+﻿@page "/league"
+@using System.Text.Json
+@using DavesDartsClub.SharedContracts.League
+@inject DavesDartsClub.Website.ApiClient.ILeagueApiClient ApiClient;
+
+<PageTitle>League</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="mt-6">
+
+    <!-- Page header / main bar -->
+    <MudStack Spacing="1" Class="mb-3">
+        <MudText Typo="Typo.h4">
+            <MudIcon Icon="@Icons.Material.Filled.Group" Class="mr-2" />
+            League Lookup
+        </MudText>
+
+        <MudText Typo="Typo.body2" Class="mud-text-secondary">
+            Fetch a league by ID or search by name and see the API response.
+        </MudText>
+    </MudStack>
+
+    <!-- Card: Get single league (by id – currently Guid.Empty) -->
+    <MudCard Elevation="6" Class="mb-4">
+        <MudCardContent>
+            <MudStack Spacing="2">
+                <MudText Typo="Typo.subtitle2">
+                    Get league by ID
+                </MudText>
+
+                <MudText Typo="Typo.body2" Class="mud-text-secondary">
+                    Currently using
+                    <MudChip T="string" Color="Color.Info" Variant="Variant.Outlined">
+                        Guid.Empty
+                    </MudChip>
+                    (placeholder). Later you can replace this with a real ID or input field.
+                </MudText>
+
+                <MudButton Color="Color.Primary"
+                           Variant="Variant.Filled"
+                           StartIcon="@Icons.Material.Filled.Search"
+                           OnClick="GetLeague"
+                           Disabled="@isLoading">
+                    @(isLoading ? "Loading..." : "Get League")
+                </MudButton>
+
+                @if (isLoading)
+                {
+                    <MudProgressCircular Indeterminate="true" Class="mt-2" />
+                }
+
+                @if (!string.IsNullOrWhiteSpace(errorMessage))
+                {
+                    <MudAlert Severity="Severity.Error" Class="mt-3">
+                        @errorMessage
+                    </MudAlert>
+                }
+
+                @if (httpResponseCode.HasValue)
+                {
+                    <MudDivider Class="my-3" />
+
+                    <MudText Typo="Typo.subtitle2">API Response</MudText>
+
+                    <MudChip T="string"
+                             Color="@GetStatusColor()"
+                             Variant="Variant.Filled">
+                        Status Code: @httpResponseCode
+                    </MudChip>
+                }
+            </MudStack>
+        </MudCardContent>
+
+        <MudCardActions Class="justify-end px-4 pb-3">
+            <MudText Typo="Typo.caption" Color="Color.Secondary">
+                Connected to: League API
+            </MudText>
+        </MudCardActions>
+    </MudCard>
+
+    <!-- Card: Search leagues by name -->
+    <MudCard Elevation="6">
+        <MudCardContent>
+            <MudStack Spacing="2">
+                <MudText Typo="Typo.subtitle2">
+                    Search leagues by name
+                </MudText>
+
+                <MudTextField @bind-Value="leagueName"
+                              Label="League name"
+                              Variant="Variant.Outlined"
+                              Adornment="Adornment.Start"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              Immediate="true" />
+
+                <MudButton Color="Color.Primary"
+                           Variant="Variant.Filled"
+                           OnClick="SearchLeagues"
+                           Disabled="@IsSearchDisabled">
+                    @(isSearching ? "Searching..." : "Search")
+                </MudButton>
+
+                @if (isSearching)
+                {
+                    <MudProgressCircular Indeterminate="true" Class="mt-2" />
+                }
+
+                @if (!string.IsNullOrWhiteSpace(searchError))
+                {
+                    <MudAlert Severity="Severity.Error" Class="mt-3">
+                        @searchError
+                    </MudAlert>
+                }
+
+                @if (searchResults is not null)
+                {
+                    <MudDivider Class="my-3" />
+
+                    <MudText Typo="Typo.subtitle2">
+                        Results (@searchResults.Count())
+                    </MudText>
+
+                    @if (!searchResults.Any())
+                    {
+                        <MudText Typo="Typo.body2" Class="mud-text-secondary">
+                            No leagues found.
+                        </MudText>
+                    }
+                    else
+                    {
+                        <MudTable Items="searchResults" Dense="true">
+                            <HeaderContent>
+                                <MudTh>Name</MudTh>
+                                <MudTh>Id</MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd>@context.LeagueName</MudTd>
+                                <MudTd>@context.LeagueId</MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    }
+                }
+
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+</MudContainer>
+
+@code {
+    // Single-league lookup
+    private int? httpResponseCode;
+    private bool isLoading;
+    private string? errorMessage;
+
+    // Search
+    private string leagueName = string.Empty;
+    private bool isSearching;
+    private string? searchError;
+    private IEnumerable<LeagueResponse>? searchResults;
+
+    private async Task GetLeague()
+    {
+        isLoading = true;
+        errorMessage = null;
+        httpResponseCode = null;
+
+        try
+        {
+            var response = await ApiClient.GetLeagueById(Guid.Empty);
+            httpResponseCode = (int)response.StatusCode;
+        }
+        catch (Exception)
+        {
+            errorMessage = "Something went wrong while calling the league API.";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task SearchLeagues()
+    {
+        isSearching = true;
+        searchError = null;
+        searchResults = null;
+
+        try
+        {
+            var response = await ApiClient.GetLeagueSearch(leagueName);
+
+            if (response.IsSuccessStatusCode && response.Content is not null)
+            {
+                searchResults = response.Content;
+            }
+            else
+            {
+                searchError = $"Search failed with status code {(int)response.StatusCode}.";
+            }
+        }
+        catch (Exception)
+        {
+            searchError = "Something went wrong while searching for leagues.";
+        }
+        finally
+        {
+            isSearching = false;
+        }
+    }
+
+    private Color GetStatusColor()
+    {
+        if (!httpResponseCode.HasValue)
+            return Color.Default;
+
+        var code = httpResponseCode.Value;
+
+        if (code >= 200 && code < 300)
+            return Color.Success;   // green for OK
+        if (code >= 300 && code < 400)
+            return Color.Warning;   // amber for redirects
+        if (code >= 400)
+            return Color.Error;     // red for errors
+
+        return Color.Default;
+    }
+
+    private bool IsSearchDisabled => isSearching || string.IsNullOrWhiteSpace(leagueName);
+}

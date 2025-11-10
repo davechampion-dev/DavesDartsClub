@@ -1,0 +1,242 @@
+﻿@page "/player"
+@using System.Text.Json
+@using DavesDartsClub.SharedContracts.Player
+@inject DavesDartsClub.Website.ApiClient.IPlayerApiClient ApiClient;
+
+<PageTitle>Player</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="mt-6">
+
+    <!-- Page header / main bar -->
+    <MudStack Spacing="1" Class="mb-3">
+        <MudText Typo="Typo.h4">
+            <MudIcon Icon="@Icons.Material.Filled.Person" Class="mr-2" />
+            Player Lookup
+        </MudText>
+
+        <MudText Typo="Typo.body2" Class="mud-text-secondary">
+            Fetch a player by member ID or search by name and see the API response.
+        </MudText>
+    </MudStack>
+
+    <!-- Card: Get single player (by memberId – currently Guid.Empty) -->
+    <MudCard Elevation="6" Class="mb-4">
+        <MudCardContent>
+            <MudStack Spacing="2">
+                <MudText Typo="Typo.subtitle2">
+                    Get player by member ID
+                </MudText>
+
+                <MudText Typo="Typo.body2" Class="mud-text-secondary">
+                    Currently using
+                    <MudChip T="string" Color="Color.Info" Variant="Variant.Outlined">
+                        Guid.Empty
+                    </MudChip>
+                    (placeholder). Later you can replace this with a real member ID or an input field.
+                </MudText>
+
+                <MudButton Color="Color.Primary"
+                           Variant="Variant.Filled"
+                           StartIcon="@Icons.Material.Filled.Search"
+                           OnClick="GetPlayer"
+                           Disabled="@isLoading">
+                    @(isLoading ? "Loading..." : "Get Player")
+                </MudButton>
+
+                @if (isLoading)
+                {
+                    <MudProgressCircular Indeterminate="true" Class="mt-2" />
+                }
+
+                @if (!string.IsNullOrWhiteSpace(errorMessage))
+                {
+                    <MudAlert Severity="Severity.Error" Class="mt-3">
+                        @errorMessage
+                    </MudAlert>
+                }
+
+                @if (httpResponseCode.HasValue)
+                {
+                    <MudDivider Class="my-3" />
+
+                    <MudText Typo="Typo.subtitle2">API Response</MudText>
+
+                    <MudChip T="string"
+                             Color="@GetStatusColor()"
+                             Variant="Variant.Filled">
+                        Status Code: @httpResponseCode
+                    </MudChip>
+
+                    @if (singlePlayer is not null)
+                    {
+                        <MudPaper Class="p-3 mt-2" Elevation="0">
+                            <MudText Typo="Typo.body2">
+                                <b>Player name:</b> @singlePlayer.PlayerName
+                            </MudText>
+                        </MudPaper>
+                    }
+                }
+            </MudStack>
+        </MudCardContent>
+
+        <MudCardActions Class="justify-end px-4 pb-3">
+            <MudText Typo="Typo.caption" Color="Color.Secondary">
+                Connected to: Player API
+            </MudText>
+        </MudCardActions>
+    </MudCard>
+
+    <!-- Card: Search players by name -->
+    <MudCard Elevation="6">
+        <MudCardContent>
+            <MudStack Spacing="2">
+                <MudText Typo="Typo.subtitle2">
+                    Search players by name
+                </MudText>
+
+                <MudTextField @bind-Value="playerName"
+                              Label="Player name"
+                              Variant="Variant.Outlined"
+                              Adornment="Adornment.Start"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              Immediate="true" />
+
+                <MudButton Color="Color.Primary"
+                           Variant="Variant.Filled"
+                           OnClick="SearchPlayers"
+                           Disabled="@IsSearchDisabled">
+                    @(isSearching ? "Searching..." : "Search")
+                </MudButton>
+
+                @if (isSearching)
+                {
+                    <MudProgressCircular Indeterminate="true" Class="mt-2" />
+                }
+
+                @if (!string.IsNullOrWhiteSpace(searchError))
+                {
+                    <MudAlert Severity="Severity.Error" Class="mt-3">
+                        @searchError
+                    </MudAlert>
+                }
+
+                @if (searchResults is not null)
+                {
+                    <MudDivider Class="my-3" />
+
+                    <MudText Typo="Typo.subtitle2">
+                        Results (@searchResults.Count())
+                    </MudText>
+
+                    @if (!searchResults.Any())
+                    {
+                        <MudText Typo="Typo.body2" Class="mud-text-secondary">
+                            No players found.
+                        </MudText>
+                    }
+                    else
+                    {
+                        <MudTable Items="searchResults" Dense="true">
+                            <HeaderContent>
+                                <MudTh>Name</MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd>@context.PlayerName</MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    }
+                }
+
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+</MudContainer>
+
+@code {
+    // Single-player lookup
+    private int? httpResponseCode;
+    private bool isLoading;
+    private string? errorMessage;
+    private PlayerResponse? singlePlayer;
+
+    // Search
+    private string playerName = string.Empty;
+    private bool isSearching;
+    private string? searchError;
+    private IEnumerable<PlayerResponse>? searchResults;
+
+    private async Task GetPlayer()
+    {
+        isLoading = true;
+        errorMessage = null;
+        httpResponseCode = null;
+        singlePlayer = null;
+
+        try
+        {
+            var response = await ApiClient.GetPlayerByMemberId(Guid.Empty);
+            httpResponseCode = (int)response.StatusCode;
+
+            if (response.IsSuccessStatusCode && response.Content is not null)
+            {
+                singlePlayer = response.Content;
+            }
+        }
+        catch (Exception)
+        {
+            errorMessage = "Something went wrong while calling the player API.";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task SearchPlayers()
+    {
+        isSearching = true;
+        searchError = null;
+        searchResults = null;
+
+        try
+        {
+            var response = await ApiClient.GetPlayerSearch(playerName);
+
+            if (response.IsSuccessStatusCode && response.Content is not null)
+            {
+                searchResults = response.Content;
+            }
+            else
+            {
+                searchError = $"Search failed with status code {(int)response.StatusCode}.";
+            }
+        }
+        catch (Exception)
+        {
+            searchError = "Something went wrong while searching for players.";
+        }
+        finally
+        {
+            isSearching = false;
+        }
+    }
+
+    private Color GetStatusColor()
+    {
+        if (!httpResponseCode.HasValue)
+            return Color.Default;
+
+        var code = httpResponseCode.Value;
+
+        if (code >= 200 && code < 300)
+            return Color.Success;   // green for OK
+        if (code >= 300 && code < 400)
+            return Color.Warning;   // amber for redirects
+        if (code >= 400)
+            return Color.Error;     // red for errors
+
+        return Color.Default;
+    }
+
+    private bool IsSearchDisabled => isSearching || string.IsNullOrWhiteSpace(playerName);
+}
