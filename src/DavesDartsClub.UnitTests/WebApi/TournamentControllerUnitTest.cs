@@ -3,24 +3,26 @@ using DavesDartsClub.Domain;
 using DavesDartsClub.SharedContracts.Tournament;
 using DavesDartsClub.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using Ardalis.Result;
 
 namespace DavesDartsClub.UnitTests.WebApi;
 
 public class TournamentControllerUnitTest
 {
     [Fact]
-    public void CreateTournament_Should_ReturnNewId_Given_AValid_TournamentRequest()
+    public async Task CreateTournament_Should_ReturnNewId_Given_AValid_TournamentRequest()
     {
         //Arrange
         var newId = Guid.NewGuid();
         var mockTournamentService = new Mock<ITournamentService>();
-        mockTournamentService.Setup(x => x.CreateTournament(It.IsAny<Tournament>()))
-           .Returns(new Tournament { TournamentId = newId });
-        var tournamentController = new DavesDartsClub.WebApi.Controllers.TournamentController(mockTournamentService.Object);
+        mockTournamentService.Setup(x => x.CreateTournament(It.IsAny<Tournament>(), It.IsAny<CancellationToken>()))
+           .Returns(Task.FromResult(new Result<Tournament>(new Tournament { TournamentId = newId })));
+        var tournamentController = new TournamentController(mockTournamentService.Object);
         var tournamentRequest = new TournamentRequest();
 
         //Act
-        var response = tournamentController.CreateTournament(tournamentRequest);
+        var response = await tournamentController.CreateTournament(tournamentRequest, CancellationToken.None);
 
         //Assert
         response.ShouldNotBeNull();
@@ -34,7 +36,7 @@ public class TournamentControllerUnitTest
 
         var value = (TournamentResponse)result.Value!;
         value.TournamentId.ShouldBe(newId);
-        mockTournamentService.Verify(x => x.CreateTournament(It.IsAny<Tournament>()), Times.Once);
+        mockTournamentService.Verify(x => x.CreateTournament(It.IsAny<Tournament>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]

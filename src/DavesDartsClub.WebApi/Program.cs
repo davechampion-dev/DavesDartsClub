@@ -23,7 +23,6 @@ builder.Services.AddOpenApi();
 builder.Services.AddDavesDartClubDomain();
 builder.Services.AddDavesDartClubApplication();
 builder.Services.AddDavesDartClubInfrastructure();
-builder.Services.AddScoped<IPlayerService, PlayerService>();
 
 var app = builder.Build();
 

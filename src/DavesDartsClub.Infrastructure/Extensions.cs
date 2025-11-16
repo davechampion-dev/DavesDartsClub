@@ -1,5 +1,8 @@
 ﻿using DavesDartsClub.Domain;
+using DavesDartsClub.Domain.Validation;
+using DavesDartsClub.Infrastructure;
 using DavesDartsClub.Infrastructure.EntityFramework;
+using FluentValidation;
 using Microsoft.Extensions.Hosting;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -8,7 +11,7 @@ public static class Extensions
 {
     public static IServiceCollection AddDavesDartClubInfrastructure(this IServiceCollection services)
     {
-
+        services.AddScoped<ITournamnetRepository, TournamentRepository>();
         return services;
     }
 
