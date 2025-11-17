@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<IsPackable>false</IsPackable>
 		<IsTestProject>true</IsTestProject>
+		<RootNamespace>DavesDartsClub.UnitTests</RootNamespace>
 		<DocumentationFile>DavesDartsClub.UnitTests.docs.xml</DocumentationFile>
 	</PropertyGroup>
 
@@ -39,6 +40,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\DavesDartsClub.Application\DavesDartsClub.Application.csproj" />
 		<ProjectReference Include="..\DavesDartsClub.Domain\DavesDartsClub.Domain.csproj" />
+		<ProjectReference Include="..\DavesDartsClub.Fakers\DavesDartsClub.Fakers.csproj" />
 		<ProjectReference Include="..\DavesDartsClub.Infrastructure\DavesDartsClub.Infrastructure.csproj" />
 		<ProjectReference Include="..\DavesDartsClub.WebApi\DavesDartsClub.WebApi.csproj" />
 		<ProjectReference Include="..\DavesDartsClub.Website\DavesDartsClub.Website.csproj" />

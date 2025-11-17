@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+		<RootNamespace>DavesDartsClub.Infrastructure</RootNamespace>
 		<DocumentationFile>DavesDartsClub.Infrastructure.docs.xml</DocumentationFile>
 	</PropertyGroup>
 
@@ -20,6 +21,11 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\DavesDartsClub.Domain\DavesDartsClub.Domain.csproj" />
+		<ProjectReference Include="..\DavesDartsClub.Fakers\DavesDartsClub.Fakers.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="EntityFramework\Migrations\TSQL\" />
 	</ItemGroup>
 
 </Project>

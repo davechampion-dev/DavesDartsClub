@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>DavesDartsClub.Fakers</RootNamespace>
+		<DocumentationFile>DavesDartsClub.Fakers.docs.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="DavesDartsClub.Fakers.docs.xml" />
+		<None Include="..\.editorconfig" Link=".editorconfig" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Bogus" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\DavesDartsClub.Domain\DavesDartsClub.Domain.csproj" />
+	</ItemGroup>
+
+</Project>

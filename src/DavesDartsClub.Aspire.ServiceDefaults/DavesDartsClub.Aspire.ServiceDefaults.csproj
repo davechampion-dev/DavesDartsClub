@@ -2,6 +2,7 @@
 
 	<PropertyGroup>
 		<IsAspireSharedProject>true</IsAspireSharedProject>
+		<RootNamespace>DavesDartsClub.Aspire.ServiceDefaults</RootNamespace>
 		<DocumentationFile>DavesDartsClub.Aspire.ServiceDefaults.docs.xml</DocumentationFile>
 	</PropertyGroup>
 

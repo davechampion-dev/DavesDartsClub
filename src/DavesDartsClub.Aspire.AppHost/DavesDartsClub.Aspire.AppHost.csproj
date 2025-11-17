@@ -1,10 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<Sdk Name="Aspire.AppHost.Sdk" Version="9.2.0" />
+	<Sdk Name="Aspire.AppHost.Sdk" Version="9.5.2" />
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
 		<IsAspireHost>true</IsAspireHost>
+		<RootNamespace>DavesDartsClub.Aspire.AppHost</RootNamespace>
 		<DocumentationFile>DavesDartsClub.Aspire.AppHost.docs.xml</DocumentationFile>
 	</PropertyGroup>
 
@@ -29,7 +30,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\DavesDartsClub.DatabaseMigrationService\DavesDartsClub.DatabaseMigrationService.csproj" />
+		<ProjectReference Include="..\DavesDartsClub.Aspire.DatabaseMigrationService\DavesDartsClub.Aspire.DatabaseMigrationService.csproj" />
 		<ProjectReference Include="..\DavesDartsClub.WebApi\DavesDartsClub.WebApi.csproj" />
 		<ProjectReference Include="..\DavesDartsClub.Website\DavesDartsClub.Website.csproj" />
 		<ProjectReference Include="..\DavesDartsClub.Infrastructure\DavesDartsClub.Infrastructure.csproj">

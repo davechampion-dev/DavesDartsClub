@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DavesDartsClub.Infrastructure.EntityFramework.Migrations
+namespace DavesDartsClub.EntityFramework.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -17,16 +17,42 @@ namespace DavesDartsClub.Infrastructure.EntityFramework.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.5")
+                .HasAnnotation("ProductVersion", "9.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.LeagueEntity", b =>
+                {
+                    b.Property<Guid>("LeagueId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("LeagueName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("LeagueId");
+
+                    b.ToTable("Leagues");
+                });
 
             modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.MemberEntity", b =>
                 {
                     b.Property<Guid>("MemberId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("MemberName")
                         .IsRequired()
@@ -35,7 +61,59 @@ namespace DavesDartsClub.Infrastructure.EntityFramework.Migrations
 
                     b.HasKey("MemberId");
 
+                    b.HasIndex("LastName", "FirstName");
+
                     b.ToTable("Members", (string)null);
+                });
+
+            modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.PlayerProfileEntity", b =>
+                {
+                    b.Property<Guid>("MemberId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Nickname")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("MemberId");
+
+                    b.ToTable("PlayerProfileEntity", (string)null);
+                });
+
+            modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.TournamentEntity", b =>
+                {
+                    b.Property<Guid>("TournamentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TournamentName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("TournamentId");
+
+                    b.ToTable("Tournaments");
+                });
+
+            modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.PlayerProfileEntity", b =>
+                {
+                    b.HasOne("DavesDartsClub.Infrastructure.EntityFramework.MemberEntity", "Member")
+                        .WithOne("PlayerProfile")
+                        .HasForeignKey("DavesDartsClub.Infrastructure.EntityFramework.PlayerProfileEntity", "MemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Member");
+                });
+
+            modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.MemberEntity", b =>
+                {
+                    b.Navigation("PlayerProfile");
                 });
 #pragma warning restore 612, 618
         }

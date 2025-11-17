@@ -13,6 +13,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Cors" />
 		<PackageReference Include="MudBlazor" />
+		<PackageReference Include="Refit.HttpClientFactory" />
 		<PackageReference Include="SonarAnalyzer.CSharp">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -22,5 +23,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\DavesDartsClub.Application\DavesDartsClub.Application.csproj" />
 		<ProjectReference Include="..\DavesDartsClub.Aspire.ServiceDefaults\DavesDartsClub.Aspire.ServiceDefaults.csproj" />
+		<ProjectReference Include="..\DavesDartsClub.SharedContracts\DavesDartsClub.SharedContracts.csproj" />
 	</ItemGroup>
 </Project>

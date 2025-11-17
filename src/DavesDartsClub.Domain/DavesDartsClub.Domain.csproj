@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+		<RootNamespace>DavesDartsClub.Domain</RootNamespace>
 		<DocumentationFile>DavesDartsClub.Domain.docs.xml</DocumentationFile>
 	</PropertyGroup>
 

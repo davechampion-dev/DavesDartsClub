@@ -9,6 +9,8 @@ public static class Extensions
         services.AddScoped<IMemberService, MemberService>();
         services.AddScoped<ITournamentService, TournamentService>();
         services.AddScoped<ILeagueService, LeagueService>();
+        services.AddScoped<IPlayerService, PlayerService>();
+
         return services;
     }
 }

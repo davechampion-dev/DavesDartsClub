@@ -1,10 +1,11 @@
 using DavesDartsClub.Application;
 using Microsoft.AspNetCore.Mvc;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
-builder.AddDavesDarstClubAppDbContext();
+builder.AddDavesDartsClubAppDbContext();
 
 // Add services to the container.
 builder.Services.AddProblemDetails();
@@ -22,8 +23,6 @@ builder.Services.AddOpenApi();
 builder.Services.AddDavesDartClubDomain();
 builder.Services.AddDavesDartClubApplication();
 builder.Services.AddDavesDartClubInfrastructure();
-builder.Services.AddScoped<IPlayerService, PlayerService>();
-
 
 var app = builder.Build();
 
@@ -44,8 +43,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapDefaultEndpoints();
 
 await app.RunAsync();
-
-
-

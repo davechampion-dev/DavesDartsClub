@@ -1,4 +1,5 @@
 ﻿using DavesDartsClub.Application;
+using DavesDartsClub.SharedContracts.League;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -40,9 +41,14 @@ public partial class LeagueController : ControllerBase
 
     [HttpGet(Name = nameof(GetLeagueSearch))]
     [ProducesResponseType(((int)HttpStatusCode.OK))]
-    public ActionResult<IEnumerable<LeagueResponse>> GetLeagueSearch([FromBody] LeagueSearchRequest leagueSearchRequest)
+    public ActionResult<IEnumerable<LeagueResponse>> GetLeagueSearch([FromBody] LeagueSearchRequest leagueName)
     {
-        var league = _leagueService.GetLeagueByName(leagueSearchRequest.LeagueName);
+        var league = _leagueService.GetLeagueByName(leagueName.LeagueName);
+
+        if (league == null)
+        {
+            return NotFound();
+        }
 
         var result = new List<LeagueResponse>
         {

@@ -1,5 +1,6 @@
 ﻿using DavesDartsClub.Application;
 using DavesDartsClub.Domain;
+using DavesDartsClub.SharedContracts.Tournament;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -20,14 +21,14 @@ public partial class TournamentController : ControllerBase
     [ProducesResponseType((int)HttpStatusCode.Created)]
     [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
-    public ActionResult<TournamentResponse> CreateTournament(TournamentRequest tournamentRequest)
+    public async Task<ActionResult<TournamentResponse>> CreateTournament(TournamentRequest tournamentRequest, CancellationToken cancellationToken)
     {
         var newTournament = new Tournament
         {
             TournamentName = tournamentRequest.TournamentName
         };
 
-        var result = _tournamentService.CreateTournament(newTournament);
+        var result = await _tournamentService.CreateTournament(newTournament, cancellationToken);
 
         if (!result.IsSuccess || result.Value == null)
         {

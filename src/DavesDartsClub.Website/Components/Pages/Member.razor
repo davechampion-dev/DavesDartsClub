@@ -1,0 +1,246 @@
+﻿@page "/member"
+@using DavesDartsClub.SharedContracts.Member
+@inject DavesDartsClub.Website.ApiClient.IMemberApiClient ApiClient
+
+<PageTitle>Member</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="mt-6">
+
+    <!-- Page header -->
+    <MudStack Spacing="1" Class="mb-3">
+        <MudText Typo="Typo.h4">
+            <MudIcon Icon="@Icons.Material.Filled.Badge" Class="mr-2" />
+            Member Lookup
+        </MudText>
+
+        <MudText Typo="Typo.body2" Class="mud-text-secondary">
+            Fetch a member by ID or search by name and see the API response.
+        </MudText>
+    </MudStack>
+
+    <!-- Card: Get single member (by id – currently Guid.Empty) -->
+    <MudCard Elevation="6" Class="mb-4">
+        <MudCardContent>
+            <MudStack Spacing="2">
+                <MudText Typo="Typo.subtitle2">
+                    Get member by ID
+                </MudText>
+
+                <MudText Typo="Typo.body2" Class="mud-text-secondary">
+                    Currently using
+                    <MudChip T="string" Color="Color.Info" Variant="Variant.Outlined">
+                        Guid.Empty
+                    </MudChip>
+                    (placeholder). Later you can replace this with a real ID or input field.
+                </MudText>
+
+                <MudButton Color="Color.Primary"
+                           Variant="Variant.Filled"
+                           StartIcon="@Icons.Material.Filled.Search"
+                           OnClick="GetMember"
+                           Disabled="@isLoading">
+                    @(isLoading ? "Loading..." : "Get Member")
+                </MudButton>
+
+                @if (isLoading)
+                {
+                    <MudProgressCircular Indeterminate="true" Class="mt-2" />
+                }
+
+                @if (!string.IsNullOrWhiteSpace(errorMessage))
+                {
+                    <MudAlert Severity="Severity.Error" Class="mt-3">
+                        @errorMessage
+                    </MudAlert>
+                }
+
+                @if (httpResponseCode.HasValue)
+                {
+                    <MudDivider Class="my-3" />
+
+                    <MudText Typo="Typo.subtitle2">API Response</MudText>
+
+                    <MudChip T="string"
+                             Color="@GetStatusColor()"
+                             Variant="Variant.Filled">
+                        Status Code: @httpResponseCode
+                    </MudChip>
+
+                    @if (singleMember is not null)
+                    {
+                        <MudPaper Class="p-3 mt-2" Elevation="0">
+                            <MudText Typo="Typo.body2">
+                                <b>Member Id:</b> @singleMember.MemberId
+                            </MudText>
+                            <MudText Typo="Typo.body2">
+                                <b>Member name:</b> @singleMember.MemberName
+                            </MudText>
+                        </MudPaper>
+                    }
+                }
+            </MudStack>
+        </MudCardContent>
+
+        <MudCardActions Class="justify-end px-4 pb-3">
+            <MudText Typo="Typo.caption" Color="Color.Secondary">
+                Connected to: Member API
+            </MudText>
+        </MudCardActions>
+    </MudCard>
+
+    <!-- Card: Search members by name -->
+    <MudCard Elevation="6">
+        <MudCardContent>
+            <MudStack Spacing="2">
+                <MudText Typo="Typo.subtitle2">
+                    Search members by name
+                </MudText>
+
+                <MudTextField @bind-Value="memberName"
+                              Label="Member name"
+                              Variant="Variant.Outlined"
+                              Adornment="Adornment.Start"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              Immediate="true" />
+
+                <MudButton Color="Color.Primary"
+                           Variant="Variant.Filled"
+                           OnClick="SearchMembers"
+                           Disabled="@IsSearchDisabled">
+                    @(isSearching ? "Searching..." : "Search")
+                </MudButton>
+
+                @if (isSearching)
+                {
+                    <MudProgressCircular Indeterminate="true" Class="mt-2" />
+                }
+
+                @if (!string.IsNullOrWhiteSpace(searchError))
+                {
+                    <MudAlert Severity="Severity.Error" Class="mt-3">
+                        @searchError
+                    </MudAlert>
+                }
+
+                @if (searchResults is not null)
+                {
+                    <MudDivider Class="my-3" />
+
+                    <MudText Typo="Typo.subtitle2">
+                        Results (@searchResults.Count())
+                    </MudText>
+
+                    @if (!searchResults.Any())
+                    {
+                        <MudText Typo="Typo.body2" Class="mud-text-secondary">
+                            No members found.
+                        </MudText>
+                    }
+                    else
+                    {
+                        <MudTable Items="searchResults" Dense="true">
+                            <HeaderContent>
+                                <MudTh>Name</MudTh>
+                                <MudTh>Id</MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd>@context.MemberName</MudTd>
+                                <MudTd>@context.MemberId</MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    }
+                }
+
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+</MudContainer>
+
+@code {
+    // Single-member lookup
+    private int? httpResponseCode;
+    private bool isLoading;
+    private string? errorMessage;
+    private MemberResponse? singleMember;
+
+    // Search
+    private string memberName = string.Empty;
+    private bool isSearching;
+    private string? searchError;
+    private IEnumerable<MemberResponse>? searchResults;
+
+    private async Task GetMember()
+    {
+        isLoading = true;
+        errorMessage = null;
+        httpResponseCode = null;
+        singleMember = null;
+
+        try
+        {
+            var response = await ApiClient.GetMemberById(Guid.Empty);
+            httpResponseCode = (int)response.StatusCode;
+
+            if (response.IsSuccessStatusCode && response.Content is not null)
+            {
+                singleMember = response.Content;
+            }
+        }
+        catch (Exception)
+        {
+            errorMessage = "Something went wrong while calling the member API.";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task SearchMembers()
+    {
+        isSearching = true;
+        searchError = null;
+        searchResults = null;
+
+        try
+        {
+            var response = await ApiClient.MemberSearch(memberName);
+
+            if (response.IsSuccessStatusCode && response.Content is not null)
+            {
+                searchResults = response.Content;
+            }
+            else
+            {
+                searchError = $"Search failed with status code {(int)response.StatusCode}.";
+            }
+        }
+        catch (Exception)
+        {
+            searchError = "Something went wrong while searching for members.";
+        }
+        finally
+        {
+            isSearching = false;
+        }
+    }
+
+    private Color GetStatusColor()
+    {
+        if (!httpResponseCode.HasValue)
+            return Color.Default;
+
+        var code = httpResponseCode.Value;
+
+        if (code >= 200 && code < 300)
+            return Color.Success;   // green for OK
+        if (code >= 300 && code < 400)
+            return Color.Warning;   // amber for redirects
+        if (code >= 400)
+            return Color.Error;     // red for errors
+
+        return Color.Default;
+    }
+
+    private bool IsSearchDisabled => isSearching || string.IsNullOrWhiteSpace(memberName);
+}

@@ -5,16 +5,16 @@ namespace DavesDartsClub.Application;
 
 public class PlayerService : IPlayerService
 {
-    private readonly IValidator<Player> _playerValidator;
+    private readonly IValidator<PlayerProfile> _playerValidator;
 
-    public PlayerService(IValidator<Player> playerValidator)
+    public PlayerService(IValidator<PlayerProfile> playerValidator)
     {
         _playerValidator = playerValidator;
     }
-    
-    public Player GetPlayerByName(string name)
+
+    public PlayerProfile GetPlayerByName(string name)
     {
-        return new Player()
+        return new PlayerProfile()
         {
             MemberName = "Edd the duck"
         };

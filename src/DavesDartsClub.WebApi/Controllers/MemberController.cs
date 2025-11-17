@@ -1,7 +1,7 @@
 ﻿using DavesDartsClub.Application;
+using DavesDartsClub.SharedContracts.Member;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-
 namespace DavesDartsClub.WebApi.Controllers;
 
 [ApiController]
@@ -38,15 +38,15 @@ public class MemberController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet(Name = nameof(GetMemberSearch))]
+    [HttpPost(Name = nameof(MemberSearch))]
     [ProducesResponseType(((int)HttpStatusCode.OK))]
 
-    public ActionResult<IEnumerable<MemberResponse>> GetMemberSearch([FromBody] MemberSearchRequest memberSearchRequest)
+    public ActionResult<IEnumerable<MemberResponse>> MemberSearch([FromBody] MemberSearchRequest memberName)
     {
-        // todo: Update to return list of members and take search term
-        var member = _memberService.GetMemberByName(memberSearchRequest.MemberName);
+        // ToDo: Update to return list of members and take search term
+        var member = _memberService.GetMemberByName(memberName.MemberName);
 
-        // todo: Switch to linq expression
+        // ToDo: Switch to linq expression
         var result = new List<MemberResponse>
         {
             new MemberResponse()

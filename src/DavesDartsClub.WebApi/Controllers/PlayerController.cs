@@ -1,6 +1,8 @@
 ﻿using DavesDartsClub.Application;
+using DavesDartsClub.SharedContracts.Player;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+
 
 namespace DavesDartsClub.WebApi.Controllers;
 
@@ -40,12 +42,12 @@ public class PlayerController : ControllerBase
     [HttpGet(Name = nameof(GetPlayerSearch))]
     [ProducesResponseType(((int)HttpStatusCode.OK))]
 
-    public ActionResult<IEnumerable<PlayerResponse>> GetPlayerSearch([FromBody] PlayerSearchRequest playerSearchRequest)
+    public ActionResult<IEnumerable<PlayerResponse>> GetPlayerSearch([FromBody] PlayerSearchRequest playerName)
     {
-        // todo: Update to return list of members and take search term
-        var player = _playerService.GetPlayerByName(playerSearchRequest.PlayerName);
+        // ToDo: Update to return list of members and take search term
+        var player = _playerService.GetPlayerByName(playerName.PlayerName);
 
-        // todo: Switch to linq expression
+        // ToDo: Switch to linq expression
         var result = new List<PlayerResponse>
 {
     new PlayerResponse()

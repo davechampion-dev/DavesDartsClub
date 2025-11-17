@@ -155,41 +155,7 @@
         "tags": [
           "Member"
         ],
-        "operationId": "CreateMember",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MemberRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/MemberRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Member"
-        ],
-        "operationId": "GetMemberSearch",
+        "operationId": "MemberSearch",
         "requestBody": {
           "content": {
             "application/json": {

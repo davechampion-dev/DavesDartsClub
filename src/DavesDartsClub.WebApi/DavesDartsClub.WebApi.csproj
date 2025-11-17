@@ -2,6 +2,7 @@
 
 	<PropertyGroup>
 		<OpenApiDocumentsDirectory>./swagger</OpenApiDocumentsDirectory>
+		<RootNamespace>DavesDartsClub.Website</RootNamespace>
 		<DocumentationFile>DavesDartsClub.Website.docs.xml</DocumentationFile>
 	</PropertyGroup>
 
@@ -13,6 +14,10 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Cors" />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		  <PrivateAssets>all</PrivateAssets>
+		</PackageReference>
 		<PackageReference Include="Microsoft.Extensions.ApiDescription.Server">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -28,6 +33,7 @@
 		<ProjectReference Include="..\DavesDartsClub.Application\DavesDartsClub.Application.csproj" />
 		<ProjectReference Include="..\DavesDartsClub.Aspire.ServiceDefaults\DavesDartsClub.Aspire.ServiceDefaults.csproj" />
 		<ProjectReference Include="..\DavesDartsClub.Infrastructure\DavesDartsClub.Infrastructure.csproj" />
+		<ProjectReference Include="..\DavesDartsClub.SharedContracts\DavesDartsClub.SharedContracts.csproj" />
 	</ItemGroup>
 
 </Project>

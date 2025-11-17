@@ -10,7 +10,7 @@ public static class Extensions
     {
         services.AddScoped<IValidator<Tournament>, TournamentValidator>();
         services.AddScoped<IValidator<League>, LeagueValidator>();
-        services.AddScoped<IValidator<Player>, PlayerValidator>();
+        services.AddScoped<IValidator<PlayerProfile>, PlayerValidator>();
         services.AddScoped<IValidator<Member>, MemberValidator>();
         return services;
     }

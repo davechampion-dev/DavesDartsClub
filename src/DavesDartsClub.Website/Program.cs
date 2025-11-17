@@ -12,6 +12,8 @@ builder.Services.AddMudServices();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddDavesDartsClubApiClient();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,5 +32,7 @@ app.UseAntiforgery();
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
+app.MapDefaultEndpoints();
 
 await app.RunAsync();

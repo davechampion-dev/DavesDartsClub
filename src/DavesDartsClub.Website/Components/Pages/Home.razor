@@ -1,59 +1,223 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Dave's Darts Club</PageTitle>
 
-<MudText Typo="Typo.h3" GutterBottom="true">Hello, world!</MudText>
-<MudText Class="mb-8">Welcome to your new app, powered by MudBlazor and the .NET 9 Template!</MudText>
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-6">
 
-<MudAlert Severity="Severity.Normal">
-    You can find documentation and examples on our website here:
-    <MudLink Href="https://mudblazor.com" Target="_blank" Typo="Typo.body2" Color="Color.Primary">
-        <b>www.mudblazor.com</b>
-    </MudLink>
-</MudAlert>
+    <!-- Hero / intro section -->
+    <MudPaper Elevation="4" Class="px-6 pt-6 pb-10 mb-6">
+        <MudStack Direction="Row" AlignItems="AlignItems.Center" Spacing="4">
+            @* <MudAvatar Icon="@Icons.Material.Filled.SportsBar"
+                       Size="Size.Large"
+                       Color="Color.Primary"
+                       Class="mud-elevation-6" /> *@
 
-<br />
-<MudText Typo="Typo.h5" GutterBottom="true">Interactivity in this Template</MudText>
-<br />
-<MudText Typo="Typo.body2">
-    When you opt for the "Global" Interactivity Location, <br />
-    the render modes are defined in App.razor and consequently apply to all child components.<br />
-    In this case, providers are globally set in the MainLayout.<br />
-    <br />
-    On the other hand, if you choose the "Per page/component" Interactivity Location,<br />
-    it is necessary to include the <br />
-    <br />
-    &lt;MudPopoverProvider /&gt; <br />
-    &lt;MudDialogProvider /&gt; <br />
-    &lt;MudSnackbarProvider /&gt; <br />
-    <br />
-    components on every interactive page.<br />
-    <br />
-    If a render mode is not specified for a page, it defaults to Server-Side Rendering (SSR),<br />
-    similar to this page. While MudBlazor allows pages to be rendered in SSR,<br />
-    please note that interactive features, such as buttons and dropdown menus, will not be functional.
-</MudText>
+            <MudStack Spacing="1">
+                <MudText Typo="Typo.h4" GutterBottom="true">
+                    Dave's Darts Club
+                </MudText>
+                <MudText Typo="Typo.body1" Class="mud-text-secondary">
+                    Manage members, players, leagues and tournaments for your darts nights –
+                    all in one place.
+                </MudText>
 
-<br />
-<MudText Typo="Typo.h5" GutterBottom="true">What's New in Blazor with the Release of .NET 9</MudText>
-<br />
+                <!-- 4 coloured buttons, no text wrapping -->
+                <MudGrid GutterSize="2" Class="mt-3">
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudButton FullWidth="true"
+                                   Class="hero-nav-button"
+                                   Color="Color.Primary"
+                                   Variant="Variant.Filled"
+                                   StartIcon="@Icons.Material.Filled.Badge"
+                                   Href="/member">
+                            View Members
+                        </MudButton>
+                    </MudItem>
 
-<MudText Typo="Typo.h6" GutterBottom="true">Prerendering</MudText>
-<MudText Typo="Typo.body2" GutterBottom="true">
-    If you're exploring the features of .NET 9 Blazor,<br /> you might be pleasantly surprised to learn that each page is prerendered on the server,<br /> regardless of the selected render mode.<br /><br />
-    This means that you'll need to inject all necessary services on the server,<br /> even when opting for the wasm (WebAssembly) render mode.<br /><br />
-    This prerendering functionality is crucial to ensuring that WebAssembly mode feels fast and responsive,<br /> especially when it comes to initial page load times.<br /><br />
-    For more information on how to detect prerendering and leverage the RenderContext, you can refer to the following link:
-    <MudLink Href="https://github.com/dotnet/aspnetcore/issues/51468#issuecomment-1783568121" Target="_blank" Typo="Typo.body2" Color="Color.Primary">
-        More details
-    </MudLink>
-</MudText>
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudButton FullWidth="true"
+                                   Class="hero-nav-button"
+                                   Color="Color.Secondary"
+                                   Variant="Variant.Filled"
+                                   StartIcon="@Icons.Material.Filled.Person"
+                                   Href="/player">
+                            View Players
+                        </MudButton>
+                    </MudItem>
 
-<br />
-<MudText Typo="Typo.h6" GutterBottom="true">InteractiveAuto</MudText>
-<MudText Typo="Typo.body2">
-    A discussion on how to achieve this can be found here:
-    <MudLink Href="https://github.com/dotnet/aspnetcore/issues/51468#issue-1950424116" Target="_blank" Typo="Typo.body2" Color="Color.Primary">
-        More details
-    </MudLink>
-</MudText>
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudButton FullWidth="true"
+                                   Class="hero-nav-button"
+                                   Color="Color.Info"
+                                   Variant="Variant.Filled"
+                                   StartIcon="@Icons.Material.Filled.Leaderboard"
+                                   Href="/league">
+                            View Leagues
+                        </MudButton>
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="3">
+                        <MudButton FullWidth="true"
+                                   Class="hero-nav-button"
+                                   Color="Color.Warning"
+                                   Variant="Variant.Filled"
+                                   StartIcon="@Icons.Material.Filled.Flag"
+                                   Href="/tournament">
+                            View Tournaments
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
+            </MudStack>
+        </MudStack>
+    </MudPaper>
+
+    <!-- Key info cards -->
+    <MudGrid GutterSize="3">
+
+        <MudItem xs="12" sm="4">
+            <MudPaper Elevation="3" Class="h-100">
+                <MudStack Spacing="1" Class="card-body">
+                    <MudText Typo="Typo.overline" Class="mud-text-secondary">
+                        NEXT LEAGUE NIGHT
+                    </MudText>
+                    <MudText Typo="Typo.h6">
+                        Coming soon
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="mud-text-secondary">
+                        When real data is hooked up,this could show the date, time and venue for the next league fixtures here.
+                    </MudText>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="4">
+            <MudPaper Elevation="3" Class="h-100">
+                <MudStack Spacing="1" Class="card-body">
+                    <MudText Typo="Typo.overline" Class="mud-text-secondary">
+                        NEXT TOURNAMENT
+                    </MudText>
+                    <MudText Typo="Typo.h6">
+                        No tournament scheduled
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="mud-text-secondary">
+                        Tournament page to be used to create and manage upcoming competitions.
+                    </MudText>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="4">
+            <MudPaper Elevation="3" Class="h-100">
+                <MudStack Spacing="1" Class="card-body">
+                    <MudText Typo="Typo.overline" Class="mud-text-secondary">
+                        QUICK STATS
+                    </MudText>
+                    <MudStack Direction="Row" Spacing="3">
+                        <MudStack Spacing="0">
+                            <MudText Typo="Typo.h6">0</MudText>
+                            <MudText Typo="Typo.caption" Class="mud-text-secondary">
+                                Members
+                            </MudText>
+                        </MudStack>
+                        <MudStack Spacing="0">
+                            <MudText Typo="Typo.h6">0</MudText>
+                            <MudText Typo="Typo.caption" Class="mud-text-secondary">
+                                Players
+                            </MudText>
+                        </MudStack>
+                        <MudStack Spacing="0">
+                            <MudText Typo="Typo.h6">0</MudText>
+                            <MudText Typo="Typo.caption" Class="mud-text-secondary">
+                                Leagues / Tournaments
+                            </MudText>
+                        </MudStack>
+                    </MudStack>
+                    <MudText Typo="Typo.caption" Class="mud-text-secondary mt-1">
+                        To be replaced with live numbers from API later.
+                    </MudText>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+
+    </MudGrid>
+
+    <!-- Divider -->
+    <MudDivider Class="my-6" />
+
+    <!-- Quick actions / navigation -->
+    <MudGrid GutterSize="3">
+
+        <MudItem xs="12" md="6">
+            <MudPaper Elevation="2" Class="h-100">
+                <MudStack Spacing="1" Class="card-body">
+                    <MudText Typo="Typo.subtitle1" GutterBottom="true">
+                        Get started
+                    </MudText>
+
+                    <MudList Dense="true" T="string">
+                        <MudListItem T="string"
+                                     Class="py-2"
+                                     Href="/member"
+                                     Icon="@Icons.Material.Filled.Badge">
+                            Manage club members
+                        </MudListItem>
+
+                        <MudListItem T="string"
+                                     Class="py-2"
+                                     Href="/player"
+                                     Icon="@Icons.Material.Filled.Person">
+                            Manage players
+                        </MudListItem>
+
+                        <MudListItem T="string"
+                                     Class="py-2"
+                                     Href="/league"
+                                     Icon="@Icons.Material.Filled.Leaderboard">
+                            Manage leagues and league tables
+                        </MudListItem>
+
+                        <MudListItem T="string"
+                                     Class="py-2"
+                                     Href="/tournament"
+                                     Icon="@Icons.Material.Filled.Flag">
+                            Browse and manage tournaments
+                        </MudListItem>
+                    </MudList>
+                </MudStack>
+            </MudPaper>
+
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudPaper Elevation="2" Class="h-100">
+                <MudStack Spacing="1" Class="card-body">
+                    <MudText Typo="Typo.subtitle1" GutterBottom="true">
+                        About this app
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="mud-text-secondary mb-2">
+                        This app is built with Blazor, .NET 9 and MudBlazor to help run
+                        darts leagues and tournaments without spreadsheets and paper scorecards.
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="mud-text-secondary">
+                        More features to follow (members, players, fixtures, results, stats),
+                        the most important information will be right here on the home page.
+                    </MudText>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+
+    </MudGrid>
+
+</MudContainer>
+
+<style>
+    .hero-nav-button {
+        white-space: nowrap;
+        min-width: 180px;
+    }
+
+    /* Extra inner padding for all card content */
+    .card-body {
+        padding: 1.25rem 1.75rem 1.5rem 1.75rem; /* top, right, bottom, left */
+    }
+</style>
