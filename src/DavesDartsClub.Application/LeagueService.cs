@@ -31,14 +31,15 @@ public class LeagueService : ILeagueService
             LeagueName = "Champions League"
         };
     }
-    public Result<League> CreateLeague(League league)
+    public async Task<Result<League>> CreateLeague(League league, CancellationToken cancellationToken)
     {
-        var validationResult = _leagueValidator.Validate(league);
+        var validationResult = await _leagueValidator.ValidateAsync(league);
         if (!validationResult.IsValid)
         {
             return Result.Invalid(validationResult.AsErrors());
         }
 
+        //ToDO: Persist the league to the database
         return league;
     }
 }
