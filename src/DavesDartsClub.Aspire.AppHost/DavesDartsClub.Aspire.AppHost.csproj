@@ -1,4 +1,6 @@
-﻿<Project Sdk="Aspire.AppHost.Sdk/13.0.0">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Sdk Name="Aspire.AppHost.Sdk" Version="9.5.2" />
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
@@ -13,6 +15,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Aspire.Hosting.AppHost" />
 		<PackageReference Include="Aspire.Hosting.SqlServer" />
 		<PackageReference Include="Microsoft.AspNetCore.Cors" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" />

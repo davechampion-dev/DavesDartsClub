@@ -15,7 +15,7 @@ public class AppDbContext : DbContext
     public DbSet<TournamentEntity> Tournaments { get; set; }
 
     public DbSet<PlayerProfileEntity> PlayerProfiles { get; set; }
-
+       
 
     //public async Task EnsureDatabaseIsSetupAsync(CancellationToken cancellationToken = default)
     //{
