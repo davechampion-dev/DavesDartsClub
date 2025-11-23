@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 9.0.x
+        dotnet-version: 10.0.100
         
     - name: Checkout code
       uses: actions/checkout@v2
@@ -26,11 +26,11 @@ jobs:
         pwd
        
     - name: Restore dependencies
-      run: dotnet restore ./src/DavesDartsClub.sln
+      run: dotnet restore ./src/DavesDartsClub.slnx
       
     - name: Build
-      run: dotnet build ./src/DavesDartsClub.sln --no-restore
+      run: dotnet build ./src/DavesDartsClub.slnx --no-restore
       
     - name: Test
-      run: dotnet test ./src/DavesDartsClub.sln --no-build --verbosity normal
+      run: dotnet test ./src/DavesDartsClub.slnx --no-build --verbosity normal
               
