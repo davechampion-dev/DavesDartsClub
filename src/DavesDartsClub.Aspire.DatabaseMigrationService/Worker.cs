@@ -79,21 +79,6 @@ public class Worker(
                 dbContext.Members.AddRange(memberEntities);
             }
 
-            //if (!await dbContext.PlayerProfiles.AnyAsync(cancellationToken)) // ✅ plural matches AppDbContext
-            //{
-            //    var playerFaker = new PlayerFaker();
-            //    var players = playerFaker.GenerateMany(100); // List<PlayerProfile> domain objects
-
-            //    var playerEntities = players.Select(p => new PlayerProfileEntity
-            //    {
-            //        PlayerId = Guid.NewGuid(),      // EF primary key
-            //        MemberId = p.MemberId,          // map from domain object
-            //        Nickname = p.Nickname
-            //    }).ToList();
-
-            //    dbContext.PlayerProfiles.AddRange(playerEntities);
-            //}
-
             await dbContext.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
         });

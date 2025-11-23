@@ -15,14 +15,7 @@ public class AppDbContext : DbContext
     public DbSet<TournamentEntity> Tournaments { get; set; }
 
     public DbSet<PlayerProfileEntity> PlayerProfiles { get; set; }
-       
-
-    //public async Task EnsureDatabaseIsSetupAsync(CancellationToken cancellationToken = default)
-    //{
-    //    // https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/applying?tabs=dotnet-core-cli#apply-migrations-at-runtime
-    //    await Database.MigrateAsync(cancellationToken);
-    //}
-
+  
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         OnMemberModelCreating(modelBuilder);
@@ -33,7 +26,7 @@ public class AppDbContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
 
-    private void OnMemberModelCreating(ModelBuilder modelBuilder)
+    private static void OnMemberModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<MemberEntity>().ToTable("Members").HasKey(x => x.MemberId);
 
@@ -58,19 +51,19 @@ public class AppDbContext : DbContext
         .HasIndex(x => new { x.LastName, x.FirstName });
     }
 
-    private void OnLeagueModelCreating(ModelBuilder modelBuilder)
+    private static void OnLeagueModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<LeagueEntity>().HasKey(x => x.LeagueId);
         modelBuilder.Entity<LeagueEntity>().Property(x => x.LeagueName).IsRequired().HasMaxLength(Domain.League.LeagueNameMaxLength);
     }
 
-    private void OnTournamentModelCreating(ModelBuilder modelBuilder)
+    private static void OnTournamentModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<TournamentEntity>().HasKey(x => x.TournamentId);
         modelBuilder.Entity<TournamentEntity>().Property(x => x.TournamentName).IsRequired().HasMaxLength(Domain.Tournament.TournamentNameMaxLength);
     }
 
-    private void OnPlayerModelCreating(ModelBuilder modelBuilder)
+    private static void OnPlayerModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<PlayerProfileEntity>()
             .ToTable("PlayerProfileEntity")
