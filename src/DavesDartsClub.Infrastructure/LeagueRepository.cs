@@ -1,6 +1,5 @@
 ﻿using DavesDartsClub.Domain;
 using DavesDartsClub.Infrastructure.EntityFramework;
-using System.Threading.Tasks;
 
 namespace DavesDartsClub.Infrastructure;
 
@@ -23,7 +22,7 @@ internal class LeagueRepository : ILeagueRepository
         cancellationToken.ThrowIfCancellationRequested();
 
         _dbContext.Leagues.Add(entity);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         return new League()
         {

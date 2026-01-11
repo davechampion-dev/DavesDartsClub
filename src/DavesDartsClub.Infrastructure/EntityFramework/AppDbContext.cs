@@ -18,6 +18,8 @@ public class AppDbContext : DbContext
   
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        ArgumentNullException.ThrowIfNull(modelBuilder);
+
         OnMemberModelCreating(modelBuilder);
         OnLeagueModelCreating(modelBuilder);
         OnTournamentModelCreating(modelBuilder);

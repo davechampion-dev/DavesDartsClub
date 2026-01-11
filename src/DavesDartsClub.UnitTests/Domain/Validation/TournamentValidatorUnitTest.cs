@@ -1,4 +1,5 @@
-﻿using DavesDartsClub.Domain;
+﻿#pragma warning disable CA1707 // Identifiers should not contain underscores
+using DavesDartsClub.Domain;
 using DavesDartsClub.Domain.Validation;
 
 namespace DavesDartsClub.UnitTests.Domain.Validation;

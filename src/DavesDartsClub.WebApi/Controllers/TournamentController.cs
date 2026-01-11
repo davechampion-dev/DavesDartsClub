@@ -8,7 +8,7 @@ namespace DavesDartsClub.WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public partial class TournamentController : ControllerBase
+public class TournamentController : ControllerBase
 {
     private readonly ITournamentService _tournamentService;
 
@@ -21,14 +21,14 @@ public partial class TournamentController : ControllerBase
     [ProducesResponseType((int)HttpStatusCode.Created)]
     [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
-    public async Task<ActionResult<TournamentResponse>> CreateTournament(TournamentRequest tournamentRequest, CancellationToken cancellationToken)
+    public async Task<ActionResult<TournamentResponse>> CreateTournament([NotNull] TournamentRequest tournamentRequest, CancellationToken cancellationToken)
     {
         var newTournament = new Tournament
         {
             TournamentName = tournamentRequest.TournamentName
         };
 
-        var result = await _tournamentService.CreateTournament(newTournament, cancellationToken);
+        var result = await _tournamentService.CreateTournament(newTournament, cancellationToken).ConfigureAwait(false);
 
         if (!result.IsSuccess || result.Value == null)
         {

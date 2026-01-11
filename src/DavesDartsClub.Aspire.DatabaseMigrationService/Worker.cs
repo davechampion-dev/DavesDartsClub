@@ -3,10 +3,9 @@ using DavesDartsClub.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
-
 namespace DavesDartsClub.DatabaseMigrationService;
 
-public class Worker(
+internal class Worker(
     IServiceProvider serviceProvider,
     IHostApplicationLifetime hostApplicationLifetime) : BackgroundService
 {
@@ -39,7 +38,11 @@ public class Worker(
         var strategy = dbContext.Database.CreateExecutionStrategy();
 
         // Run migration in a transaction to avoid partial migration if it fails ...
-        await strategy.ExecuteAsync(async () => await dbContext.Database.MigrateAsync(cancellationToken));
+        await strategy.ExecuteAsync(async () =>
+        {
+            await dbContext.Database.MigrateAsync(cancellationToken).ConfigureAwait(false);
+        }
+        ).ConfigureAwait(false);
     }
 
     private static async Task SeedDataAsync(AppDbContext dbContext, CancellationToken cancellationToken)
@@ -48,9 +51,9 @@ public class Worker(
         await strategy.ExecuteAsync(async () =>
         {
             // Seed the database
-            await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
+            await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
 
-            if (!await dbContext.Leagues.AnyAsync(cancellationToken))
+            if (!await dbContext.Leagues.AnyAsync(cancellationToken).ConfigureAwait(false))
             {
                 var leagueFaker = new LeagueFaker();
                 var leagues = leagueFaker.CreateFaker().Generate(5); // List<League>
@@ -64,7 +67,7 @@ public class Worker(
                 dbContext.Leagues.AddRange(leagueEntities);
             }
 
-            if (!await dbContext.Set<MemberEntity>().AnyAsync(cancellationToken))
+            if (!await dbContext.Set<MemberEntity>().AnyAsync(cancellationToken).ConfigureAwait(false))
             {
                 var memberFaker = new MemberFaker();
                 var members = memberFaker.CreateFaker().Generate(5); // List<Member> domain objects
@@ -79,9 +82,9 @@ public class Worker(
                 dbContext.Members.AddRange(memberEntities);
             }
 
-            await dbContext.SaveChangesAsync(cancellationToken);
-            await transaction.CommitAsync(cancellationToken);
-        });
+            await dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
+        }).ConfigureAwait(false); 
     }
 }
 

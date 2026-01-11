@@ -1,9 +1,9 @@
-﻿using DavesDartsClub.Application;
+﻿#pragma warning disable CA1707 // Identifiers should not contain underscores
+using DavesDartsClub.Application;
 using DavesDartsClub.Domain;
 using DavesDartsClub.SharedContracts.Tournament;
 using DavesDartsClub.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using Ardalis.Result;
 
 namespace DavesDartsClub.UnitTests.WebApi;
@@ -11,6 +11,7 @@ namespace DavesDartsClub.UnitTests.WebApi;
 public class TournamentControllerUnitTest
 {
     [Fact]
+    [SuppressMessage("Usage", "Moq1400:Moq: Explicitly choose a mock behavior", Justification = "Default Mock only")]
     public async Task CreateTournament_Should_ReturnNewId_Given_AValid_TournamentRequest()
     {
         //Arrange
@@ -40,6 +41,7 @@ public class TournamentControllerUnitTest
     }
 
     [Fact]
+    [SuppressMessage("Usage", "Moq1400:Moq: Explicitly choose a mock behavior", Justification = "Default Mock only")]
     public void GetTournamentById_Should_ReturnATournamentResponse_Given_AValidTournamentId()
     {
         //Arrange
@@ -68,6 +70,7 @@ public class TournamentControllerUnitTest
     }
 
     [Fact]
+    [SuppressMessage("Usage", "Moq1400:Moq: Explicitly choose a mock behavior", Justification = "Default Mock only")]
     public void GetTournamentById_Should_ReturnATournamentNotFoundResponse_Given_ValidNonExistentTournamentId()
     {
         //Arrange

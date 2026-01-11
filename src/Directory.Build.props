@@ -6,11 +6,16 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<LangVersion>latest</LangVersion>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 		<AnalysisLevel>latest</AnalysisLevel>
 		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
 		<!--See: https://devblogs.microsoft.com/nuget/introducing-central-package-management/-->
 		<UserSecretsId>b761978f-b4a0-4a71-b061-695946cc4d39</UserSecretsId>
-		<NoWarn>$(NoWarn);S1133;S1135;S1125;1701;1702;1591;NU1605;CS1591</NoWarn>
-		<!--https://github.com/dotnet/aspnetcore/issues/50836-->
+		<NoWarn>$(NoWarn);S1133;S1135;S1125;1701;1702;1591;NU1605;CS1591;CA1515</NoWarn>
 	</PropertyGroup>
+	<ItemGroup>
+		<Using Include="System.Diagnostics.CodeAnalysis" />
+	</ItemGroup>
 </Project>
+

@@ -1,13 +1,14 @@
-﻿using DavesDartsClub.Application;
+﻿#pragma warning disable CA1707 // Identifiers should not contain underscores
+using DavesDartsClub.Application;
 using DavesDartsClub.Domain;
 using FluentValidation;
 using FluentValidation.Results;
-using System.Threading.Tasks;
 
 namespace DavesDartsClub.UnitTests.Application;
 
 public class LeagueServiceUnitTest
 {
+    [SuppressMessage("Usage", "Moq1400:Moq: Explicitly choose a mock behavior", Justification = "Default Mock only")]
     private readonly Mock<IValidator<League>> _mockLeagueValidator = new Mock<IValidator<League>>();
     private readonly LeagueService _leagueService;
 
@@ -17,6 +18,7 @@ public class LeagueServiceUnitTest
     }
 
     [Fact]
+    [SuppressMessage("Usage", "Moq1400:Moq: Explicitly choose a mock behavior", Justification = "Default Mock only")]
     public async Task CreateLeague_Should_ReturnASavedLeague_Given_AValid_League()
     {
         //Arrange

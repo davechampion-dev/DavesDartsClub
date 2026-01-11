@@ -23,7 +23,7 @@ internal class TournamentRepository : ITournamnetRepository
         cancellationToken.ThrowIfCancellationRequested();
 
         _dbContext.Tournaments.Add(entity);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         return new Tournament()
         {

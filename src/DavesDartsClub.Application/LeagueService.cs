@@ -33,7 +33,7 @@ public class LeagueService : ILeagueService
     }
     public async Task<Result<League>> CreateLeague(League league, CancellationToken cancellationToken)
     {
-        var validationResult = await _leagueValidator.ValidateAsync(league);
+        var validationResult = await _leagueValidator.ValidateAsync(league, cancellationToken).ConfigureAwait(false);
         if (!validationResult.IsValid)
         {
             return Result.Invalid(validationResult.AsErrors());
