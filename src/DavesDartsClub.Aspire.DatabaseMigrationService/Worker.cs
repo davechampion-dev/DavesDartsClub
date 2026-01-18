@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace DavesDartsClub.DatabaseMigrationService;
 
-internal class Worker(
+internal sealed class Worker(
     IServiceProvider serviceProvider,
     IHostApplicationLifetime hostApplicationLifetime) : BackgroundService
 {
@@ -21,8 +21,8 @@ internal class Worker(
             using var scope = serviceProvider.CreateScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-            await RunMigrationAsync(dbContext, stoppingToken);
-            await SeedDataAsync(dbContext, stoppingToken);
+            await RunMigrationAsync(dbContext, stoppingToken).ConfigureAwait(ConfigureAwaitOptions.None);
+            await SeedDataAsync(dbContext, stoppingToken).ConfigureAwait(ConfigureAwaitOptions.None);
         }
         catch (Exception ex)
         {
@@ -40,9 +40,9 @@ internal class Worker(
         // Run migration in a transaction to avoid partial migration if it fails ...
         await strategy.ExecuteAsync(async () =>
         {
-            await dbContext.Database.MigrateAsync(cancellationToken).ConfigureAwait(false);
+            await dbContext.Database.MigrateAsync(cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
         }
-        ).ConfigureAwait(false);
+        ).ConfigureAwait(ConfigureAwaitOptions.None);
     }
 
     private static async Task SeedDataAsync(AppDbContext dbContext, CancellationToken cancellationToken)
@@ -51,9 +51,9 @@ internal class Worker(
         await strategy.ExecuteAsync(async () =>
         {
             // Seed the database
-            await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
+            await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
 
-            if (!await dbContext.Leagues.AnyAsync(cancellationToken).ConfigureAwait(false))
+            if (!await dbContext.Leagues.AnyAsync(cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None))
             {
                 var leagueFaker = new LeagueFaker();
                 var leagues = leagueFaker.CreateFaker().Generate(5); // List<League>
@@ -67,7 +67,7 @@ internal class Worker(
                 dbContext.Leagues.AddRange(leagueEntities);
             }
 
-            if (!await dbContext.Set<MemberEntity>().AnyAsync(cancellationToken).ConfigureAwait(false))
+            if (!await dbContext.Set<MemberEntity>().AnyAsync(cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None))
             {
                 var memberFaker = new MemberFaker();
                 var members = memberFaker.CreateFaker().Generate(5); // List<Member> domain objects
@@ -82,9 +82,9 @@ internal class Worker(
                 dbContext.Members.AddRange(memberEntities);
             }
 
-            await dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-            await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
-        }).ConfigureAwait(false); 
+            await dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
+            await transaction.CommitAsync(cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
+        }).ConfigureAwait(ConfigureAwaitOptions.None); 
     }
 }
 

@@ -45,4 +45,4 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapDefaultEndpoints();
 
-await app.RunAsync();
+await app.RunAsync().ConfigureAwait(ConfigureAwaitOptions.None);

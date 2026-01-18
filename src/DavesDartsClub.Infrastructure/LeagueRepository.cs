@@ -22,7 +22,7 @@ internal class LeagueRepository : ILeagueRepository
         cancellationToken.ThrowIfCancellationRequested();
 
         _dbContext.Leagues.Add(entity);
-        await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
 
         return new League()
         {

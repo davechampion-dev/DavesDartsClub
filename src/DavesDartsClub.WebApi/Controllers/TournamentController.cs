@@ -28,7 +28,7 @@ public class TournamentController : ControllerBase
             TournamentName = tournamentRequest.TournamentName
         };
 
-        var result = await _tournamentService.CreateTournament(newTournament, cancellationToken).ConfigureAwait(false);
+        var result = await _tournamentService.CreateTournament(newTournament, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
 
         if (!result.IsSuccess || result.Value == null)
         {

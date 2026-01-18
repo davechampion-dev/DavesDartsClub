@@ -1,10 +1,9 @@
 ﻿using DavesDartsClub.Domain;
 using DavesDartsClub.Infrastructure.EntityFramework;
-using System.Threading.Tasks;
 
 namespace DavesDartsClub.Infrastructure;
 
-internal class TournamentRepository : ITournamnetRepository
+internal sealed class TournamentRepository : ITournamnetRepository
 {
     private readonly AppDbContext _dbContext;
 
@@ -23,7 +22,7 @@ internal class TournamentRepository : ITournamnetRepository
         cancellationToken.ThrowIfCancellationRequested();
 
         _dbContext.Tournaments.Add(entity);
-        await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
 
         return new Tournament()
         {

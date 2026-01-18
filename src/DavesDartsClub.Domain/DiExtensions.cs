@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
-public static class Extensions
+public static class DiExtensions
 {
     public static IServiceCollection AddDavesDartClubDomain(this IServiceCollection services)
     {

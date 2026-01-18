@@ -25,4 +25,4 @@ builder.AddProject<Projects.DavesDartsClub_Website>("Website")
     .WithHttpHealthCheck("/health")
     .WithReference(api).WaitFor(api);
 
-await builder.Build().RunAsync();
+await builder.Build().RunAsync().ConfigureAwait(ConfigureAwaitOptions.None);

@@ -44,12 +44,12 @@ public class TournamentService : ITournamentService
 
     public async Task<Result<Tournament>> CreateTournament(Tournament tournament, CancellationToken cancellationToken)
     {
-        var validationResult = await _tournamentValidator.ValidateAsync(tournament, cancellationToken).ConfigureAwait(false);
+        var validationResult = await _tournamentValidator.ValidateAsync(tournament, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
         if (!validationResult.IsValid)
         {
             return Result.Invalid(validationResult.AsErrors());
         }
 
-        return await _tournamnetRepository.AddTournament(tournament, cancellationToken).ConfigureAwait(false); 
+        return await _tournamnetRepository.AddTournament(tournament, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None); 
     }
 }
