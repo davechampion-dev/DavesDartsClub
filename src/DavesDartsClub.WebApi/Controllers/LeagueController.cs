@@ -7,7 +7,7 @@ namespace DavesDartsClub.WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public partial class LeagueController : ControllerBase
+public class LeagueController : ControllerBase
 {
     private readonly ILeagueService _leagueService;
 
@@ -41,7 +41,7 @@ public partial class LeagueController : ControllerBase
 
     [HttpGet(Name = nameof(GetLeagueSearch))]
     [ProducesResponseType(((int)HttpStatusCode.OK))]
-    public ActionResult<IEnumerable<LeagueResponse>> GetLeagueSearch([FromBody] LeagueSearchRequest leagueName)
+    public ActionResult<IEnumerable<LeagueResponse>> GetLeagueSearch([NotNull,FromBody] LeagueSearchRequest leagueName)
     {
         var league = _leagueService.GetLeagueByName(leagueName.LeagueName);
 

@@ -11,4 +11,4 @@ builder.Services.AddOpenTelemetry()
 builder.AddDavesDartsClubAppDbContext();
 
 var host = builder.Build();
-await host.RunAsync();
+await host.RunAsync().ConfigureAwait(ConfigureAwaitOptions.None);

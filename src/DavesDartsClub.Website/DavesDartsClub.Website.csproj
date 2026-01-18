@@ -11,7 +11,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Cors" />
 		<PackageReference Include="MudBlazor" />
 		<PackageReference Include="Refit.HttpClientFactory" />
 		<PackageReference Include="SonarAnalyzer.CSharp">

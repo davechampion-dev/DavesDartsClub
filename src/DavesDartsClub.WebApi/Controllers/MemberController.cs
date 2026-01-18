@@ -40,8 +40,7 @@ public class MemberController : ControllerBase
 
     [HttpPost(Name = nameof(MemberSearch))]
     [ProducesResponseType(((int)HttpStatusCode.OK))]
-
-    public ActionResult<IEnumerable<MemberResponse>> MemberSearch([FromBody] MemberSearchRequest memberName)
+    public ActionResult<IEnumerable<MemberResponse>> MemberSearch([NotNull, FromBody] MemberSearchRequest memberName)
     {
         // ToDo: Update to return list of members and take search term
         var member = _memberService.GetMemberByName(memberName.MemberName);

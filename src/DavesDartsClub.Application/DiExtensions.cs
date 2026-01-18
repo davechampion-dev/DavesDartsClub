@@ -2,7 +2,7 @@
 
 namespace Microsoft.Extensions.DependencyInjection;
 
-public static class Extensions
+public static class DiExtensions
 {
     public static IServiceCollection AddDavesDartClubApplication(this IServiceCollection services)
     {

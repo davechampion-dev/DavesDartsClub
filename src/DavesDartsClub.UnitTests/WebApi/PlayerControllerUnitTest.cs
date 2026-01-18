@@ -1,13 +1,14 @@
-﻿using DavesDartsClub.Application;
+﻿#pragma warning disable CA1707 // Identifiers should not contain underscores
+using DavesDartsClub.Application;
 using DavesDartsClub.SharedContracts.Player;
 using DavesDartsClub.WebApi.Controllers;
-
 
 namespace DavesDartsClub.UnitTests.WebApi;
 
 public class PlayerControllerUnitTest
 {
     [Fact]
+    [SuppressMessage("Usage", "Moq1400:Moq: Explicitly choose a mock behavior", Justification = "Default Mock only")]
     public void CreatePlayer_Should_ReturnNewId_Given_AValid_PlayerRequest()
     {
         //Arrange

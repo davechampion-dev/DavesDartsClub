@@ -41,20 +41,19 @@ public class PlayerController : ControllerBase
 
     [HttpGet(Name = nameof(GetPlayerSearch))]
     [ProducesResponseType(((int)HttpStatusCode.OK))]
-
-    public ActionResult<IEnumerable<PlayerResponse>> GetPlayerSearch([FromBody] PlayerSearchRequest playerName)
+    public ActionResult<IEnumerable<PlayerResponse>> GetPlayerSearch([NotNull, FromBody] PlayerSearchRequest playerName)
     {
         // ToDo: Update to return list of members and take search term
         var player = _playerService.GetPlayerByName(playerName.PlayerName);
 
         // ToDo: Switch to linq expression
         var result = new List<PlayerResponse>
-{
-    new PlayerResponse()
-    {
-        PlayerName = player.Nickname ?? string.Empty
-    }
-    };
+        {
+            new PlayerResponse()
+            {
+                PlayerName = player.Nickname ?? string.Empty
+            }
+        };
         return Ok(result);
     }
 

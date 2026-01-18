@@ -1,4 +1,5 @@
-﻿using DavesDartsClub.Application;
+﻿#pragma warning disable CA1707 // Identifiers should not contain underscores
+using DavesDartsClub.Application;
 using DavesDartsClub.Domain;
 using DavesDartsClub.Infrastructure;
 using FluentValidation;
@@ -8,7 +9,9 @@ namespace DavesDartsClub.UnitTests.Application;
 
 public class TournamentServiceUnitTest
 {
+    [SuppressMessage("Usage", "Moq1400:Moq: Explicitly choose a mock behavior", Justification = "Default Mock only")]
     private readonly Mock<IValidator<Tournament>> _mockTournamentValidator = new Mock<IValidator<Tournament>>();
+    [SuppressMessage("Usage", "Moq1400:Moq: Explicitly choose a mock behavior", Justification = "Default Mock only")]
     private readonly Mock<ITournamnetRepository> _mockTournamentRepository = new Mock<ITournamnetRepository>();
     private readonly TournamentService _tournamentService;
 
