@@ -4,7 +4,5 @@ namespace DavesDartsClub.Application;
 
 public interface IPlayerService
 {
-
-    PlayerProfile GetPlayerByName(string name);
+    Task<PlayerProfile> GetPlayerByNameAsync(string name, CancellationToken cancellationToken);
 }
-

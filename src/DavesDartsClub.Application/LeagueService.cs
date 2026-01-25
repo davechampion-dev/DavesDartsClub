@@ -14,8 +14,9 @@ public class LeagueService : ILeagueService
         _leagueValidator = leagueValidator;
     }
 
-    public League GetLeagueById(Guid leagueId)
+    public async Task<League> GetLeagueByIdAsync(Guid leagueId, CancellationToken cancellationToken)
     {
+        //ToDo: Add data access
         return new League()
         {
             LeagueId = leagueId,
@@ -23,15 +24,17 @@ public class LeagueService : ILeagueService
         };
     }
 
-    public League GetLeagueByName(string name)
+    public async Task<League> GetLeagueByNameAsync(string name, CancellationToken cancellationToken)
     {
+        //ToDo: Add data access
         return new League()
         {
             LeagueId = Guid.NewGuid(),
             LeagueName = "Champions League"
         };
     }
-    public async Task<Result<League>> CreateLeague(League league, CancellationToken cancellationToken)
+
+    public async Task<Result<League>> CreateLeagueAsync(League league, CancellationToken cancellationToken)
     {
         var validationResult = await _leagueValidator.ValidateAsync(league, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
         if (!validationResult.IsValid)

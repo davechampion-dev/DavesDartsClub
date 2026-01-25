@@ -17,7 +17,7 @@ public class TournamentControllerUnitTest
         //Arrange
         var newId = Guid.NewGuid();
         var mockTournamentService = new Mock<ITournamentService>();
-        mockTournamentService.Setup(x => x.CreateTournament(It.IsAny<Tournament>(), It.IsAny<CancellationToken>()))
+        mockTournamentService.Setup(x => x.CreateTournamentAsync(It.IsAny<Tournament>(), It.IsAny<CancellationToken>()))
            .Returns(Task.FromResult(new Result<Tournament>(new Tournament { TournamentId = newId })));
         var tournamentController = new TournamentController(mockTournamentService.Object);
         var tournamentRequest = new TournamentRequest();
@@ -37,12 +37,13 @@ public class TournamentControllerUnitTest
 
         var value = (TournamentResponse)result.Value!;
         value.TournamentId.ShouldBe(newId);
-        mockTournamentService.Verify(x => x.CreateTournament(It.IsAny<Tournament>(), It.IsAny<CancellationToken>()), Times.Once);
+        mockTournamentService.Verify(x => x.CreateTournamentAsync(It.IsAny<Tournament>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
     [SuppressMessage("Usage", "Moq1400:Moq: Explicitly choose a mock behavior", Justification = "Default Mock only")]
-    public void GetTournamentById_Should_ReturnATournamentResponse_Given_AValidTournamentId()
+    [SuppressMessage("Usage", "Moq1203:Method setup should specify a return value", Justification = "<Pending>")]
+    public async Task GetTournamentById_Should_ReturnATournamentResponse_Given_AValidTournamentId()
     {
         //Arrange
         var tournament = new Tournament()
@@ -51,12 +52,12 @@ public class TournamentControllerUnitTest
             TournamentName = "Champions Cup"
         };
         var mockTournamentService = new Mock<ITournamentService>();
-        mockTournamentService.Setup(x => x.GetTournamentById(tournament.TournamentId))
-           .Returns(tournament);
+        mockTournamentService.Setup(x => x.GetTournamentByIdAsync(tournament.TournamentId, CancellationToken.None))
+           .ReturnsAsync(tournament);
         var tournamentController = new TournamentController(mockTournamentService.Object);
 
         //Act
-        var result = tournamentController.GetTournamentById(tournament.TournamentId);
+        var result = await tournamentController.GetTournamentById(tournament.TournamentId, CancellationToken.None);
 
         //Assert
         var okResult = result.Result.ShouldBeOfType<OkObjectResult>();
@@ -66,26 +67,27 @@ public class TournamentControllerUnitTest
         tournamentResponse.ShouldNotBeNull();
         tournamentResponse.TournamentId.ShouldBe(tournament.TournamentId);
         tournamentResponse.TournamentName.ShouldBe(tournament.TournamentName);
-        mockTournamentService.Verify(x => x.GetTournamentById(tournament.TournamentId), Times.Once);
+        mockTournamentService.Verify(x => x.GetTournamentByIdAsync(tournament.TournamentId, CancellationToken.None), Times.Once);
     }
 
     [Fact]
     [SuppressMessage("Usage", "Moq1400:Moq: Explicitly choose a mock behavior", Justification = "Default Mock only")]
-    public void GetTournamentById_Should_ReturnATournamentNotFoundResponse_Given_ValidNonExistentTournamentId()
+    [SuppressMessage("Usage", "Moq1203:Method setup should specify a return value", Justification = "<Pending>")]
+    public async Task GetTournamentById_Should_ReturnATournamentNotFoundResponse_Given_ValidNonExistentTournamentId()
     {
         //Arrange
         var mocktournametId = Guid.NewGuid();
         Tournament? tournament = null;
         var mockTournamentService = new Mock<ITournamentService>();
-        mockTournamentService.Setup(x => x.GetTournamentById(mocktournametId))
-           .Returns(tournament);
+        mockTournamentService.Setup(x => x.GetTournamentByIdAsync(mocktournametId, CancellationToken.None))
+           .ReturnsAsync(tournament);
         var tournamentController = new TournamentController(mockTournamentService.Object);
 
         //Act
-        var result = tournamentController.GetTournamentById(mocktournametId);
+        var result = await tournamentController.GetTournamentById(mocktournametId, CancellationToken.None);
 
         //Assert
         result.Result.ShouldBeOfType<NotFoundResult>();
-        mockTournamentService.Verify(x => x.GetTournamentById(mocktournametId), Times.Once);
+        mockTournamentService.Verify(x => x.GetTournamentByIdAsync(mocktournametId, CancellationToken.None), Times.Once);
     }
 }

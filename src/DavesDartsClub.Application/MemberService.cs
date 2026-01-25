@@ -12,8 +12,9 @@ public class MemberService : IMemberService
         _memberValidator = memberValidator;
     }
 
-    public Member GetMemberById(Guid memberId)
+    public async Task<Member> GetMemberByIdAsync(Guid memberId, CancellationToken cancellationToken)
     {
+        //ToDo: Add data access
         return new Member()
         {
             MemberId = memberId,
@@ -21,8 +22,9 @@ public class MemberService : IMemberService
         };
     }
 
-    public Member GetMemberByName(string name)
+    public async Task<Member> GetMemberByNameAsync(string name, CancellationToken cancellationToken)
     {
+        //ToDo: Add data access
         return new Member()
         {
             MemberId = Guid.NewGuid(),

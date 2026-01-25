@@ -28,7 +28,7 @@ public class TournamentController : ControllerBase
             TournamentName = tournamentRequest.TournamentName
         };
 
-        var result = await _tournamentService.CreateTournament(newTournament, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
+        var result = await _tournamentService.CreateTournamentAsync(newTournament, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
 
         if (!result.IsSuccess || result.Value == null)
         {
@@ -49,9 +49,9 @@ public class TournamentController : ControllerBase
     [HttpGet("{tournamentId}", Name = nameof(GetTournamentById))]
     [ProducesResponseType(typeof(TournamentResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
-    public ActionResult<TournamentResponse> GetTournamentById(Guid tournamentId)
+    public async Task<ActionResult<TournamentResponse>> GetTournamentById(Guid tournamentId, CancellationToken cancellationToken)
     {
-        var tournament = _tournamentService.GetTournamentById(tournamentId);
+        var tournament = await _tournamentService.GetTournamentByIdAsync(tournamentId, cancellationToken).ConfigureAwait(false);
 
         if (tournament == null)
         {
@@ -69,9 +69,9 @@ public class TournamentController : ControllerBase
 
     [HttpGet("search", Name = nameof(GetTournamentSearch))]
     [ProducesResponseType((int)HttpStatusCode.OK)]
-    public ActionResult<IEnumerable<TournamentResponse>> GetTournamentSearch([FromQuery] string tournamentName)
+    public async Task<ActionResult<IEnumerable<TournamentResponse>>> GetTournamentSearch([FromQuery] string tournamentName, CancellationToken cancellationToken)
     {
-        var tournament = _tournamentService.GetTournamentByName(tournamentName);
+        var tournament = await _tournamentService.GetTournamentByNameAsync(tournamentName,cancellationToken).ConfigureAwait(false);
 
         if (tournament == null)
         {
@@ -93,8 +93,9 @@ public class TournamentController : ControllerBase
     [HttpDelete("{tournamentId}", Name = nameof(DeleteTournament))]
     [ProducesResponseType(((int)HttpStatusCode.NoContent))]
     [ProducesResponseType(((int)HttpStatusCode.NotFound))]
-    public ActionResult DeleteTournament(Guid tournamentId)
+    public async Task<ActionResult> DeleteTournament(Guid tournamentId, CancellationToken cancellationToken)
     {
+        //ToDo: Implement delete tournament logic
         var tournamentExists = true;
 
         if (!tournamentExists)
@@ -104,5 +105,4 @@ public class TournamentController : ControllerBase
 
         return NoContent();
     }
-
 }

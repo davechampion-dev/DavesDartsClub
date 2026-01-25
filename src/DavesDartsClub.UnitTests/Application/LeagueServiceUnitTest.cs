@@ -31,7 +31,7 @@ public class LeagueServiceUnitTest
            .Returns(Task.FromResult(new ValidationResult()));
 
         //Act
-        var response = await leagueService.CreateLeague(league, CancellationToken.None);
+        var response = await leagueService.CreateLeagueAsync(league, CancellationToken.None);
 
         //Assert
         response.ShouldNotBeNull();
@@ -50,7 +50,7 @@ public class LeagueServiceUnitTest
             .Returns(Task.FromResult(validationResult));
 
         //Act
-        var response = await _leagueService.CreateLeague(league, CancellationToken.None);
+        var response = await _leagueService.CreateLeagueAsync(league, CancellationToken.None);
 
         //Assert
         response.ShouldNotBeNull();

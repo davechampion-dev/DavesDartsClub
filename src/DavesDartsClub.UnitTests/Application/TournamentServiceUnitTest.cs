@@ -38,7 +38,7 @@ public class TournamentServiceUnitTest
             }));
 
         //Act
-        var response = await _tournamentService.CreateTournament(tournament, CancellationToken.None);
+        var response = await _tournamentService.CreateTournamentAsync(tournament, CancellationToken.None);
 
         //Assert
         response.ShouldNotBeNull();
@@ -60,7 +60,7 @@ public class TournamentServiceUnitTest
             .Returns(Task.FromResult(validationResult));
 
         //Act
-        var response = await _tournamentService.CreateTournament(tournament, CancellationToken.None);
+        var response = await _tournamentService.CreateTournamentAsync(tournament, CancellationToken.None);
 
         //Assert
         response.ShouldNotBeNull();

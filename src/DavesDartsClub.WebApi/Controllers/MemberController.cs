@@ -17,8 +17,9 @@ public class MemberController : ControllerBase
 
     [HttpPost(Name = nameof(CreateMember))]
     [ProducesResponseType(((int)HttpStatusCode.Created))]
-    public ActionResult<Guid> CreateMember([FromBody] MemberRequest memberRequest)
+    public async Task<ActionResult<Guid>> CreateMember([FromBody] MemberRequest memberRequest, CancellationToken cancellationToken)
     {
+        //ToDo: Implement create member logic
         var id = Guid.NewGuid();
         return CreatedAtRoute(nameof(GetMemberById), new { memberId = id }, id);
     }
@@ -26,9 +27,9 @@ public class MemberController : ControllerBase
     [HttpGet("{memberId}", Name = nameof(GetMemberById))]
     [ProducesResponseType(((int)HttpStatusCode.OK))]
     [ProducesResponseType(((int)HttpStatusCode.NotFound))]
-    public ActionResult<MemberResponse> GetMemberById(Guid memberId)
+    public async Task<ActionResult<MemberResponse>> GetMemberById(Guid memberId, CancellationToken cancellationToken)
     {
-        var member = _memberService.GetMemberById(memberId);
+        var member = await _memberService.GetMemberByIdAsync(memberId, cancellationToken).ConfigureAwait(false);
         var result = new MemberResponse()
         {
             MemberId = member.MemberId,
@@ -40,10 +41,10 @@ public class MemberController : ControllerBase
 
     [HttpPost(Name = nameof(MemberSearch))]
     [ProducesResponseType(((int)HttpStatusCode.OK))]
-    public ActionResult<IEnumerable<MemberResponse>> MemberSearch([NotNull, FromBody] MemberSearchRequest memberName)
+    public async Task<ActionResult<IEnumerable<MemberResponse>>> MemberSearch([NotNull, FromBody] MemberSearchRequest memberName, CancellationToken cancellationToken)
     {
         // ToDo: Update to return list of members and take search term
-        var member = _memberService.GetMemberByName(memberName.MemberName);
+        var member = await _memberService.GetMemberByNameAsync(memberName.MemberName, cancellationToken).ConfigureAwait(false);
 
         // ToDo: Switch to linq expression
         var result = new List<MemberResponse>
@@ -61,8 +62,9 @@ public class MemberController : ControllerBase
     [HttpDelete("{memberId}", Name = nameof(DeleteMember))]
     [ProducesResponseType(((int)HttpStatusCode.NoContent))]
     [ProducesResponseType(((int)HttpStatusCode.NotFound))]
-    public ActionResult DeleteMember(Guid memberId)
+    public async Task<ActionResult> DeleteMember(Guid memberId, CancellationToken cancellationToken)
     {
+        //ToDo: Implement delete member logic
         var memberExists = true;
 
         if (!memberExists)
