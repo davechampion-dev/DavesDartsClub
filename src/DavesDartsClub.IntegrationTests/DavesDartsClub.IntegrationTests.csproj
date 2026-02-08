@@ -37,7 +37,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\DavesDartsClub.Aspire.AppHost\DavesDartsClub.Aspire.AppHost.csproj" />
-		<ProjectReference Include="..\DavesDartsClub.UnitTests\DavesDartsClub.UnitTests.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
