@@ -1,7 +1,10 @@
-﻿using DavesDartsClub.Application;
+﻿using Ardalis.Result;
+using DavesDartsClub.Application;
 using DavesDartsClub.SharedContracts.Member;
+using DavesDartsClub.Domain;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+
 namespace DavesDartsClub.WebApi.Controllers;
 
 [ApiController]
@@ -19,29 +22,24 @@ public class MemberController : ControllerBase
     [ProducesResponseType(((int)HttpStatusCode.Created))]
     public async Task<ActionResult<Guid>> CreateMember([FromBody] MemberRequest memberRequest, CancellationToken cancellationToken)
     {
-        //ToDo: Implement create member logic
-        var id = Guid.NewGuid();
-        return CreatedAtRoute(nameof(GetMemberById), new { memberId = id }, id);
-    }
-
-    [HttpGet("{memberId}", Name = nameof(GetMemberById))]
-    [ProducesResponseType(((int)HttpStatusCode.OK))]
-    [ProducesResponseType(((int)HttpStatusCode.NotFound))]
-    public async Task<ActionResult<MemberResponse>> GetMemberById(Guid memberId, CancellationToken cancellationToken)
-    {
-        var member = await _memberService.GetMemberByIdAsync(memberId, cancellationToken).ConfigureAwait(false);
-        var result = new MemberResponse()
+        var member = new Member
         {
-            MemberId = member.MemberId,
-            MemberName = member.MemberName
+            MemberName = memberRequest.MemberName
         };
 
-        return Ok(result);
+        var memberResult = await _memberService.CreateMemberAsync(member, cancellationToken).ConfigureAwait(false);
+
+        if (memberResult.Status != ResultStatus.Created)
+        {
+            return BadRequest(memberResult.Errors);
+        }
+
+        return CreatedAtRoute(nameof(GetMemberById), new { memberId = memberResult.Value.MemberId }, memberResult.Value.MemberId);
     }
 
-    [HttpPost(Name = nameof(MemberSearch))]
+    [HttpPost(ApiConstants.SearchRoute, Name = nameof(PostMemberSearch))]
     [ProducesResponseType(((int)HttpStatusCode.OK))]
-    public async Task<ActionResult<IEnumerable<MemberResponse>>> MemberSearch([NotNull, FromBody] MemberSearchRequest memberName, CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<MemberResponse>>> PostMemberSearch([NotNull, FromBody] MemberSearchRequest memberName, CancellationToken cancellationToken)
     {
         // ToDo: Update to return list of members and take search term
         var member = await _memberService.GetMemberByNameAsync(memberName.MemberName, cancellationToken).ConfigureAwait(false);
@@ -54,6 +52,27 @@ public class MemberController : ControllerBase
                 MemberId = member.MemberId,
                 MemberName = member.MemberName
             }
+        };
+
+        return Ok(result);
+    }
+
+    [HttpGet("{memberId}", Name = nameof(GetMemberById))]
+    [ProducesResponseType(((int)HttpStatusCode.OK))]
+    [ProducesResponseType(((int)HttpStatusCode.NotFound))]
+    public async Task<ActionResult<MemberResponse>> GetMemberById(Guid memberId, CancellationToken cancellationToken)
+    {
+        var member = await _memberService.GetMemberByIdAsync(memberId, cancellationToken).ConfigureAwait(false);
+
+        if (member == null)
+        {
+            return NotFound();
+        }
+
+        var result = new MemberResponse
+        {
+            MemberId = member.MemberId,
+            MemberName = member.MemberName
         };
 
         return Ok(result);
