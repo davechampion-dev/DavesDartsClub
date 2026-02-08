@@ -1,21 +1,26 @@
 ﻿using Ardalis.Result;
 using Ardalis.Result.FluentValidation;
 using DavesDartsClub.Domain;
+using DavesDartsClub.Infrastructure;
 using FluentValidation;
 
 namespace DavesDartsClub.Application;
 
 public class LeagueService : ILeagueService
 {
+    private readonly ILeagueRepository _leagueRepository;
     private readonly IValidator<League> _leagueValidator;
 
-    public LeagueService(IValidator<League> leagueValidator)
-    {
+    public LeagueService(ILeagueRepository leagueRepository, IValidator<League> leagueValidator)
+    { 
+        _leagueRepository = leagueRepository;
         _leagueValidator = leagueValidator;
+       
     }
 
-    public League GetLeagueById(Guid leagueId)
+    public async Task<League> GetLeagueByIdAsync(Guid leagueId, CancellationToken cancellationToken)
     {
+        //ToDo: Add data access
         return new League()
         {
             LeagueId = leagueId,
@@ -23,15 +28,17 @@ public class LeagueService : ILeagueService
         };
     }
 
-    public League GetLeagueByName(string name)
+    public async Task<League> GetLeagueByNameAsync(string name, CancellationToken cancellationToken)
     {
+        //ToDo: Add data access
         return new League()
         {
             LeagueId = Guid.NewGuid(),
             LeagueName = "Champions League"
         };
     }
-    public async Task<Result<League>> CreateLeague(League league, CancellationToken cancellationToken)
+
+    public async Task<Result<League>> CreateLeagueAsync(League league, CancellationToken cancellationToken)
     {
         var validationResult = await _leagueValidator.ValidateAsync(league, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
         if (!validationResult.IsValid)
@@ -39,7 +46,7 @@ public class LeagueService : ILeagueService
             return Result.Invalid(validationResult.AsErrors());
         }
 
-        //ToDO: Persist the league to the database
-        return league;
+        var createdLeague = await _leagueRepository.AddLeague(league, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None); 
+        return Result.Created(createdLeague);
     }
 }

@@ -10,6 +10,9 @@ public static class DiExtensions
     public static IServiceCollection AddDavesDartClubInfrastructure(this IServiceCollection services)
     {
         services.AddScoped<ITournamnetRepository, TournamentRepository>();
+        services.AddScoped<ITeamRepository, TeamRepository>();
+        services.AddScoped<ILeagueRepository, LeagueRepository>();
+        services.AddScoped<IMemberRepository, MemberRepository>();
         return services;
     }
 

@@ -12,7 +12,7 @@ public class PlayerService : IPlayerService
         _playerValidator = playerValidator;
     }
 
-    public PlayerProfile GetPlayerByName(string name)
+    public async Task<PlayerProfile> GetPlayerByNameAsync(string name, CancellationToken cancellationToken)
     {
         return new PlayerProfile()
         {

@@ -9,7 +9,7 @@ public class PlayerControllerUnitTest
 {
     [Fact]
     [SuppressMessage("Usage", "Moq1400:Moq: Explicitly choose a mock behavior", Justification = "Default Mock only")]
-    public void CreatePlayer_Should_ReturnNewId_Given_AValid_PlayerRequest()
+    public async Task CreatePlayer_Should_ReturnNewId_Given_AValid_PlayerRequest()
     {
         //Arrange
         var mockPlayerService = new Mock<IPlayerService>();
@@ -17,7 +17,7 @@ public class PlayerControllerUnitTest
         var playerRequest = new PlayerRequest();
 
         //Act
-        var result = playerController.CreatePlayer(playerRequest);
+        var result = await playerController.CreatePlayer(playerRequest, CancellationToken.None);
 
         //Assert
         result.ShouldNotBeNull();

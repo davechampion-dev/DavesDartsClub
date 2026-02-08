@@ -12,7 +12,6 @@ public class TournamentValidatorUnitTest
         _tournamentValidator = new TournamentValidator();
     }
 
-
     [Fact]
     public void Validate_Should_ReturnAValidResponseWithNoErrors_Given_AValidTournament()
     {

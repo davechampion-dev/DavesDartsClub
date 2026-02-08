@@ -1,9 +1,11 @@
-﻿using DavesDartsClub.Domain;
+﻿using Ardalis.Result;
+using DavesDartsClub.Domain;
 
 namespace DavesDartsClub.Application;
 
 public interface IMemberService
 {
-    Member GetMemberById(Guid memberId);
-    Member GetMemberByName(string name);
+    Task<Member?> GetMemberByIdAsync(Guid memberId, CancellationToken cancellationToken);
+    Task<Member> GetMemberByNameAsync(string name, CancellationToken cancellationToken);
+    Task<Result<Member>> CreateMemberAsync(Member member, CancellationToken cancellationToken);
 }
