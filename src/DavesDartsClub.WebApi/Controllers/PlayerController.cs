@@ -39,9 +39,9 @@ public class PlayerController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet(Name = nameof(GetPlayerSearch))]
+    [HttpPost(ApiConstants.SearchRoute, Name = nameof(PostPlayerSearch))]
     [ProducesResponseType(((int)HttpStatusCode.OK))]
-    public async Task<ActionResult<IEnumerable<PlayerResponse>>> GetPlayerSearch([NotNull, FromBody] PlayerSearchRequest playerName, CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<PlayerResponse>>> PostPlayerSearch([NotNull, FromBody] PlayerSearchRequest playerName, CancellationToken cancellationToken)
     {
         // ToDo: Update to return list of members and take search term
         var player = await _playerService.GetPlayerByNameAsync(playerName.PlayerName, cancellationToken).ConfigureAwait(false);
