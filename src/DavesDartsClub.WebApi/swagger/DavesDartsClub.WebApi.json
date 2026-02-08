@@ -39,42 +39,6 @@
             }
           }
         }
-      },
-      "get": {
-        "tags": [
-          "League"
-        ],
-        "operationId": "GetLeagueSearch",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LeagueSearchRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/LeagueSearchRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/LeagueResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/League/{leagueId}": {
@@ -150,12 +114,86 @@
         }
       }
     },
+    "/League/search": {
+      "post": {
+        "tags": [
+          "League"
+        ],
+        "operationId": "PostLeagueSearch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LeagueSearchRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LeagueSearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LeagueResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Member": {
       "post": {
         "tags": [
           "Member"
         ],
-        "operationId": "MemberSearch",
+        "operationId": "CreateMember",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Member/search": {
+      "post": {
+        "tags": [
+          "Member"
+        ],
+        "operationId": "PostMemberSearch",
         "requestBody": {
           "content": {
             "application/json": {
@@ -295,42 +333,6 @@
             }
           }
         }
-      },
-      "get": {
-        "tags": [
-          "Player"
-        ],
-        "operationId": "GetPlayerSearch",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PlayerSearchRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/PlayerSearchRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PlayerResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/Player/{memberId}": {
@@ -406,6 +408,44 @@
         }
       }
     },
+    "/Player/search": {
+      "post": {
+        "tags": [
+          "Player"
+        ],
+        "operationId": "PostPlayerSearch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayerSearchRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayerSearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlayerResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Score": {
       "get": {
         "tags": [
@@ -439,6 +479,153 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/Teams": {
+      "post": {
+        "tags": [
+          "Teams"
+        ],
+        "operationId": "CreateTeam",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TeamRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TeamRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Teams/{teamId}": {
+      "get": {
+        "tags": [
+          "Teams"
+        ],
+        "operationId": "GetTeamById",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeamResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Teams"
+        ],
+        "operationId": "DeleteTeam",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Teams/search": {
+      "post": {
+        "tags": [
+          "Teams"
+        ],
+        "operationId": "PostTeamSearch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TeamSearchRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TeamSearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TeamResponse"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -572,20 +759,26 @@
       }
     },
     "/Tournament/search": {
-      "get": {
+      "post": {
         "tags": [
           "Tournament"
         ],
-        "operationId": "GetTournamentSearch",
-        "parameters": [
-          {
-            "name": "tournamentName",
-            "in": "query",
-            "schema": {
-              "type": "string"
+        "operationId": "PostTournamentSearch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TournamentSearchRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TournamentSearchRequest"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -724,6 +917,67 @@
           }
         }
       },
+      "TeamRequest": {
+        "type": "object",
+        "properties": {
+          "teamName": {
+            "type": "string"
+          },
+          "leagueId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "captainId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "homeVenueId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          }
+        }
+      },
+      "TeamResponse": {
+        "type": "object",
+        "properties": {
+          "teamId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "teamName": {
+            "type": "string"
+          },
+          "leagueId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "captainId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "homeVenueId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TeamSearchRequest": {
+        "type": "object",
+        "properties": {
+          "teamName": {
+            "type": "string"
+          }
+        }
+      },
       "TournamentRequest": {
         "type": "object",
         "properties": {
@@ -743,6 +997,14 @@
             "type": "string"
           }
         }
+      },
+      "TournamentSearchRequest": {
+        "type": "object",
+        "properties": {
+          "tournamentName": {
+            "type": "string"
+          }
+        }
       }
     }
   },
@@ -758,6 +1020,9 @@
     },
     {
       "name": "Score"
+    },
+    {
+      "name": "Teams"
     },
     {
       "name": "Tournament"

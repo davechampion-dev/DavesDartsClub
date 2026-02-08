@@ -12,6 +12,7 @@ public static class DiExtensions
         services.AddScoped<IValidator<League>, LeagueValidator>();
         services.AddScoped<IValidator<PlayerProfile>, PlayerValidator>();
         services.AddScoped<IValidator<Member>, MemberValidator>();
+        services.AddScoped<IValidator<Team>, TeamValidator>();
         return services;
     }
 }

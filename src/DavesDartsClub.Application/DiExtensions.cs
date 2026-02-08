@@ -10,7 +10,7 @@ public static class DiExtensions
         services.AddScoped<ITournamentService, TournamentService>();
         services.AddScoped<ILeagueService, LeagueService>();
         services.AddScoped<IPlayerService, PlayerService>();
-
+        services.AddScoped<ITeamService, TeamService>();
         return services;
     }
 }
