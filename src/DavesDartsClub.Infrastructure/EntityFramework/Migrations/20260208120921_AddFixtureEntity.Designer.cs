@@ -4,6 +4,7 @@ using DavesDartsClub.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DavesDartsClub.EntityFramework.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260208120921_AddFixtureEntity")]
+    partial class AddFixtureEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,44 +115,6 @@ namespace DavesDartsClub.EntityFramework.Migrations
                     b.HasKey("LeagueId");
 
                     b.ToTable("Leagues");
-                });
-
-            modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.MatchResultEntity", b =>
-                {
-                    b.Property<Guid>("MatchResultId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("AwayTeamScore")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ConfirmedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("FixtureId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("HomeTeamScore")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.Property<Guid>("SubmittedByMemberId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("SubmittedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("MatchResultId");
-
-                    b.HasIndex("FixtureId");
-
-                    b.HasIndex("SubmittedByMemberId");
-
-                    b.ToTable("MatchResults", (string)null);
                 });
 
             modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.MemberEntity", b =>
@@ -387,25 +352,6 @@ namespace DavesDartsClub.EntityFramework.Migrations
                     b.Navigation("Season");
 
                     b.Navigation("Venue");
-                });
-
-            modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.MatchResultEntity", b =>
-                {
-                    b.HasOne("DavesDartsClub.Infrastructure.EntityFramework.FixtureEntity", "Fixture")
-                        .WithMany()
-                        .HasForeignKey("FixtureId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("DavesDartsClub.Infrastructure.EntityFramework.MemberEntity", "SubmittedBy")
-                        .WithMany()
-                        .HasForeignKey("SubmittedByMemberId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Fixture");
-
-                    b.Navigation("SubmittedBy");
                 });
 
             modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.PlayerProfileEntity", b =>
