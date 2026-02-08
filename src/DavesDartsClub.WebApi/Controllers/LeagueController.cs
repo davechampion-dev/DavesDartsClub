@@ -51,9 +51,9 @@ public class LeagueController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet(Name = nameof(GetLeagueSearch))]
+    [HttpPost(ApiConstants.SearchRoute, Name = nameof(PostLeagueSearch))]
     [ProducesResponseType(((int)HttpStatusCode.OK))]
-    public async Task<ActionResult<IEnumerable<LeagueResponse>>> GetLeagueSearch([NotNull,FromBody] LeagueSearchRequest leagueName, CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<LeagueResponse>>> PostLeagueSearch([NotNull,FromBody] LeagueSearchRequest leagueName, CancellationToken cancellationToken)
     {
         var league = await _leagueService.GetLeagueByNameAsync(leagueName.LeagueName, cancellationToken).ConfigureAwait(false);
 

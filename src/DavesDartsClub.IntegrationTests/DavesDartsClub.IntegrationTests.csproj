@@ -21,7 +21,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Cors" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" />
 		<PackageReference Include="xunit" />
-		<PackageReference Include="xunit.analyzers" >
+		<PackageReference Include="xunit.analyzers">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
@@ -37,6 +37,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\DavesDartsClub.Aspire.AppHost\DavesDartsClub.Aspire.AppHost.csproj" />
+		<ProjectReference Include="..\DavesDartsClub.UnitTests\DavesDartsClub.UnitTests.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

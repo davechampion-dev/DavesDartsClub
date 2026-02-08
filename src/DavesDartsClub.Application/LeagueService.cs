@@ -1,17 +1,21 @@
 ﻿using Ardalis.Result;
 using Ardalis.Result.FluentValidation;
 using DavesDartsClub.Domain;
+using DavesDartsClub.Infrastructure;
 using FluentValidation;
 
 namespace DavesDartsClub.Application;
 
 public class LeagueService : ILeagueService
 {
+    private readonly ILeagueRepository _leagueRepository;
     private readonly IValidator<League> _leagueValidator;
 
-    public LeagueService(IValidator<League> leagueValidator)
-    {
+    public LeagueService(ILeagueRepository leagueRepository, IValidator<League> leagueValidator)
+    { 
+        _leagueRepository = leagueRepository;
         _leagueValidator = leagueValidator;
+       
     }
 
     public async Task<League> GetLeagueByIdAsync(Guid leagueId, CancellationToken cancellationToken)
@@ -42,7 +46,7 @@ public class LeagueService : ILeagueService
             return Result.Invalid(validationResult.AsErrors());
         }
 
-        //ToDO: Persist the league to the database
-        return league;
+        var createdLeague = await _leagueRepository.AddLeague(league, cancellationToken);
+        return Result.Created(createdLeague);
     }
 }
