@@ -26,17 +26,25 @@ public class LeagueServiceUnitTest
     [SuppressMessage("Usage", "Moq1400:Moq: Explicitly choose a mock behavior", Justification = "Default Mock only")]
     public async Task CreateLeague_Should_ReturnASavedLeague_Given_AValid_League()
     {
-        var mockLeagueValidator = new Mock<IValidator<League>>();
-        var mockLeagueRepository = new Mock<ILeagueRepository>();
-        var leagueService = new LeagueService(mockLeagueRepository.Object, mockLeagueValidator.Object);
+        //Arrange
         var newId = Guid.NewGuid();
-        var league = new League { LeagueId = newId };
+        var league = new League { LeagueName = "test League" };
 
-        mockLeagueValidator.Setup(x => x.ValidateAsync(league, It.IsAny<CancellationToken>()))
+        _mockLeagueValidator.Setup(x => x.ValidateAsync(league, It.IsAny<CancellationToken>()))
            .Returns(Task.FromResult(new ValidationResult()));
 
-        var response = await leagueService.CreateLeagueAsync(league, CancellationToken.None);
+        _mockLeagueRepository.Setup(x => x.AddLeague(league, It.IsAny<CancellationToken>()))
+            .Returns(Task.FromResult(new League()
+            {
+                LeagueId = newId,
+                LeagueName = league.LeagueName
+            }));
 
+        //Act
+        var response = await _leagueService.CreateLeagueAsync(league, CancellationToken.None);
+
+        //Assert
+        league.LeagueId.ShouldBe(Guid.Empty);
         response.ShouldNotBeNull();
         response.Value.ShouldNotBeNull();
         response.Value.LeagueId.ShouldBe(newId);

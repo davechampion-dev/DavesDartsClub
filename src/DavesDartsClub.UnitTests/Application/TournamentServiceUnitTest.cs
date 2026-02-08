@@ -41,6 +41,7 @@ public class TournamentServiceUnitTest
         var response = await _tournamentService.CreateTournamentAsync(tournament, CancellationToken.None);
 
         //Assert
+        tournament.TournamentId.ShouldBe(Guid.Empty);
         response.ShouldNotBeNull();
         response.Value.ShouldNotBeNull();
         response.Value.TournamentId.ShouldBe(newId);
