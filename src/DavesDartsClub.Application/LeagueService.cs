@@ -46,7 +46,7 @@ public class LeagueService : ILeagueService
             return Result.Invalid(validationResult.AsErrors());
         }
 
-        var createdLeague = await _leagueRepository.AddLeague(league, cancellationToken);
+        var createdLeague = await _leagueRepository.AddLeague(league, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None); 
         return Result.Created(createdLeague);
     }
 }

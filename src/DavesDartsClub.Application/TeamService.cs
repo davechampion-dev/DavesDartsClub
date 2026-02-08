@@ -18,12 +18,12 @@ public class TeamService : ITeamService
 
     public async Task<Team?> GetTeamByIdAsync(Guid teamId, CancellationToken cancellationToken)
     {
-        return await _teamRepository.GetTeamByIdAsync(teamId, cancellationToken);
+        return await _teamRepository.GetTeamByIdAsync(teamId, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
     }
 
     public async Task<List<Team>> GetTeamsByLeagueAsync(Guid leagueId, CancellationToken cancellationToken)
     {
-        return await _teamRepository.GetTeamsByLeagueAsync(leagueId, cancellationToken);
+        return await _teamRepository.GetTeamsByLeagueAsync(leagueId, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
     }
 
     public async Task<Result<Team>> CreateTeamAsync(Team team, CancellationToken cancellationToken)
@@ -36,7 +36,7 @@ public class TeamService : ITeamService
             return Result.Invalid(validationResult.AsErrors());
         }
 
-        var createdTeam = await _teamRepository.AddTeam(team, cancellationToken);
+        var createdTeam = await _teamRepository.AddTeam(team, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
         return Result.Created(createdTeam);
     }
 }

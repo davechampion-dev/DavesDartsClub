@@ -3,7 +3,7 @@ using DavesDartsClub.Infrastructure.EntityFramework;
 
 namespace DavesDartsClub.Infrastructure;
 
-internal class LeagueRepository : ILeagueRepository
+internal sealed class LeagueRepository : ILeagueRepository
 {
     private readonly AppDbContext _dbContext;
 

@@ -19,7 +19,7 @@ public class MemberService : IMemberService
 
     public async Task<Member?> GetMemberByIdAsync(Guid memberId, CancellationToken cancellationToken)
     {
-        return await _memberRepository.GetMemberByIdAsync(memberId, cancellationToken);
+        return await _memberRepository.GetMemberByIdAsync(memberId, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
     }
 
     public async Task<Member> GetMemberByNameAsync(string name, CancellationToken cancellationToken)
@@ -41,7 +41,7 @@ public class MemberService : IMemberService
             return Result.Invalid(validationResult.AsErrors());
         }
 
-        var createdMember = await _memberRepository.AddMember(member, cancellationToken);
+        var createdMember = await _memberRepository.AddMember(member, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
         return Result.Created(createdMember);
     }
 }

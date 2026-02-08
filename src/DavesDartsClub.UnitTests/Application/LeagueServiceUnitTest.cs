@@ -53,13 +53,18 @@ public class LeagueServiceUnitTest
     [Fact]
     public async Task CreateLeague_Should_ReturnValidationErrors_Given_AnInvalid_League()
     {
+        //Arrange
         var league = new League();
         var validationResult = new ValidationResult();
         validationResult.Errors.Add(new ValidationFailure("LeagueId", "LeagueId is required"));
-
+        
         _mockLeagueValidator.Setup(x => x.ValidateAsync(league, It.IsAny<CancellationToken>()))
             .Returns(Task.FromResult(validationResult));
 
-        var response = await _leagueService.CreateLeagueAsync(league, CancellationToken.None);
+        //Act
+        await _leagueService.CreateLeagueAsync(league, CancellationToken.None);
+        
+        //Assert
+        //ToDo Add Asserts
     }
 }

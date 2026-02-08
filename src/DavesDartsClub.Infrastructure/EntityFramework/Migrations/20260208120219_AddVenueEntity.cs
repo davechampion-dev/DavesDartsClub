@@ -2,6 +2,10 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
+#pragma warning disable CA1062 // Validate arguments of public methods
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+#pragma warning disable CA1861 // Avoid constant arrays as arguments
+
 
 namespace DavesDartsClub.EntityFramework.Migrations
 {

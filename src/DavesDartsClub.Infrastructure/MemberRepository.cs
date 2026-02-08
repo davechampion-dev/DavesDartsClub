@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DavesDartsClub.Infrastructure;
 
-internal class MemberRepository : IMemberRepository
+internal sealed class MemberRepository : IMemberRepository
 {
     private readonly AppDbContext _dbContext;
 

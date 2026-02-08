@@ -483,10 +483,10 @@
         }
       }
     },
-    "/Teams": {
+    "/Team": {
       "post": {
         "tags": [
-          "Teams"
+          "Team"
         ],
         "operationId": "CreateTeam",
         "requestBody": {
@@ -519,10 +519,10 @@
         }
       }
     },
-    "/Teams/{teamId}": {
+    "/Team/{teamId}": {
       "get": {
         "tags": [
-          "Teams"
+          "Team"
         ],
         "operationId": "GetTeamById",
         "parameters": [
@@ -561,7 +561,7 @@
       },
       "delete": {
         "tags": [
-          "Teams"
+          "Team"
         ],
         "operationId": "DeleteTeam",
         "parameters": [
@@ -592,10 +592,10 @@
         }
       }
     },
-    "/Teams/search": {
+    "/Team/search": {
       "post": {
         "tags": [
-          "Teams"
+          "Team"
         ],
         "operationId": "PostTeamSearch",
         "requestBody": {
@@ -1022,7 +1022,7 @@
       "name": "Score"
     },
     {
-      "name": "Teams"
+      "name": "Team"
     },
     {
       "name": "Tournament"
