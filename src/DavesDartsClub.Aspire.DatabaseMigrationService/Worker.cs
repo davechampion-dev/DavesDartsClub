@@ -26,6 +26,7 @@ internal sealed class Worker(
         }
         catch (Exception ex)
         {
+            activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
             activity?.AddException(ex);
             throw;
         }
@@ -38,39 +39,37 @@ internal sealed class Worker(
         var strategy = dbContext.Database.CreateExecutionStrategy();
 
         // Run migration in a transaction to avoid partial migration if it fails ...
-        await strategy.ExecuteAsync(async () =>
-        {
-            await dbContext.Database.MigrateAsync(cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
-        }
+        await strategy.ExecuteAsync(
+            async ct => await dbContext.Database.MigrateAsync(ct).ConfigureAwait(ConfigureAwaitOptions.None),
+            cancellationToken
         ).ConfigureAwait(ConfigureAwaitOptions.None);
     }
 
     private static async Task SeedDataAsync(AppDbContext dbContext, CancellationToken cancellationToken)
     {
         var strategy = dbContext.Database.CreateExecutionStrategy();
-        await strategy.ExecuteAsync(async () =>
+        await strategy.ExecuteAsync(async ct =>
         {
-            // Seed the database
-            await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
+            await using var transaction = await dbContext.Database.BeginTransactionAsync(ct).ConfigureAwait(ConfigureAwaitOptions.None);
 
-            if (!await dbContext.Leagues.AnyAsync(cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None))
+            if (!await dbContext.Leagues.AsNoTracking().AnyAsync(ct).ConfigureAwait(ConfigureAwaitOptions.None))
             {
                 var leagueFaker = new LeagueFaker();
-                var leagues = leagueFaker.CreateFaker().Generate(5); // List<League>
+                var leagues = leagueFaker.CreateFaker().Generate(5);
 
                 var leagueEntities = leagues.Select(l => new LeagueEntity
                 {
-                    LeagueId = Guid.NewGuid(), // EF primary key
+                    LeagueId = Guid.NewGuid(),
                     LeagueName = l.LeagueName
                 }).ToList();
 
                 dbContext.Leagues.AddRange(leagueEntities);
             }
 
-            if (!await dbContext.Set<MemberEntity>().AnyAsync(cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None))
+            if (!await dbContext.Set<MemberEntity>().AsNoTracking().AnyAsync(ct).ConfigureAwait(ConfigureAwaitOptions.None))
             {
                 var memberFaker = new MemberFaker();
-                var members = memberFaker.CreateFaker().Generate(5); // List<Member> domain objects
+                var members = memberFaker.CreateFaker().Generate(5);
 
                 var memberEntities = members.Select(m => new MemberEntity
                 {
@@ -82,9 +81,9 @@ internal sealed class Worker(
                 dbContext.Members.AddRange(memberEntities);
             }
 
-            await dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
-            await transaction.CommitAsync(cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
-        }).ConfigureAwait(ConfigureAwaitOptions.None); 
+            await dbContext.SaveChangesAsync(ct).ConfigureAwait(ConfigureAwaitOptions.None);
+            await transaction.CommitAsync(ct).ConfigureAwait(ConfigureAwaitOptions.None);
+        }, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
     }
 }
 
