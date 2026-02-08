@@ -9,11 +9,11 @@ namespace DavesDartsClub.WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class TeamsController : ControllerBase
+public class TeamController : ControllerBase
 {
     private readonly ITeamService _teamService;
 
-    public TeamsController(ITeamService teamService)
+    public TeamController(ITeamService teamService)
     {
         _teamService = teamService;
     }
