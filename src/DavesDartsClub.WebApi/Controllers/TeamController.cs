@@ -1,9 +1,9 @@
-﻿using DavesDartsClub.Application;
+﻿using Ardalis.Result;
+using DavesDartsClub.Application;
 using DavesDartsClub.Domain;
 using DavesDartsClub.SharedContracts.Team;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using Ardalis.Result;
 
 namespace DavesDartsClub.WebApi.Controllers;
 
