@@ -9,7 +9,7 @@ internal static class Extensions
 {
     public static IServiceCollection AddDavesDartsClubApiClient(this IServiceCollection services)
     {
-    
+
         services
             .AddRefitClient<ILeagueApiClient>()
             .ConfigureHttpClient(client =>
