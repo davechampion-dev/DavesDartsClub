@@ -3,8 +3,6 @@
 // Project-level suppressions either have no target or are given
 // a specific target and scoped to a namespace, type, member, etc.
 
-using System.Diagnostics.CodeAnalysis;
-
 [assembly: SuppressMessage("Minor Code Smell", "S101:Types should be named in PascalCase", Justification = "Genrated code", Scope = "type", Target = "~T:DavesDartsClub.Infrastructure.EntityFramework.Migrations._1_Initial")]
 [assembly: SuppressMessage("Minor Code Smell", "S101:Types should be named in PascalCase", Justification = "EF Migration", Scope = "type", Target = "~T:DavesDartsClub.EntityFramework.Migrations._001_Initial")]
 [assembly: SuppressMessage("Minor Code Smell", "S101:Types should be named in PascalCase", Justification = "EF Migration", Scope = "type", Target = "~T:DavesDartsClub.EntityFramework.Migrations._002_Initial")]
