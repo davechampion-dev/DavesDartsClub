@@ -12,6 +12,7 @@ public static class DiExtensions
         services.AddScoped<IPlayerService, PlayerService>();
         services.AddScoped<ITeamService, TeamService>();
         services.AddScoped<IVenueService, VenueService>();
+        services.AddScoped<ISeasonService, SeasonService>();
         return services;
     }
 }
