@@ -6,6 +6,6 @@ namespace DavesDartsClub.Application;
 public interface IMemberService
 {
     Task<Member?> GetMemberByIdAsync(Guid memberId, CancellationToken cancellationToken);
-    Task<List<Member>> GetMemberByNameAsync(string name, CancellationToken cancellationToken);
+    Task<List<Member>> GetMemberByNameAsync(string memberName, CancellationToken cancellationToken);
     Task<Result<Member>> CreateMemberAsync(Member member, CancellationToken cancellationToken);
 }
