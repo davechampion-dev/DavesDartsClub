@@ -51,17 +51,17 @@ internal sealed class MemberRepository : IMemberRepository
 
     public async Task<List<Member>> GetMemberByNameAsync(string memberName, CancellationToken cancellationToken)
     {
-        {
-            var entities = await _dbContext.Members
-               .Where(t => t.MemberName.Contains(memberName))
-               .ToListAsync(cancellationToken)
-               .ConfigureAwait(ConfigureAwaitOptions.None);
 
-            return entities.Select(e => new Member
-            {
-                MemberId = e.MemberId,
-                MemberName = e.MemberName,
-            }).ToList();
-        }
+        var entities = await _dbContext.Members
+           .Where(t => t.MemberName.Contains(memberName))
+           .ToListAsync(cancellationToken)
+           .ConfigureAwait(ConfigureAwaitOptions.None);
+
+        return entities.Select(e => new Member
+        {
+            MemberId = e.MemberId,
+            MemberName = e.MemberName,
+        }).ToList();
+
     }
 }
