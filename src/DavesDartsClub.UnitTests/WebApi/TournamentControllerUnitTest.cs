@@ -1,10 +1,10 @@
 ﻿#pragma warning disable CA1707 // Identifiers should not contain underscores
+using Ardalis.Result;
 using DavesDartsClub.Application;
 using DavesDartsClub.Domain;
 using DavesDartsClub.SharedContracts.Tournament;
 using DavesDartsClub.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using Ardalis.Result;
 
 namespace DavesDartsClub.UnitTests.WebApi;
 

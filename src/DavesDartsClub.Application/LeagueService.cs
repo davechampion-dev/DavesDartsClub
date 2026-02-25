@@ -12,20 +12,16 @@ public class LeagueService : ILeagueService
     private readonly IValidator<League> _leagueValidator;
 
     public LeagueService(ILeagueRepository leagueRepository, IValidator<League> leagueValidator)
-    { 
+    {
         _leagueRepository = leagueRepository;
         _leagueValidator = leagueValidator;
-       
+
     }
 
-    public async Task<League> GetLeagueByIdAsync(Guid leagueId, CancellationToken cancellationToken)
+    public async Task<League?> GetLeagueByIdAsync(Guid leagueId, CancellationToken cancellationToken)
     {
         //ToDo: Add data access
-        return new League()
-        {
-            LeagueId = leagueId,
-            LeagueName = "Champions League"
-        };
+        return await _leagueRepository.GetLeagueByIdAsync(leagueId, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
     }
 
     public async Task<League> GetLeagueByNameAsync(string name, CancellationToken cancellationToken)
@@ -46,7 +42,7 @@ public class LeagueService : ILeagueService
             return Result.Invalid(validationResult.AsErrors());
         }
 
-        var createdLeague = await _leagueRepository.AddLeague(league, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None); 
+        var createdLeague = await _leagueRepository.AddLeague(league, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
         return Result.Created(createdLeague);
     }
 }

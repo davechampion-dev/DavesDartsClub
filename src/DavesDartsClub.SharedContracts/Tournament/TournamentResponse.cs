@@ -2,6 +2,6 @@
 
 public class TournamentResponse
 {
-    public Guid TournamentId { get; set; }
+    public Guid TournamentId { get; init; }
     public string TournamentName { get; set; } = string.Empty;
 }

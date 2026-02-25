@@ -51,6 +51,6 @@ public class TournamentService : ITournamentService
         }
 
         cancellationToken.ThrowIfCancellationRequested();
-        return await _tournamnetRepository.AddTournament(tournament, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None); 
+        return await _tournamnetRepository.AddTournament(tournament, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
     }
 }

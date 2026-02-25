@@ -2,7 +2,7 @@
 
 public class TeamResponse
 {
-    public Guid TeamId { get; set; }
+    public Guid TeamId { get; init; }
     public string TeamName { get; set; } = string.Empty;
     public Guid LeagueId { get; set; }
     public Guid CaptainId { get; set; }

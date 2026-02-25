@@ -1,7 +1,6 @@
 ﻿using Ardalis.Result;
 using Ardalis.Result.FluentValidation;
 using DavesDartsClub.Domain;
-using DavesDartsClub.Infrastructure;
 using FluentValidation;
 
 namespace DavesDartsClub.Application;
@@ -22,13 +21,9 @@ public class MemberService : IMemberService
         return await _memberRepository.GetMemberByIdAsync(memberId, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
     }
 
-    public async Task<Member> GetMemberByNameAsync(string name, CancellationToken cancellationToken)
+    public async Task<List<Member>> GetMemberByNameAsync(string memberName, CancellationToken cancellationToken)
     {
-        return new Member()
-        {
-            MemberId = Guid.NewGuid(),
-            MemberName = "Bob The Frog"
-        };
+        return await _memberRepository.GetMemberByNameAsync(memberName, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
     }
 
     public async Task<Result<Member>> CreateMemberAsync(Member member, CancellationToken cancellationToken)

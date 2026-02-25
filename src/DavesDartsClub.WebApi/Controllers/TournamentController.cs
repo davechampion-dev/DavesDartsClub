@@ -69,7 +69,7 @@ public class TournamentController : ControllerBase
 
     [HttpPost(ApiConstants.SearchRoute, Name = nameof(PostTournamentSearch))]
     [ProducesResponseType((int)HttpStatusCode.OK)]
-    public async Task<ActionResult<IEnumerable<TournamentResponse>>> PostTournamentSearch([FromBody] TournamentSearchRequest  tournamentSearch, CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<TournamentResponse>>> PostTournamentSearch([FromBody] TournamentSearchRequest tournamentSearch, CancellationToken cancellationToken)
     {
         //ToDO: add Wildcard search on tournament name
         var tournament = await _tournamentService.GetTournamentByNameAsync(tournamentSearch?.TournamentName ?? string.Empty, cancellationToken).ConfigureAwait(false);

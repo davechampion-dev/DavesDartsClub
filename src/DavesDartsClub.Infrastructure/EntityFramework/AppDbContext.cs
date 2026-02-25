@@ -18,6 +18,7 @@ public class AppDbContext : DbContext
     public DbSet<VenueEntity> Venues { get; set; }
     public DbSet<MatchResultEntity> MatchResults { get; set; }
 
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         ArgumentNullException.ThrowIfNull(modelBuilder);

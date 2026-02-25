@@ -57,13 +57,13 @@ public class LeagueServiceUnitTest
         var league = new League();
         var validationResult = new ValidationResult();
         validationResult.Errors.Add(new ValidationFailure("LeagueId", "LeagueId is required"));
-        
+
         _mockLeagueValidator.Setup(x => x.ValidateAsync(league, It.IsAny<CancellationToken>()))
             .Returns(Task.FromResult(validationResult));
 
         //Act
         await _leagueService.CreateLeagueAsync(league, CancellationToken.None);
-        
+
         //Assert
         //ToDo Add Asserts
     }

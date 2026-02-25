@@ -13,6 +13,8 @@ public static class DiExtensions
         services.AddScoped<ITeamRepository, TeamRepository>();
         services.AddScoped<ILeagueRepository, LeagueRepository>();
         services.AddScoped<IMemberRepository, MemberRepository>();
+        services.AddScoped<IVenueRepository, VenueRepository>();
+        services.AddScoped<ISeasonRepository, SeasonRepository>();
         return services;
     }
 

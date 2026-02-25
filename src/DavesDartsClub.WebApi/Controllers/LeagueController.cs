@@ -22,7 +22,7 @@ public class LeagueController : ControllerBase
     [ProducesResponseType(((int)HttpStatusCode.Created))]
     public async Task<ActionResult<Guid>> CreateLeague(LeagueRequest leagueRequest, CancellationToken cancellationToken)
     {
-        
+
         var league = new League()
         {
             LeagueName = leagueRequest.LeagueName
@@ -53,7 +53,7 @@ public class LeagueController : ControllerBase
 
     [HttpPost(ApiConstants.SearchRoute, Name = nameof(PostLeagueSearch))]
     [ProducesResponseType(((int)HttpStatusCode.OK))]
-    public async Task<ActionResult<IEnumerable<LeagueResponse>>> PostLeagueSearch([NotNull,FromBody] LeagueSearchRequest leagueName, CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<LeagueResponse>>> PostLeagueSearch([NotNull, FromBody] LeagueSearchRequest leagueName, CancellationToken cancellationToken)
     {
         var league = await _leagueService.GetLeagueByNameAsync(leagueName.LeagueName, cancellationToken).ConfigureAwait(false);
 

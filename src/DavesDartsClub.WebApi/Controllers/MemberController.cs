@@ -1,7 +1,7 @@
 ﻿using Ardalis.Result;
 using DavesDartsClub.Application;
-using DavesDartsClub.SharedContracts.Member;
 using DavesDartsClub.Domain;
+using DavesDartsClub.SharedContracts.Member;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -41,20 +41,16 @@ public class MemberController : ControllerBase
     [ProducesResponseType(((int)HttpStatusCode.OK))]
     public async Task<ActionResult<IEnumerable<MemberResponse>>> PostMemberSearch([NotNull, FromBody] MemberSearchRequest memberName, CancellationToken cancellationToken)
     {
-        // ToDo: Update to return list of members and take search term
-        var member = await _memberService.GetMemberByNameAsync(memberName.MemberName, cancellationToken).ConfigureAwait(false);
+        var members = await _memberService.GetMemberByNameAsync(memberName.MemberName, cancellationToken)
+            .ConfigureAwait(false);
 
-        // ToDo: Switch to linq expression
-        var result = new List<MemberResponse>
+        var results = members.Select(m => new MemberResponse
         {
-            new MemberResponse()
-            {
-                MemberId = member.MemberId,
-                MemberName = member.MemberName
-            }
-        };
+            MemberId = m.MemberId,
+            MemberName = m.MemberName
+        }).ToList();
 
-        return Ok(result);
+        return Ok(results);
     }
 
     [HttpGet("{memberId}", Name = nameof(GetMemberById))]
