@@ -9,18 +9,18 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DavesDartsClub.EntityFramework.Migrations
+namespace DavesDartsClub.Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260208115321_AddDivisionEntity")]
-    partial class AddDivisionEntity
+    [Migration("20260304202955_001_Initial")]
+    partial class _001_Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.2")
+                .HasAnnotation("ProductVersion", "10.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -54,6 +54,53 @@ namespace DavesDartsClub.EntityFramework.Migrations
                     b.ToTable("Divisions", (string)null);
                 });
 
+            modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.FixtureEntity", b =>
+                {
+                    b.Property<Guid>("FixtureId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AwayTeamId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DivisionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("HomeTeamId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("RoundNumber")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ScheduledDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("SeasonId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<Guid>("VenueId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("FixtureId");
+
+                    b.HasIndex("AwayTeamId");
+
+                    b.HasIndex("DivisionId");
+
+                    b.HasIndex("HomeTeamId");
+
+                    b.HasIndex("SeasonId");
+
+                    b.HasIndex("VenueId");
+
+                    b.ToTable("Fixtures", (string)null);
+                });
+
             modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.LeagueEntity", b =>
                 {
                     b.Property<Guid>("LeagueId")
@@ -68,6 +115,44 @@ namespace DavesDartsClub.EntityFramework.Migrations
                     b.HasKey("LeagueId");
 
                     b.ToTable("Leagues");
+                });
+
+            modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.MatchResultEntity", b =>
+                {
+                    b.Property<Guid>("MatchResultId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AwayTeamScore")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ConfirmedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("FixtureId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("HomeTeamScore")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<Guid>("SubmittedByMemberId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("SubmittedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("MatchResultId");
+
+                    b.HasIndex("FixtureId");
+
+                    b.HasIndex("SubmittedByMemberId");
+
+                    b.ToTable("MatchResults", (string)null);
                 });
 
             modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.MemberEntity", b =>
@@ -157,6 +242,9 @@ namespace DavesDartsClub.EntityFramework.Migrations
                     b.Property<Guid>("CaptainId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("DivisionId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("HomeVenueId")
                         .HasColumnType("uniqueidentifier");
 
@@ -176,6 +264,8 @@ namespace DavesDartsClub.EntityFramework.Migrations
                     b.HasKey("TeamId");
 
                     b.HasIndex("CaptainId");
+
+                    b.HasIndex("DivisionId");
 
                     b.HasIndex("LeagueId");
 
@@ -198,6 +288,53 @@ namespace DavesDartsClub.EntityFramework.Migrations
                     b.ToTable("Tournaments");
                 });
 
+            modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.VenueEntity", b =>
+                {
+                    b.Property<Guid>("VenueId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ContactEmail")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ContactPhone")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<int>("NumberOfBoards")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Postcode")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("VenueName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("VenueId");
+
+                    b.ToTable("Venues", (string)null);
+                });
+
             modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.DivisionEntity", b =>
                 {
                     b.HasOne("DavesDartsClub.Infrastructure.EntityFramework.LeagueEntity", "League")
@@ -215,6 +352,68 @@ namespace DavesDartsClub.EntityFramework.Migrations
                     b.Navigation("League");
 
                     b.Navigation("Season");
+                });
+
+            modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.FixtureEntity", b =>
+                {
+                    b.HasOne("DavesDartsClub.Infrastructure.EntityFramework.TeamEntity", "AwayTeam")
+                        .WithMany()
+                        .HasForeignKey("AwayTeamId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DavesDartsClub.Infrastructure.EntityFramework.DivisionEntity", "Division")
+                        .WithMany()
+                        .HasForeignKey("DivisionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DavesDartsClub.Infrastructure.EntityFramework.TeamEntity", "HomeTeam")
+                        .WithMany()
+                        .HasForeignKey("HomeTeamId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DavesDartsClub.Infrastructure.EntityFramework.SeasonEntity", "Season")
+                        .WithMany()
+                        .HasForeignKey("SeasonId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DavesDartsClub.Infrastructure.EntityFramework.VenueEntity", "Venue")
+                        .WithMany()
+                        .HasForeignKey("VenueId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AwayTeam");
+
+                    b.Navigation("Division");
+
+                    b.Navigation("HomeTeam");
+
+                    b.Navigation("Season");
+
+                    b.Navigation("Venue");
+                });
+
+            modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.MatchResultEntity", b =>
+                {
+                    b.HasOne("DavesDartsClub.Infrastructure.EntityFramework.FixtureEntity", "Fixture")
+                        .WithMany()
+                        .HasForeignKey("FixtureId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DavesDartsClub.Infrastructure.EntityFramework.MemberEntity", "SubmittedBy")
+                        .WithMany()
+                        .HasForeignKey("SubmittedByMemberId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Fixture");
+
+                    b.Navigation("SubmittedBy");
                 });
 
             modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.PlayerProfileEntity", b =>
@@ -247,6 +446,12 @@ namespace DavesDartsClub.EntityFramework.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("DavesDartsClub.Infrastructure.EntityFramework.DivisionEntity", "Division")
+                        .WithMany()
+                        .HasForeignKey("DivisionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DavesDartsClub.Infrastructure.EntityFramework.LeagueEntity", "League")
                         .WithMany()
                         .HasForeignKey("LeagueId")
@@ -254,6 +459,8 @@ namespace DavesDartsClub.EntityFramework.Migrations
                         .IsRequired();
 
                     b.Navigation("Captain");
+
+                    b.Navigation("Division");
 
                     b.Navigation("League");
                 });

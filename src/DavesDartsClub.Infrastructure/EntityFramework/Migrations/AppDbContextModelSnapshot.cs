@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DavesDartsClub.EntityFramework.Migrations
+namespace DavesDartsClub.Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -17,7 +17,7 @@ namespace DavesDartsClub.EntityFramework.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.2")
+                .HasAnnotation("ProductVersion", "10.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -239,6 +239,9 @@ namespace DavesDartsClub.EntityFramework.Migrations
                     b.Property<Guid>("CaptainId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("DivisionId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("HomeVenueId")
                         .HasColumnType("uniqueidentifier");
 
@@ -258,6 +261,8 @@ namespace DavesDartsClub.EntityFramework.Migrations
                     b.HasKey("TeamId");
 
                     b.HasIndex("CaptainId");
+
+                    b.HasIndex("DivisionId");
 
                     b.HasIndex("LeagueId");
 
@@ -438,6 +443,12 @@ namespace DavesDartsClub.EntityFramework.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("DavesDartsClub.Infrastructure.EntityFramework.DivisionEntity", "Division")
+                        .WithMany()
+                        .HasForeignKey("DivisionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DavesDartsClub.Infrastructure.EntityFramework.LeagueEntity", "League")
                         .WithMany()
                         .HasForeignKey("LeagueId")
@@ -445,6 +456,8 @@ namespace DavesDartsClub.EntityFramework.Migrations
                         .IsRequired();
 
                     b.Navigation("Captain");
+
+                    b.Navigation("Division");
 
                     b.Navigation("League");
                 });
