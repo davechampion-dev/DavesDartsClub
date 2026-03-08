@@ -17,6 +17,7 @@ public class AppDbContext : DbContext
     public DbSet<DivisionEntity> Divisions { get; set; }
     public DbSet<VenueEntity> Venues { get; set; }
     public DbSet<MatchResultEntity> MatchResults { get; set; }
+    public DbSet<FixtureEntity> Fixtures { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -13,6 +13,8 @@ public static class DiExtensions
         services.AddScoped<ITeamService, TeamService>();
         services.AddScoped<IVenueService, VenueService>();
         services.AddScoped<ISeasonService, SeasonService>();
+        services.AddScoped<IFixtureService, FixtureService>();
+        services.AddScoped<FixtureGenerator>(); // The Math Expert
         return services;
     }
 }

@@ -15,6 +15,7 @@ public static class DiExtensions
         services.AddScoped<IMemberRepository, MemberRepository>();
         services.AddScoped<IVenueRepository, VenueRepository>();
         services.AddScoped<ISeasonRepository, SeasonRepository>();
+        services.AddScoped<IFixtureRepository, FixtureRepository>();
         return services;
     }
 
