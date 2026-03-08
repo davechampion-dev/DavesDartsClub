@@ -1289,6 +1289,12 @@
         "properties": {
           "memberName": {
             "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
           }
         }
       },
@@ -1301,6 +1307,12 @@
           },
           "memberName": {
             "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
           }
         }
       },
@@ -1308,6 +1320,12 @@
         "type": "object",
         "properties": {
           "memberName": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
             "type": "string"
           }
         }

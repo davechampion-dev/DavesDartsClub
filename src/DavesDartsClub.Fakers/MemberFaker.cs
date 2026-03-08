@@ -10,6 +10,7 @@ public class MemberFaker : BaseFaker<Member>
     {
         return new Faker<Member>()
              .RuleFor(x => x.MemberId, f => Guid.NewGuid())
-             .RuleFor(x => x.MemberName, f => f.Name.FullName());
+             .RuleFor(x => x.MemberName, f => f.Name.FullName())
+             .RuleFor(m => m.MemberName, (f, m) => $"{m.FirstName} {m.LastName}");
     }
 }
