@@ -5,6 +5,83 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/Divisions": {
+      "post": {
+        "tags": [
+          "Divisions"
+        ],
+        "operationId": "CreateDivision",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DivisionRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DivisionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Divisions/{divisionId}": {
+      "get": {
+        "tags": [
+          "Divisions"
+        ],
+        "operationId": "GetDivisionById",
+        "parameters": [
+          {
+            "name": "divisionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DivisionResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/League": {
       "post": {
         "tags": [
@@ -1127,6 +1204,58 @@
   },
   "components": {
     "schemas": {
+      "DivisionRequest": {
+        "type": "object",
+        "properties": {
+          "divisionName": {
+            "type": "string"
+          },
+          "seasonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "leagueId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "divisionLevel": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "DivisionResponse": {
+        "type": "object",
+        "properties": {
+          "divisionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "divisionName": {
+            "type": "string"
+          },
+          "seasonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "leagueId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "divisionLevel": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
       "LeagueRequest": {
         "type": "object",
         "properties": {
@@ -1487,6 +1616,9 @@
     }
   },
   "tags": [
+    {
+      "name": "Divisions"
+    },
     {
       "name": "League"
     },

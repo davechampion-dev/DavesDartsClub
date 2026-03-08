@@ -6,4 +6,5 @@ public interface ITeamRepository
     Task<Team?> GetTeamByIdAsync(Guid teamId, CancellationToken cancellationToken);
     Task<List<Team>> GetTeamsByLeagueAsync(Guid leagueId, CancellationToken cancellationToken);
     Task<List<Team>> GetTeamsByDivisionAsync(Guid divisionId, CancellationToken ct);
+
 }
