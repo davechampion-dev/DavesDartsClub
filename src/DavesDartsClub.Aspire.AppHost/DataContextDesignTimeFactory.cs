@@ -15,7 +15,7 @@ public class DataContextDesignTimeFactory : IDesignTimeDbContextFactory<AppDbCon
         sql.AddDatabase("DavesDartsClubMigrations");
 
         var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-        optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=DavesDartsClubMigrations;Integrated Security=true;TrustServerCertificate=true;");
+        optionsBuilder.UseSqlServer("Server=localhost,56045;Database=DavesDartsClubMigrations;User Id=sa;Password=YourPassword123!;TrustServerCertificate=true;");
         return new AppDbContext(optionsBuilder.Options);
     }
 }

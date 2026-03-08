@@ -66,6 +66,8 @@ CREATE TABLE [Divisions] (
     [DivisionName] nvarchar(100) NOT NULL,
     [SeasonId] uniqueidentifier NOT NULL,
     [LeagueId] uniqueidentifier NOT NULL,
+    [DivisionLevel] int NOT NULL,
+    [IsActive] bit NOT NULL,
     [DisplayOrder] int NOT NULL,
     CONSTRAINT [PK_Divisions] PRIMARY KEY ([DivisionId]),
     CONSTRAINT [FK_Divisions_Leagues_LeagueId] FOREIGN KEY ([LeagueId]) REFERENCES [Leagues] ([LeagueId]) ON DELETE NO ACTION,
@@ -147,7 +149,7 @@ CREATE INDEX [IX_Teams_DivisionId] ON [Teams] ([DivisionId]);
 CREATE INDEX [IX_Teams_LeagueId] ON [Teams] ([LeagueId]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20260304202955_001_Initial', N'10.0.3');
+VALUES (N'20260308152852_1_Initial', N'10.0.3');
 
 COMMIT;
 GO

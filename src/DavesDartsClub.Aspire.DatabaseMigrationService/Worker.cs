@@ -38,11 +38,12 @@ internal sealed class Worker(
     {
         var strategy = dbContext.Database.CreateExecutionStrategy();
 
-        // Run migration in a transaction to avoid partial migration if it fails ...
-        await strategy.ExecuteAsync(
-            async ct => await dbContext.Database.MigrateAsync(ct).ConfigureAwait(ConfigureAwaitOptions.None),
-            cancellationToken
-        ).ConfigureAwait(ConfigureAwaitOptions.None);
+        await strategy.ExecuteAsync(async ct =>
+        {
+            await dbContext.Database.EnsureDeletedAsync(ct).ConfigureAwait(false);
+
+            await dbContext.Database.MigrateAsync(ct).ConfigureAwait(ConfigureAwaitOptions.None);
+        }, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
     }
 
     private static async Task SeedDataAsync(AppDbContext dbContext, CancellationToken cancellationToken)

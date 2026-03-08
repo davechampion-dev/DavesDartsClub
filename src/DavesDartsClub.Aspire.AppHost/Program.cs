@@ -2,7 +2,9 @@ using DavesDartsClub.Domain;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-var sql = builder.AddSqlServer("DavesDartsClubSql")
+var password = builder.AddParameter("sql-password", "Password123!");
+
+var sql = builder.AddSqlServer("DavesDartsClubSql", password)
                  .WithDataVolume()
                  .WithEndpoint(port: 56045, targetPort: 1433, name: "ssms", isProxied: false)
                  .WithLifetime(ContainerLifetime.Persistent);

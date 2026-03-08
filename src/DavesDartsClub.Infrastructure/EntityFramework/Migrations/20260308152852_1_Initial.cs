@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DavesDartsClub.Infrastructure.EntityFramework.Migrations
 {
     /// <inheritdoc />
-    public partial class _001_Initial : Migration
+    public partial class _1_Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -117,6 +117,8 @@ namespace DavesDartsClub.Infrastructure.EntityFramework.Migrations
                     DivisionName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     SeasonId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LeagueId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DivisionLevel = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     DisplayOrder = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
