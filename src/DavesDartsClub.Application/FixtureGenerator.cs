@@ -4,22 +4,21 @@
 public class FixtureGenerator
 {
     // This is the secret formula (Round-Robin) to make sure everyone plays everyone
-    public List<(Guid HomeTeamId, Guid AwayTeamId)> GenerateRoundRobin(List<Guid> teamIds)
+    public List<(Guid HomeTeamId, Guid AwayTeamId)> GenerateRoundRobin(IEnumerable<Guid> teamIds)
     {
-        // 1. If we have an odd number of teams, we need a "Bye" (a ghost team)
-        if (teamIds.Count % 2 != 0)
-        {
-            teamIds.Add(Guid.Empty);
-        }
-
-        int numTeams = teamIds.Count;
-        int numDays = numTeams - 1;
-        int halfSize = numTeams / 2;
-
-        var fixtures = new List<(Guid, Guid)>();
         var teams = new List<Guid>(teamIds);
 
-        // 2. The "Circle Method": Rotate the teams like a dial to create matches
+        // odd number team gets a "Bye"
+        if (teams.Count % 2 != 0)      
+            teams.Add(Guid.Empty);
+
+        var numTeams = teams.Count;
+        var numDays = numTeams - 1;
+        var halfSize = numTeams / 2;
+
+        var fixtures = new List<(Guid, Guid)>();
+
+        // The "Circle Method": Rotate the teams like a dial to create matches
         for (int day = 0; day < numDays; day++)
         {
             for (int i = 0; i < halfSize; i++)
