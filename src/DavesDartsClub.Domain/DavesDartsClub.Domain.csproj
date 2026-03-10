@@ -19,4 +19,8 @@
 		</PackageReference>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\DavesDartsClub.Aspire.ServiceDefaults\DavesDartsClub.Aspire.ServiceDefaults.csproj" />
+	</ItemGroup>
+
 </Project>

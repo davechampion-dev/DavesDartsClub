@@ -80,13 +80,13 @@ public class TournamentController : ControllerBase
         }
 
         var result = new List<TournamentResponse>
-    {
-        new TournamentResponse
         {
-            TournamentId = tournament.TournamentId,
-            TournamentName = tournament.TournamentName
-        }
-    };
+            new TournamentResponse
+            {
+                TournamentId = tournament.TournamentId,
+                TournamentName = tournament.TournamentName
+            }
+        };
 
         return Ok(result);
     }

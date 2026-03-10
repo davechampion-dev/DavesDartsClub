@@ -19,7 +19,8 @@ internal sealed class MemberRepository : IMemberRepository
         {
             MemberId = Guid.NewGuid(),
             MemberName = member.MemberName,
-
+            FirstName = member.FirstName,    
+            LastName = member.LastName,
         };
 
         cancellationToken.ThrowIfCancellationRequested();
@@ -30,7 +31,8 @@ internal sealed class MemberRepository : IMemberRepository
         {
             MemberId = entity.MemberId,
             MemberName = entity.MemberName,
-
+            FirstName = entity.FirstName,
+            LastName = entity.LastName,
         };
     }
 
@@ -46,6 +48,8 @@ internal sealed class MemberRepository : IMemberRepository
         {
             MemberId = entity.MemberId,
             MemberName = entity.MemberName,
+            FirstName = entity.FirstName,
+            LastName = entity.LastName,
         };
     }
 
@@ -61,6 +65,8 @@ internal sealed class MemberRepository : IMemberRepository
         {
             MemberId = e.MemberId,
             MemberName = e.MemberName,
+            FirstName = e.MemberName,
+            LastName = e.MemberName,
         }).ToList();
 
     }

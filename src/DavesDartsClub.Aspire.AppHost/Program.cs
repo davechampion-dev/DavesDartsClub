@@ -1,8 +1,20 @@
+#pragma warning disable ASPIREINTERACTION001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+
 using DavesDartsClub.Domain;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-var sql = builder.AddSqlServer("DavesDartsClubSql")
+var password = builder.AddParameter("sql-password")
+    .WithDescription("DavesDartsClubSql password")
+    .WithCustomInput(p => new()
+    {
+        InputType = InputType.SecretText,
+        Name = p.Name,
+        Placeholder = $"Enter value for {p.Name}",
+        Description = p.Description
+    });
+
+var sql = builder.AddSqlServer("DavesDartsClubSql", password)
                  .WithDataVolume()
                  .WithEndpoint(port: 56045, targetPort: 1433, name: "ssms", isProxied: false)
                  .WithLifetime(ContainerLifetime.Persistent);

@@ -1,4 +1,4 @@
-﻿namespace DavesDartsClub.Infrastructure.EntityFramework;
+﻿using DavesDartsClub.Infrastructure.EntityFramework;
 
 public class DivisionEntity
 {
@@ -6,6 +6,8 @@ public class DivisionEntity
     public string DivisionName { get; set; } = string.Empty;
     public Guid SeasonId { get; set; }
     public Guid LeagueId { get; set; }
+    public int DivisionLevel { get; set; }
+    public bool IsActive { get; set; }
     public int DisplayOrder { get; set; }
 
     public SeasonEntity? Season { get; set; }

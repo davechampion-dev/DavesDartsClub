@@ -32,16 +32,20 @@ public class SeasonService : ISeasonService
 
     public async Task<Season?> GetSeasonByIdAsync(Guid seasonId, CancellationToken cancellationToken)
     {
+        //ToDo return result not found response
         return await _seasonRepository.GetSeasonByIdAsync(seasonId, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
     }
 
     public async Task<List<Season>> GetSeasonByNameAsync(string seasonName, CancellationToken cancellationToken)
     {
+        //ToDo return result Starts/Ends with, or contains, wildcard
+        //ToDo add validation 
         return await _seasonRepository.GetSeasonByNameAsync(seasonName, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
     }
 
     public async Task<List<Season>> GetSeasonsByLeagueAsync(Guid leagueId, CancellationToken cancellationToken)
     {
+        //ToDo return result not found response
         return await _seasonRepository.GetSeasonsByLeagueAsync(leagueId, cancellationToken)
             .ConfigureAwait(ConfigureAwaitOptions.None);
     }

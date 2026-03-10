@@ -28,8 +28,4 @@
 		<ProjectReference Include="..\DavesDartsClub.Fakers\DavesDartsClub.Fakers.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="EntityFramework\Migrations\TSQL\" />
-	</ItemGroup>
-
 </Project>
