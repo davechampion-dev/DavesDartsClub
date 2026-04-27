@@ -3,7 +3,7 @@
     <!--Application Layer-->
     <!--None.-->
     <!--Aspire-->
-    <PackageVersion Include="Aspire.Hosting.SqlServer" Version="13.2.3" />
+    <PackageVersion Include="Aspire.Hosting.SqlServer" Version="13.2.4" />
     <PackageVersion Include="Bogus" Version="35.6.5" />
     <!--ServiceDefaults-->
     <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="10.5.0" />
@@ -18,7 +18,7 @@
     <!--Domain-->
     <!--None.-->
     <!--Infrastructure-->
-    <PackageVersion Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="13.2.3" />
+    <PackageVersion Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="13.2.4" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="10.0.7" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Analyzers" Version="10.0.7" />
     <!--    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.10" />-->
@@ -34,7 +34,7 @@
     <PackageVersion Include="coverlet.collector" Version="10.0.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.4.0" />
     <!--IntergrationTests-->
-    <PackageVersion Include="Aspire.Hosting.Testing" Version="13.2.3" />
+    <PackageVersion Include="Aspire.Hosting.Testing" Version="13.2.4" />
     <!--UnitTests-->
     <!--None.-->
     <!--WebApi-->
@@ -42,13 +42,13 @@
     <PackageVersion Include="Microsoft.Extensions.ApiDescription.Server" Version="10.0.7" />
     <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.1.7" />
     <!--WebApp-->
-    <PackageVersion Include="MudBlazor" Version="9.3.0" />
+    <PackageVersion Include="MudBlazor" Version="9.4.0" />
     <!--Shared / Common-->
     <PackageVersion Include="Microsoft.AspNetCore.Cors" Version="2.3.9" />
     <PackageVersion Include="Ardalis.Result.FluentValidation" Version="10.1.0" />
     <PackageVersion Include="FluentValidation" Version="12.1.1" />
     <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
-    <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.24.0.138807" />
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.25.0.139117" />
     <PackageVersion Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.14.15" />
   </ItemGroup>
 </Project>

@@ -22,7 +22,6 @@ public class DivisionsController : ControllerBase
     [ProducesResponseType((int)HttpStatusCode.Created)]
     public async Task<ActionResult<Guid>> CreateDivision([FromBody] DivisionRequest request, CancellationToken ct)
     {
-        // 1. Receptionist takes the Form and maps it to a "League Tier" object
         var division = new Division
         {
             DivisionName = request.DivisionName,
@@ -31,16 +30,13 @@ public class DivisionsController : ControllerBase
             DivisionLevel = request.DivisionLevel
         };
 
-        // 2. Hands it to the Manager (Service)
         var result = await _divisionService.CreateDivisionAsync(division, ct).ConfigureAwait(false);
 
-        // 3. If the Manager says "No" (e.g. name is empty), give a 400 Bad Request
         if (result.Status != ResultStatus.Created)
         {
             return BadRequest(result.Errors);
         }
 
-        // 4. If all good, tell the user where it's filed (201 Created)
         return CreatedAtRoute(nameof(GetDivisionById), new { divisionId = result.Value.DivisionId }, result.Value.DivisionId);
     }
 
@@ -49,7 +45,6 @@ public class DivisionsController : ControllerBase
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
     public async Task<ActionResult<DivisionResponse>> GetDivisionById(Guid divisionId, CancellationToken ct)
     {
-        // 1. Manager looks for the record
         var division = await _divisionService.GetDivisionByIdAsync(divisionId, ct).ConfigureAwait(false);
 
         if (division == null)
@@ -57,7 +52,6 @@ public class DivisionsController : ControllerBase
             return NotFound();
         }
 
-        // 2. Map the data to a clean Return Slip (Response DTO)
         var response = new DivisionResponse
         {
             DivisionId = division.DivisionId,
