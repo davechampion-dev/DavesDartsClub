@@ -13,16 +13,16 @@ internal sealed class SeasonRepository : ISeasonRepository
         _dbContext = dbContext;
     }
 
-    public async Task<Season> AddSeason(Season Season, CancellationToken cancellationToken)
+    public async Task<Season> AddSeason(Season season, CancellationToken cancellationToken)
     {
         var entity = new SeasonEntity
         {
             SeasonId = Guid.NewGuid(),
-            SeasonName = Season.SeasonName,
-            LeagueId = Season.LeagueId,
-            StartDate = Season.StartDate,
-            EndDate = Season.EndDate,
-            IsActive = Season.IsActive,
+            SeasonName = season.SeasonName,
+            LeagueId = season.LeagueId,
+            StartDate = season.StartDate,
+            EndDate = season.EndDate,
+            IsActive = season.IsActive,
         };
 
         cancellationToken.ThrowIfCancellationRequested();
@@ -40,10 +40,10 @@ internal sealed class SeasonRepository : ISeasonRepository
         };
     }
 
-    public async Task<Season?> GetSeasonByIdAsync(Guid SeasonId, CancellationToken cancellationToken)
+    public async Task<Season?> GetSeasonByIdAsync(Guid seasonId, CancellationToken cancellationToken)
     {
         var entity = await _dbContext.Seasons
-            .FirstOrDefaultAsync(s => s.SeasonId == SeasonId, cancellationToken)
+            .FirstOrDefaultAsync(s => s.SeasonId == seasonId, cancellationToken)
             .ConfigureAwait(ConfigureAwaitOptions.None);
 
         if (entity == null) return null;
@@ -59,10 +59,10 @@ internal sealed class SeasonRepository : ISeasonRepository
         };
     }
 
-    public async Task<List<Season>> GetSeasonByNameAsync(string SeasonName, CancellationToken cancellationToken)
+    public async Task<List<Season>> GetSeasonByNameAsync(string seasonName, CancellationToken cancellationToken)
     {
         var entities = await _dbContext.Seasons
-            .Where(s => s.SeasonName.Contains(SeasonName))
+            .Where(s => s.SeasonName.Contains(seasonName))
             .ToListAsync(cancellationToken)
             .ConfigureAwait(ConfigureAwaitOptions.None);
 

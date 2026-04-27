@@ -4,6 +4,6 @@ dotnet ef migrations script --output ./DavesDartsClub.Infrastructure/EntityFrame
 
 //Subsequent runs 
 
-dotnet ef migrations add 002_additionaltables --context AppDbContext --project "./DavesDartsClub.Infrastructure/DavesDartsClub.Infrastructure.csproj" --startup-project "./DavesDartsClub.Aspire.AppHost/DavesDartsClub.Aspire.AppHost.csproj"
+dotnet ef migrations add 2_additionaltables --context AppDbContext --project "./DavesDartsClub.Infrastructure/DavesDartsClub.Infrastructure.csproj" --startup-project "./DavesDartsClub.Aspire.AppHost/DavesDartsClub.Aspire.AppHost.csproj"
 
-dotnet ef migrations script --idempotent --output "./DavesDartsClub.Infrastructure/EntityFramework/Migrations/TSQL/002_aditionaltables.sql" --context AppDbContext --project "./DavesDartsClub.Infrastructure/DavesDartsClub.Infrastructure.csproj" --startup-project "./DavesDartsClub.Aspire.AppHost/DavesDartsClub.Aspire.AppHost.csproj"
+dotnet ef migrations script --idempotent --output "./DavesDartsClub.Infrastructure/EntityFramework/Migrations/TSQL/2_aditionaltables.sql" --context AppDbContext --project "./DavesDartsClub.Infrastructure/DavesDartsClub.Infrastructure.csproj" --startup-project "./DavesDartsClub.Aspire.AppHost/DavesDartsClub.Aspire.AppHost.csproj"

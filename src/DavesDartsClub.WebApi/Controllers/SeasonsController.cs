@@ -74,7 +74,6 @@ public class SeasonController : ControllerBase
         var seasons = await _seasonService.GetSeasonByNameAsync(seasonName.SeasonName, cancellationToken);
 
         var results = seasons.Select(v => new SeasonResponse
-
         {
             SeasonId = v.SeasonId,
             SeasonName = v.SeasonName,

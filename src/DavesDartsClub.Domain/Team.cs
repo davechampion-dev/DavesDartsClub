@@ -9,5 +9,6 @@ public class Team
     public Guid LeagueId { get; set; }
     public Guid CaptainId { get; set; }
     public Guid? HomeVenueId { get; set; }
+    public Guid DivisionId { get; set; }
     public bool IsActive { get; set; } = true;
 }

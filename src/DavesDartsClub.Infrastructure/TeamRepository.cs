@@ -59,6 +59,24 @@ internal sealed class TeamRepository : ITeamRepository
         };
     }
 
+    public async Task<List<Team>> GetTeamsByDivisionAsync(Guid divisionId, CancellationToken ct)
+    {
+        var entities = await _dbContext.Teams
+            .Where(t => t.DivisionId == divisionId)  
+            .ToListAsync(ct)
+            .ConfigureAwait(ConfigureAwaitOptions.None);
+
+        return entities.Select(e => new Team
+        {
+            TeamId = e.TeamId,
+            TeamName = e.TeamName,
+            LeagueId = e.LeagueId,
+            CaptainId = e.CaptainId,
+            HomeVenueId = e.HomeVenueId,
+            IsActive = e.IsActive
+        }).ToList();
+    }
+
     public async Task<List<Team>> GetTeamsByLeagueAsync(Guid leagueId, CancellationToken cancellationToken)
     {
         var entities = await _dbContext.Teams
