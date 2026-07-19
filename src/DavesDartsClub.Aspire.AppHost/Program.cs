@@ -1,4 +1,4 @@
-#pragma warning disable ASPIREINTERACTION001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable ASPIREINTERACTION001
 
 using DavesDartsClub.Domain;
 
@@ -15,12 +15,30 @@ var password = builder.AddParameter("sql-password")
     });
 
 var sql = builder.AddSqlServer("DavesDartsClubSql", password)
+    .
                  .WithDataVolume()
-                 .WithEndpoint(port: 56045, targetPort: 1433, name: "ssms", isProxied: false)
+                 .WithHostPort(56045)
                  .WithLifetime(ContainerLifetime.Persistent);
 
-var db = sql.AddDatabase(Constants.DatabaseName)
-    .WithParentRelationship(sql);
+var serverHealthChecks = sql.Resource.Annotations
+    .Where(a => a.GetType().Name.Contains("HealthCheck"))
+    .ToList();
+
+foreach (var annotation in serverHealthChecks)
+{
+    sql.Resource.Annotations.Remove(annotation);
+}
+
+var db = sql.AddDatabase(Constants.DatabaseName);
+
+var dbHealthChecks = db.Resource.Annotations
+    .Where(a => a.GetType().Name.Contains("HealthCheck"))
+    .ToList();
+
+foreach (var annotation in dbHealthChecks)
+{
+    db.Resource.Annotations.Remove(annotation);
+}
 
 var migrations = builder.AddProject<Projects.DavesDartsClub_Aspire_DatabaseMigrationService>("MigrationService")
     .WithReference(db).WaitFor(db);
