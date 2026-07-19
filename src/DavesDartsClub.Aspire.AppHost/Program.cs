@@ -15,6 +15,7 @@ var password = builder.AddParameter("sql-password")
     });
 
 var sql = builder.AddSqlServer("DavesDartsClubSql", password)
+    .
                  .WithDataVolume()
                  .WithHostPort(56045)
                  .WithLifetime(ContainerLifetime.Persistent);
