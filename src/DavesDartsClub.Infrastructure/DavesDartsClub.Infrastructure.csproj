@@ -12,6 +12,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -26,6 +27,12 @@
 	<ItemGroup>
 		<ProjectReference Include="..\DavesDartsClub.Domain\DavesDartsClub.Domain.csproj" />
 		<ProjectReference Include="..\DavesDartsClub.Fakers\DavesDartsClub.Fakers.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="EntityFramework\Migrations\**\*.cs">
+			<SonarQubeExclude>true</SonarQubeExclude>
+		</Compile>
 	</ItemGroup>
 
 </Project>

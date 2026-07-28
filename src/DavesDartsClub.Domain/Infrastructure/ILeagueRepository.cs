@@ -6,6 +6,7 @@ public interface ILeagueRepository
 {
     Task<League> AddLeague(League league, CancellationToken cancellationToken);
     Task<League?> GetLeagueByIdAsync(Guid leagueId, CancellationToken cancellationToken);
+    Task<League?> GetLeagueByNameAsync(string name, CancellationToken cancellationToken);
 }
 
 

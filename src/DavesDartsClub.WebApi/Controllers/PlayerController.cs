@@ -1,4 +1,5 @@
-﻿using DavesDartsClub.Application;
+﻿using Ardalis.Result.AspNetCore;
+using DavesDartsClub.Application;
 using DavesDartsClub.SharedContracts.Player;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -40,21 +41,14 @@ public class PlayerController : ControllerBase
     }
 
     [HttpPost(ApiConstants.SearchRoute, Name = nameof(PostPlayerSearch))]
-    [ProducesResponseType(((int)HttpStatusCode.OK))]
-    public async Task<ActionResult<IEnumerable<PlayerResponse>>> PostPlayerSearch([NotNull, FromBody] PlayerSearchRequest playerName, CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(PlayerResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType((int)HttpStatusCode.NotFound)]
+    public async Task<ActionResult<PlayerResponse>> PostPlayerSearch([NotNull, FromBody] PlayerSearchRequest playerRequest, CancellationToken cancellationToken)
     {
-        // ToDo: Update to return list of members and take search term
-        var player = await _playerService.GetPlayerByNameAsync(playerName.PlayerName, cancellationToken).ConfigureAwait(false);
+        var result = await _playerService.GetPlayerByNameAsync(playerRequest.PlayerName, cancellationToken)
+            .ConfigureAwait(ConfigureAwaitOptions.None);
 
-        // ToDo: Switch to linq expression
-        var result = new List<PlayerResponse>
-        {
-            new PlayerResponse()
-            {
-                PlayerName = player.Nickname ?? string.Empty
-            }
-        };
-        return Ok(result);
+        return this.ToActionResult(result);
     }
 
     [HttpDelete("{memberId}", Name = nameof(DeletePlayer))]

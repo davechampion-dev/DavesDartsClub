@@ -7,6 +7,6 @@ public class MemberEntity
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
 
-    public PlayerProfileEntity? PlayerProfile { get; set; }
+    public PlayerEntity? PlayerProfile { get; set; }
    
 }

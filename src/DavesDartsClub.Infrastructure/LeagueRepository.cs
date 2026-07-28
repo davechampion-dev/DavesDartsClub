@@ -46,4 +46,22 @@ internal sealed class LeagueRepository : ILeagueRepository
         };
     }
 
+    public async Task<League?> GetLeagueByNameAsync(string name, CancellationToken cancellationToken)
+    {
+        var entity = await _dbContext.Leagues
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.LeagueName == name, cancellationToken)
+            .ConfigureAwait(ConfigureAwaitOptions.None);
+
+        if (entity is null)
+        {
+            return null;
+        }
+
+        return new League
+        {
+            LeagueId = entity.LeagueId,
+            LeagueName = entity.LeagueName
+        };
+    }
 }
