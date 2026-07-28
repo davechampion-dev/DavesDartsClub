@@ -1,5 +1,4 @@
 #pragma warning disable ASPIREINTERACTION001
-
 using DavesDartsClub.Domain;
 
 var builder = DistributedApplication.CreateBuilder(args);
@@ -19,34 +18,20 @@ var sql = builder.AddSqlServer("DavesDartsClubSql", password)
                  .WithHostPort(56045)
                  .WithLifetime(ContainerLifetime.Persistent);
 
-var serverHealthChecks = sql.Resource.Annotations
-    .Where(a => a.GetType().Name.Contains("HealthCheck"))
-    .ToList();
-
-foreach (var annotation in serverHealthChecks)
-{
-    sql.Resource.Annotations.Remove(annotation);
-}
-
 var db = sql.AddDatabase(Constants.DatabaseName);
 
-var dbHealthChecks = db.Resource.Annotations
-    .Where(a => a.GetType().Name.Contains("HealthCheck"))
-    .ToList();
-
-foreach (var annotation in dbHealthChecks)
-{
-    db.Resource.Annotations.Remove(annotation);
-}
+var cache = builder.AddRedis("cache");
 
 var migrations = builder.AddProject<Projects.DavesDartsClub_Aspire_DatabaseMigrationService>("MigrationService")
-    .WithReference(db).WaitFor(db);
+    .WithReference(db)
+    .WaitFor(db);
 
 var api = builder.AddProject<Projects.DavesDartsClub_WebApi>("WebApi")
     .WithExternalHttpEndpoints()
     .WithHttpHealthCheck("/health")
     .WithReference(migrations).WaitForCompletion(migrations)
     .WithReference(db).WaitFor(db)
+    .WithReference(cache).WaitFor(cache)
     .WithUrl("/swagger/index.html");
 
 builder.AddProject<Projects.DavesDartsClub_Website>("Website")

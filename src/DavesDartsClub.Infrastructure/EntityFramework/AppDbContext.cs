@@ -12,7 +12,7 @@ public class AppDbContext : DbContext
     public DbSet<TeamEntity> Teams { get; set; }
     public DbSet<LeagueEntity> Leagues { get; set; }
     public DbSet<TournamentEntity> Tournaments { get; set; }
-    public DbSet<PlayerProfileEntity> PlayerProfiles { get; set; }
+    public DbSet<PlayerEntity> PlayerProfiles { get; set; }
     public DbSet<SeasonEntity> Seasons { get; set; }
     public DbSet<DivisionEntity> Divisions { get; set; }
     public DbSet<VenueEntity> Venues { get; set; }
@@ -45,7 +45,7 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<MemberEntity>()
             .HasOne(x => x.PlayerProfile)
             .WithOne(x => x.Member)
-            .HasForeignKey<PlayerProfileEntity>(x => x.MemberId)
+            .HasForeignKey<PlayerEntity>(x => x.MemberId)
             .IsRequired();
 
         modelBuilder.Entity<MemberEntity>()
@@ -104,14 +104,14 @@ public class AppDbContext : DbContext
 
     private static void OnPlayerModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<PlayerProfileEntity>()
+        modelBuilder.Entity<PlayerEntity>()
             .ToTable("PlayerProfileEntity")
             .HasKey(x => x.MemberId);
 
-        modelBuilder.Entity<PlayerProfileEntity>()
+        modelBuilder.Entity<PlayerEntity>()
             .Property(x => x.Nickname)
             .IsRequired()
-            .HasMaxLength(Domain.PlayerProfile.PlayerNicknameMaxLength);
+            .HasMaxLength(Domain.Player.PlayerNicknameMaxLength);
     }
 
     private static void OnSeasonModelCreating(ModelBuilder modelBuilder)

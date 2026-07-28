@@ -4,6 +4,7 @@ using DavesDartsClub.Domain;
 using DavesDartsClub.SharedContracts.League;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Ardalis.Result.AspNetCore;
 
 namespace DavesDartsClub.WebApi.Controllers;
 
@@ -37,42 +38,25 @@ public class LeagueController : ControllerBase
     }
 
     [HttpGet("{leagueId}", Name = nameof(GetLeagueById))]
-    [ProducesResponseType(((int)HttpStatusCode.OK))]
-    [ProducesResponseType(((int)HttpStatusCode.NotFound))]
+    [ProducesResponseType(typeof(LeagueResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType((int)HttpStatusCode.NotFound)]
     public async Task<ActionResult<LeagueResponse>> GetLeagueById(Guid leagueId, CancellationToken cancellationToken)
     {
-        var league = await _leagueService.GetLeagueByIdAsync(leagueId, cancellationToken).ConfigureAwait(false);
-        var result = new LeagueResponse()
-        {
-            LeagueId = league.LeagueId,
-            LeagueName = league.LeagueName
-        };
+        var result = await _leagueService.GetLeagueByIdAsync(leagueId, cancellationToken)
+            .ConfigureAwait(ConfigureAwaitOptions.None);
 
-        return Ok(result);
+        return this.ToActionResult(result);
     }
 
     [HttpPost(ApiConstants.SearchRoute, Name = nameof(PostLeagueSearch))]
-    [ProducesResponseType(((int)HttpStatusCode.OK))]
-    public async Task<ActionResult<IEnumerable<LeagueResponse>>> PostLeagueSearch([NotNull, FromBody] LeagueSearchRequest leagueName, CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(LeagueResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType((int)HttpStatusCode.NotFound)]
+    public async Task<ActionResult<LeagueResponse>> PostLeagueSearch([NotNull, FromBody] LeagueSearchRequest leagueName, CancellationToken cancellationToken)
     {
-        var league = await _leagueService.GetLeagueByNameAsync(leagueName.LeagueName, cancellationToken).ConfigureAwait(false);
+        var result = await _leagueService.GetLeagueByNameAsync(leagueName.LeagueName, cancellationToken)
+            .ConfigureAwait(ConfigureAwaitOptions.None);
 
-        if (league == null)
-        {
-            return NotFound();
-        }
-
-        var result = new List<LeagueResponse>
-        {
-            new LeagueResponse()
-            {
-                LeagueId = league.LeagueId,
-                LeagueName = league.LeagueName
-            }
-
-        };
-
-        return Ok(result);
+        return this.ToActionResult(result);
     }
 
     [HttpDelete("{leagueId}", Name = nameof(DeleteLeague))]

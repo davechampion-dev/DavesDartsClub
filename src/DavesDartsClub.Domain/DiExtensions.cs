@@ -10,7 +10,7 @@ public static class DiExtensions
     {
         services.AddScoped<IValidator<League>, LeagueValidator>();
         services.AddScoped<IValidator<Member>, MemberValidator>();
-        services.AddScoped<IValidator<PlayerProfile>, PlayerValidator>();
+        services.AddScoped<IValidator<Player>, PlayerValidator>();
         services.AddScoped<IValidator<Season>, SeasonValidator>();
         services.AddScoped<IValidator<Team>, TeamValidator>();
         services.AddScoped<IValidator<Tournament>, TournamentValidator>();
