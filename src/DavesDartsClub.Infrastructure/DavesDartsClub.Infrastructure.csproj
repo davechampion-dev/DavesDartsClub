@@ -29,4 +29,10 @@
 		<ProjectReference Include="..\DavesDartsClub.Fakers\DavesDartsClub.Fakers.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<Compile Update="EntityFramework\Migrations\**\*.cs">
+			<SonarQubeExclude>true</SonarQubeExclude>
+		</Compile>
+	</ItemGroup>
+
 </Project>
