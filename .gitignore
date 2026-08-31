@@ -402,3 +402,4 @@ FodyWeavers.xsd
 
 # Visual Studio XML Doc Comments
 **/*.docs.xml
+/docs/LikeC4/dist
