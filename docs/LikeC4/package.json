@@ -1,0 +1,17 @@
+{
+  "name": "Daves Darts Club",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": "",
+  "scripts": {
+    "dev": "likec4 serve . --view index --use-hash-routing",
+    "build": "likec4 build --view index --use-hash-routing -o ./dist",
+    "postbuild": "",
+    "preview": "likec4 preview --view index -o ./dist",
+    "check": "likec4 check ."
+  },
+  "devDependencies": {
+    "likec4": "^1.56.0"
+  }
+}
