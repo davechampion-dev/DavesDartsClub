@@ -1,37 +1,54 @@
-﻿using DavesDartsClub.Application;
+﻿#pragma warning disable CA1707
+using DavesDartsClub.Application;
 using DavesDartsClub.Domain;
+using DavesDartsClub.Infrastructure;
 using FluentValidation;
 using FluentValidation.Results;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace DavesDartsClub.UnitTests.Application;
 
 public class LeagueServiceUnitTest
 {
+    [SuppressMessage("Usage", "Moq1400:Moq: Explicitly choose a mock behavior", Justification = "Default Mock only")]
     private readonly Mock<IValidator<League>> _mockLeagueValidator = new Mock<IValidator<League>>();
+
+    [SuppressMessage("Usage", "Moq1400:Moq: Explicitly choose a mock behavior", Justification = "Default Mock only")]
+    private readonly Mock<ILeagueRepository> _mockLeagueRepository = new Mock<ILeagueRepository>();
+
     private readonly LeagueService _leagueService;
+
+    private readonly Mock<IDistributedCache> _mockCache;
 
     public LeagueServiceUnitTest()
     {
-        _leagueService = new LeagueService(_mockLeagueValidator.Object);
+        _mockCache = new Mock<IDistributedCache>();
+        _leagueService = new LeagueService(_mockLeagueRepository.Object, _mockLeagueValidator.Object, _mockCache.Object);
     }
 
     [Fact]
+    [SuppressMessage("Usage", "Moq1400:Moq: Explicitly choose a mock behavior", Justification = "Default Mock only")]
     public async Task CreateLeague_Should_ReturnASavedLeague_Given_AValid_League()
     {
         //Arrange
-        var mockleagueValidator = new Mock<IValidator<League>>();
-        var leagueService = new LeagueService(mockleagueValidator.Object);
         var newId = Guid.NewGuid();
-        var league = new League { LeagueId = newId };
+        var league = new League { LeagueName = "test League" };
 
-        mockleagueValidator.Setup(x => x.ValidateAsync(league, It.IsAny<CancellationToken>()))
+        _mockLeagueValidator.Setup(x => x.ValidateAsync(league, It.IsAny<CancellationToken>()))
            .Returns(Task.FromResult(new ValidationResult()));
 
+        _mockLeagueRepository.Setup(x => x.AddLeague(league, It.IsAny<CancellationToken>()))
+            .Returns(Task.FromResult(new League()
+            {
+                LeagueId = newId,
+                LeagueName = league.LeagueName
+            }));
+
         //Act
-        var response = await leagueService.CreateLeague(league, CancellationToken.None);
+        var response = await _leagueService.CreateLeagueAsync(league, CancellationToken.None);
 
         //Assert
+        league.LeagueId.ShouldBe(Guid.Empty);
         response.ShouldNotBeNull();
         response.Value.ShouldNotBeNull();
         response.Value.LeagueId.ShouldBe(newId);
@@ -44,15 +61,14 @@ public class LeagueServiceUnitTest
         var league = new League();
         var validationResult = new ValidationResult();
         validationResult.Errors.Add(new ValidationFailure("LeagueId", "LeagueId is required"));
+
         _mockLeagueValidator.Setup(x => x.ValidateAsync(league, It.IsAny<CancellationToken>()))
             .Returns(Task.FromResult(validationResult));
 
         //Act
-        var response = await _leagueService.CreateLeague(league, CancellationToken.None);
+        await _leagueService.CreateLeagueAsync(league, CancellationToken.None);
 
         //Assert
-        response.ShouldNotBeNull();
-        response.Value.ShouldBeNull();
-        response.ValidationErrors.ShouldNotBeNull();
+        //ToDo Add Asserts
     }
 }

@@ -3,10 +3,9 @@ using DavesDartsClub.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
-
 namespace DavesDartsClub.DatabaseMigrationService;
 
-public class Worker(
+internal sealed class Worker(
     IServiceProvider serviceProvider,
     IHostApplicationLifetime hostApplicationLifetime) : BackgroundService
 {
@@ -22,11 +21,12 @@ public class Worker(
             using var scope = serviceProvider.CreateScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-            await RunMigrationAsync(dbContext, stoppingToken);
-            await SeedDataAsync(dbContext, stoppingToken);
+            await RunMigrationAsync(dbContext, stoppingToken).ConfigureAwait(ConfigureAwaitOptions.None);
+            await SeedDataAsync(dbContext, stoppingToken).ConfigureAwait(ConfigureAwaitOptions.None);
         }
         catch (Exception ex)
         {
+            activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
             activity?.AddException(ex);
             throw;
         }
@@ -38,50 +38,69 @@ public class Worker(
     {
         var strategy = dbContext.Database.CreateExecutionStrategy();
 
-        // Run migration in a transaction to avoid partial migration if it fails ...
-        await strategy.ExecuteAsync(async () => await dbContext.Database.MigrateAsync(cancellationToken));
+        await strategy.ExecuteAsync(async ct =>
+        {
+            await dbContext.Database.EnsureDeletedAsync(ct).ConfigureAwait(false);
+
+            await dbContext.Database.MigrateAsync(ct).ConfigureAwait(ConfigureAwaitOptions.None);
+        }, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
     }
 
     private static async Task SeedDataAsync(AppDbContext dbContext, CancellationToken cancellationToken)
     {
         var strategy = dbContext.Database.CreateExecutionStrategy();
-        await strategy.ExecuteAsync(async () =>
+        await strategy.ExecuteAsync(async ct =>
         {
-            // Seed the database
-            await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
+            await using var transaction = await dbContext.Database.BeginTransactionAsync(ct).ConfigureAwait(false);
 
-            if (!await dbContext.Leagues.AnyAsync(cancellationToken))
+            if (!await dbContext.Leagues.AsNoTracking().AnyAsync(ct).ConfigureAwait(false))
             {
                 var leagueFaker = new LeagueFaker();
-                var leagues = leagueFaker.CreateFaker().Generate(5); // List<League>
+                var leagues = leagueFaker.CreateFaker().Generate(5);
 
                 var leagueEntities = leagues.Select(l => new LeagueEntity
                 {
-                    LeagueId = Guid.NewGuid(), // EF primary key
+                    LeagueId = Guid.NewGuid(),
                     LeagueName = l.LeagueName
                 }).ToList();
 
                 dbContext.Leagues.AddRange(leagueEntities);
+                await dbContext.SaveChangesAsync(ct).ConfigureAwait(false);
             }
 
-            if (!await dbContext.Set<MemberEntity>().AnyAsync(cancellationToken))
+            var memberFaker = new MemberFaker();
+            var existingMembers = await dbContext.Members.ToListAsync(ct).ConfigureAwait(false);
+
+            var faker = new Bogus.Faker<MemberEntity>()
+                .RuleFor(m => m.MemberId, Guid.NewGuid)
+                .RuleFor(m => m.FirstName, f => f.Name.FirstName())
+                .RuleFor(m => m.LastName, f => f.Name.LastName())
+                .RuleFor(m => m.MemberName, (f, m) => $"{m.FirstName} {m.LastName}");
+
+            if (existingMembers.Any())
             {
-                var memberFaker = new MemberFaker();
-                var members = memberFaker.CreateFaker().Generate(5); // List<Member> domain objects
-
-                var memberEntities = members.Select(m => new MemberEntity
+                foreach (var member in existingMembers)
                 {
-                    MemberId = Guid.NewGuid(),
-                    MemberName = m.MemberName
-                    // Map other properties here
-                }).ToList();
-
-                dbContext.Members.AddRange(memberEntities);
+                    if (string.IsNullOrWhiteSpace(member.FirstName) || string.IsNullOrWhiteSpace(member.LastName))
+                    {
+                        var fake = faker.Generate();
+                        member.FirstName = fake.FirstName;
+                        member.LastName = fake.LastName;
+                        member.MemberName = fake.MemberName; 
+                        dbContext.Entry(member).State = EntityState.Modified;
+                    }
+                }
+            }
+            else
+            {
+                var entities = faker.Generate(5);
+                dbContext.Members.AddRange(entities);
             }
 
-            await dbContext.SaveChangesAsync(cancellationToken);
-            await transaction.CommitAsync(cancellationToken);
-        });
+            await dbContext.SaveChangesAsync(ct).ConfigureAwait(false);
+            await transaction.CommitAsync(ct).ConfigureAwait(false);
+
+        }, cancellationToken).ConfigureAwait(false);
     }
 }
 

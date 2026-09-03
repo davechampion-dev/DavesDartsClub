@@ -1,13 +1,16 @@
-﻿using DavesDartsClub.Application;
+﻿using Ardalis.Result;
+using DavesDartsClub.Application;
+using DavesDartsClub.Domain;
 using DavesDartsClub.SharedContracts.League;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Ardalis.Result.AspNetCore;
 
 namespace DavesDartsClub.WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public partial class LeagueController : ControllerBase
+public class LeagueController : ControllerBase
 {
     private readonly ILeagueService _leagueService;
 
@@ -18,56 +21,50 @@ public partial class LeagueController : ControllerBase
 
     [HttpPost(Name = nameof(CreateLeague))]
     [ProducesResponseType(((int)HttpStatusCode.Created))]
-    public ActionResult<Guid> CreateLeague(LeagueRequest leagueRequest)
+    public async Task<ActionResult<Guid>> CreateLeague(LeagueRequest leagueRequest, CancellationToken cancellationToken)
     {
-        var id = Guid.NewGuid();
-        return CreatedAtRoute(nameof(GetLeagueById), new { leagueId = id }, id);
+
+        var league = new League()
+        {
+            LeagueName = leagueRequest.LeagueName
+        };
+        var leagueResult = await _leagueService.CreateLeagueAsync(league, cancellationToken).ConfigureAwait(false);
+        if (leagueResult.Status != ResultStatus.Created)
+        {
+            return BadRequest(leagueResult.Errors);
+        }
+
+        return CreatedAtRoute(nameof(GetLeagueById), new { leagueId = leagueResult.Value.LeagueId }, leagueResult.Value.LeagueId);
     }
 
     [HttpGet("{leagueId}", Name = nameof(GetLeagueById))]
-    [ProducesResponseType(((int)HttpStatusCode.OK))]
-    [ProducesResponseType(((int)HttpStatusCode.NotFound))]
-    public ActionResult<LeagueResponse> GetLeagueById(Guid leagueId)
+    [ProducesResponseType(typeof(LeagueResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType((int)HttpStatusCode.NotFound)]
+    public async Task<ActionResult<LeagueResponse>> GetLeagueById(Guid leagueId, CancellationToken cancellationToken)
     {
-        var league = _leagueService.GetLeagueById(leagueId);
-        var result = new LeagueResponse()
-        {
-            LeagueId = league.LeagueId,
-            LeagueName = league.LeagueName
-        };
+        var result = await _leagueService.GetLeagueByIdAsync(leagueId, cancellationToken)
+            .ConfigureAwait(ConfigureAwaitOptions.None);
 
-        return Ok(result);
+        return this.ToActionResult(result);
     }
 
-    [HttpGet(Name = nameof(GetLeagueSearch))]
-    [ProducesResponseType(((int)HttpStatusCode.OK))]
-    public ActionResult<IEnumerable<LeagueResponse>> GetLeagueSearch([FromBody] LeagueSearchRequest leagueName)
+    [HttpPost(ApiConstants.SearchRoute, Name = nameof(PostLeagueSearch))]
+    [ProducesResponseType(typeof(LeagueResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType((int)HttpStatusCode.NotFound)]
+    public async Task<ActionResult<LeagueResponse>> PostLeagueSearch([NotNull, FromBody] LeagueSearchRequest leagueName, CancellationToken cancellationToken)
     {
-        var league = _leagueService.GetLeagueByName(leagueName.LeagueName);
+        var result = await _leagueService.GetLeagueByNameAsync(leagueName.LeagueName, cancellationToken)
+            .ConfigureAwait(ConfigureAwaitOptions.None);
 
-        if (league == null)
-        {
-            return NotFound();
-        }
-
-        var result = new List<LeagueResponse>
-        {
-            new LeagueResponse()
-            {
-                LeagueId = league.LeagueId,
-                LeagueName = league.LeagueName
-            }
-
-        };
-
-        return Ok(result);
+        return this.ToActionResult(result);
     }
 
     [HttpDelete("{leagueId}", Name = nameof(DeleteLeague))]
     [ProducesResponseType(((int)HttpStatusCode.NoContent))]
     [ProducesResponseType(((int)HttpStatusCode.NotFound))]
-    public ActionResult DeleteLeague(Guid leagueId)
+    public async Task<ActionResult> DeleteLeague(Guid leagueId, CancellationToken cancellationToken)
     {
+        //TODO: Implement delete logic
         var leagueExists = true;
 
         if (!leagueExists)
@@ -77,5 +74,4 @@ public partial class LeagueController : ControllerBase
 
         return NoContent();
     }
-
 }

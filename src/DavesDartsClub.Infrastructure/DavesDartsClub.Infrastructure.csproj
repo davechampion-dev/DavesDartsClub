@@ -12,6 +12,11 @@
 
 	<ItemGroup>
 		<PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="Microsoft.AspNetCore.Cors" />
 		<PackageReference Include="SonarAnalyzer.CSharp">
 			<PrivateAssets>all</PrivateAssets>
@@ -25,7 +30,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="EntityFramework\Migrations\TSQL\" />
+		<Compile Update="EntityFramework\Migrations\**\*.cs">
+			<SonarQubeExclude>true</SonarQubeExclude>
+		</Compile>
 	</ItemGroup>
 
 </Project>

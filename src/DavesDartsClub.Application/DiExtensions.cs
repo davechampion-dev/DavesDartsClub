@@ -1,0 +1,21 @@
+﻿using DavesDartsClub.Application;
+
+namespace Microsoft.Extensions.DependencyInjection;
+
+public static class DiExtensions
+{
+    public static IServiceCollection AddDavesDartClubApplication(this IServiceCollection services)
+    {
+        services.AddScoped<IMemberService, MemberService>();
+        services.AddScoped<ITournamentService, TournamentService>();
+        services.AddScoped<ILeagueService, LeagueService>();
+        services.AddScoped<IPlayerService, PlayerService>();
+        services.AddScoped<ITeamService, TeamService>();
+        services.AddScoped<IVenueService, VenueService>();
+        services.AddScoped<ISeasonService, SeasonService>();
+        services.AddScoped<IFixtureService, FixtureService>();
+        services.AddScoped<IDivisionService, DivisionService>();
+        services.AddScoped<FixtureGenerator>();
+        return services;
+    }
+}

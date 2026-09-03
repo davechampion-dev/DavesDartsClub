@@ -1,20 +1,18 @@
-using DavesDartsClub.Application;
 using Microsoft.AspNetCore.Mvc;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
+builder.AddRedisDistributedCache("cache");
 builder.AddDavesDartsClubAppDbContext();
 
-// Add services to the container.
 builder.Services.AddProblemDetails();
 builder.Services.AddControllers(opts =>
 {
-    // Define MediaType limits ...
-    opts.Filters.Add(new ProducesAttribute("application/json")); // Response limit
-    opts.Filters.Add(new ConsumesAttribute("application/json")); // Request limit
-    opts.ReturnHttpNotAcceptable = true; // Force client to only request media types based on the above limits.
+    opts.Filters.Add(new ProducesAttribute("application/json")); 
+    opts.Filters.Add(new ConsumesAttribute("application/json")); 
+    opts.ReturnHttpNotAcceptable = true; 
 });
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -45,4 +43,4 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapDefaultEndpoints();
 
-await app.RunAsync();
+await app.RunAsync().ConfigureAwait(ConfigureAwaitOptions.None);

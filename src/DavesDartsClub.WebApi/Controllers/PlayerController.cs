@@ -1,4 +1,5 @@
-﻿using DavesDartsClub.Application;
+﻿using Ardalis.Result.AspNetCore;
+using DavesDartsClub.Application;
 using DavesDartsClub.SharedContracts.Player;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -19,7 +20,7 @@ public class PlayerController : ControllerBase
 
     [HttpPost(Name = nameof(CreatePlayer))]
     [ProducesResponseType(((int)HttpStatusCode.Created))]
-    public ActionResult<Guid> CreatePlayer([FromBody] PlayerRequest playerRequest)
+    public async Task<ActionResult<Guid>> CreatePlayer([FromBody] PlayerRequest playerRequest, CancellationToken cancellationToken)
     {
         var id = Guid.NewGuid();
         return CreatedAtRoute(nameof(GetPlayerByMemberId), new { memberId = id }, id);
@@ -28,7 +29,7 @@ public class PlayerController : ControllerBase
     [HttpGet("{memberId}", Name = nameof(GetPlayerByMemberId))]
     [ProducesResponseType(((int)HttpStatusCode.OK))]
     [ProducesResponseType(((int)HttpStatusCode.NotFound))]
-    public ActionResult<PlayerResponse> GetPlayerByMemberId(Guid memberId)
+    public async Task<ActionResult<PlayerResponse>> GetPlayerByMemberId(Guid memberId, CancellationToken cancellationToken)
     {
 #pragma warning restore S1481
         var result = new PlayerResponse()
@@ -39,31 +40,23 @@ public class PlayerController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet(Name = nameof(GetPlayerSearch))]
-    [ProducesResponseType(((int)HttpStatusCode.OK))]
-
-    public ActionResult<IEnumerable<PlayerResponse>> GetPlayerSearch([FromBody] PlayerSearchRequest playerName)
+    [HttpPost(ApiConstants.SearchRoute, Name = nameof(PostPlayerSearch))]
+    [ProducesResponseType(typeof(PlayerResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType((int)HttpStatusCode.NotFound)]
+    public async Task<ActionResult<PlayerResponse>> PostPlayerSearch([NotNull, FromBody] PlayerSearchRequest playerRequest, CancellationToken cancellationToken)
     {
-        // ToDo: Update to return list of members and take search term
-        var player = _playerService.GetPlayerByName(playerName.PlayerName);
+        var result = await _playerService.GetPlayerByNameAsync(playerRequest.PlayerName, cancellationToken)
+            .ConfigureAwait(ConfigureAwaitOptions.None);
 
-        // ToDo: Switch to linq expression
-        var result = new List<PlayerResponse>
-{
-    new PlayerResponse()
-    {
-        PlayerName = player.Nickname ?? string.Empty
-    }
-    };
-        return Ok(result);
+        return this.ToActionResult(result);
     }
 
     [HttpDelete("{memberId}", Name = nameof(DeletePlayer))]
     [ProducesResponseType(((int)HttpStatusCode.NoContent))]
     [ProducesResponseType(((int)HttpStatusCode.NotFound))]
-
-    public ActionResult DeletePlayer(Guid memberId)
+    public async Task<ActionResult> DeletePlayer(Guid memberId, CancellationToken cancellationToken)
     {
+        //ToDo: Implement delete player logic
         var playerExists = true;
 
         if (!playerExists)
@@ -73,6 +66,4 @@ public class PlayerController : ControllerBase
 
         return NoContent();
     }
-
 }
-

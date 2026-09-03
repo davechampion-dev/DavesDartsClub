@@ -8,7 +8,7 @@ namespace DavesDartsClub.WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public partial class TournamentController : ControllerBase
+public class TournamentController : ControllerBase
 {
     private readonly ITournamentService _tournamentService;
 
@@ -21,14 +21,14 @@ public partial class TournamentController : ControllerBase
     [ProducesResponseType((int)HttpStatusCode.Created)]
     [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
-    public async Task<ActionResult<TournamentResponse>> CreateTournament(TournamentRequest tournamentRequest, CancellationToken cancellationToken)
+    public async Task<ActionResult<TournamentResponse>> CreateTournament([NotNull] TournamentRequest tournamentRequest, CancellationToken cancellationToken)
     {
         var newTournament = new Tournament
         {
             TournamentName = tournamentRequest.TournamentName
         };
 
-        var result = await _tournamentService.CreateTournament(newTournament, cancellationToken);
+        var result = await _tournamentService.CreateTournamentAsync(newTournament, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
 
         if (!result.IsSuccess || result.Value == null)
         {
@@ -49,9 +49,9 @@ public partial class TournamentController : ControllerBase
     [HttpGet("{tournamentId}", Name = nameof(GetTournamentById))]
     [ProducesResponseType(typeof(TournamentResponse), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
-    public ActionResult<TournamentResponse> GetTournamentById(Guid tournamentId)
+    public async Task<ActionResult<TournamentResponse>> GetTournamentById(Guid tournamentId, CancellationToken cancellationToken)
     {
-        var tournament = _tournamentService.GetTournamentById(tournamentId);
+        var tournament = await _tournamentService.GetTournamentByIdAsync(tournamentId, cancellationToken).ConfigureAwait(false);
 
         if (tournament == null)
         {
@@ -67,11 +67,12 @@ public partial class TournamentController : ControllerBase
         return Ok(tournamentResponse);
     }
 
-    [HttpGet("search", Name = nameof(GetTournamentSearch))]
+    [HttpPost(ApiConstants.SearchRoute, Name = nameof(PostTournamentSearch))]
     [ProducesResponseType((int)HttpStatusCode.OK)]
-    public ActionResult<IEnumerable<TournamentResponse>> GetTournamentSearch([FromQuery] string tournamentName)
+    public async Task<ActionResult<IEnumerable<TournamentResponse>>> PostTournamentSearch([FromBody] TournamentSearchRequest tournamentSearch, CancellationToken cancellationToken)
     {
-        var tournament = _tournamentService.GetTournamentByName(tournamentName);
+        //ToDO: add Wildcard search on tournament name
+        var tournament = await _tournamentService.GetTournamentByNameAsync(tournamentSearch?.TournamentName ?? string.Empty, cancellationToken).ConfigureAwait(false);
 
         if (tournament == null)
         {
@@ -79,13 +80,13 @@ public partial class TournamentController : ControllerBase
         }
 
         var result = new List<TournamentResponse>
-    {
-        new TournamentResponse
         {
-            TournamentId = tournament.TournamentId,
-            TournamentName = tournament.TournamentName
-        }
-    };
+            new TournamentResponse
+            {
+                TournamentId = tournament.TournamentId,
+                TournamentName = tournament.TournamentName
+            }
+        };
 
         return Ok(result);
     }
@@ -93,8 +94,9 @@ public partial class TournamentController : ControllerBase
     [HttpDelete("{tournamentId}", Name = nameof(DeleteTournament))]
     [ProducesResponseType(((int)HttpStatusCode.NoContent))]
     [ProducesResponseType(((int)HttpStatusCode.NotFound))]
-    public ActionResult DeleteTournament(Guid tournamentId)
+    public async Task<ActionResult> DeleteTournament(Guid tournamentId, CancellationToken cancellationToken)
     {
+        //ToDo: Implement delete tournament logic
         var tournamentExists = true;
 
         if (!tournamentExists)
@@ -104,5 +106,4 @@ public partial class TournamentController : ControllerBase
 
         return NoContent();
     }
-
 }

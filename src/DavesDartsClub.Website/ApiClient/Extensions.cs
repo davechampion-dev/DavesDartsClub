@@ -5,11 +5,11 @@ using Refit;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
-public static class Extensions
+internal static class Extensions
 {
     public static IServiceCollection AddDavesDartsClubApiClient(this IServiceCollection services)
     {
-    
+
         services
             .AddRefitClient<ILeagueApiClient>()
             .ConfigureHttpClient(client =>

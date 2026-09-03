@@ -1,4 +1,5 @@
-﻿using DavesDartsClub.Domain;
+﻿#pragma warning disable CA1707 // Identifiers should not contain underscores
+using DavesDartsClub.Domain;
 using DavesDartsClub.Domain.Validation;
 
 namespace DavesDartsClub.UnitTests.Domain.Validation;
@@ -10,7 +11,6 @@ public class TournamentValidatorUnitTest
     {
         _tournamentValidator = new TournamentValidator();
     }
-
 
     [Fact]
     public void Validate_Should_ReturnAValidResponseWithNoErrors_Given_AValidTournament()

@@ -1,14 +1,15 @@
-﻿using DavesDartsClub.Application;
+﻿#pragma warning disable CA1707 
+using DavesDartsClub.Application;
 using DavesDartsClub.SharedContracts.Player;
 using DavesDartsClub.WebApi.Controllers;
-
 
 namespace DavesDartsClub.UnitTests.WebApi;
 
 public class PlayerControllerUnitTest
 {
     [Fact]
-    public void CreatePlayer_Should_ReturnNewId_Given_AValid_PlayerRequest()
+    [SuppressMessage("Usage", "Moq1400:Moq: Explicitly choose a mock behavior", Justification = "Default Mock only")]
+    public async Task CreatePlayer_Should_ReturnNewId_Given_AValid_PlayerRequest()
     {
         //Arrange
         var mockPlayerService = new Mock<IPlayerService>();
@@ -16,7 +17,7 @@ public class PlayerControllerUnitTest
         var playerRequest = new PlayerRequest();
 
         //Act
-        var result = playerController.CreatePlayer(playerRequest);
+        var result = await playerController.CreatePlayer(playerRequest, CancellationToken.None);
 
         //Assert
         result.ShouldNotBeNull();

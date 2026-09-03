@@ -5,10 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
-// Add MudBlazor services
 builder.Services.AddMudServices();
 
-// Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
@@ -16,7 +14,6 @@ builder.Services.AddDavesDartsClubApiClient();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
@@ -35,4 +32,4 @@ app.MapRazorComponents<App>()
 
 app.MapDefaultEndpoints();
 
-await app.RunAsync();
+await app.RunAsync().ConfigureAwait(ConfigureAwaitOptions.None);

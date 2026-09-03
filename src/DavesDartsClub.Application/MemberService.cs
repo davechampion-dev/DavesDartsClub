@@ -1,32 +1,42 @@
-﻿using DavesDartsClub.Domain;
+﻿using Ardalis.Result;
+using Ardalis.Result.FluentValidation;
+using DavesDartsClub.Domain;
 using FluentValidation;
 
 namespace DavesDartsClub.Application;
 
 public class MemberService : IMemberService
 {
+    private readonly IMemberRepository _memberRepository;
     private readonly IValidator<Member> _memberValidator;
 
-    public MemberService(IValidator<Member> memberValidator)
+    public MemberService(IMemberRepository memberRepository, IValidator<Member> memberValidator)
     {
+        _memberRepository = memberRepository;
         _memberValidator = memberValidator;
     }
 
-    public Member GetMemberById(Guid memberId)
+    public async Task<Member?> GetMemberByIdAsync(Guid memberId, CancellationToken cancellationToken)
     {
-        return new Member()
-        {
-            MemberId = memberId,
-            MemberName = "Bob The Frog"
-        };
+        return await _memberRepository.GetMemberByIdAsync(memberId, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
     }
 
-    public Member GetMemberByName(string name)
+    public async Task<List<Member>> GetMemberByNameAsync(string memberName, CancellationToken cancellationToken)
     {
-        return new Member()
+        return await _memberRepository.GetMemberByNameAsync(memberName, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
+    }
+
+    public async Task<Result<Member>> CreateMemberAsync(Member member, CancellationToken cancellationToken)
+    {
+        var validationResult = await _memberValidator.ValidateAsync(member, cancellationToken)
+            .ConfigureAwait(ConfigureAwaitOptions.None);
+
+        if (!validationResult.IsValid)
         {
-            MemberId = Guid.NewGuid(),
-            MemberName = "Bob The Frog"
-        };
+            return Result.Invalid(validationResult.AsErrors());
+        }
+
+        var createdMember = await _memberRepository.AddMember(member, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
+        return Result.Created(createdMember);
     }
 }

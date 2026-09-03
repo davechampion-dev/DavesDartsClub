@@ -5,6 +5,83 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/Divisions": {
+      "post": {
+        "tags": [
+          "Divisions"
+        ],
+        "operationId": "CreateDivision",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DivisionRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DivisionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Divisions/{divisionId}": {
+      "get": {
+        "tags": [
+          "Divisions"
+        ],
+        "operationId": "GetDivisionById",
+        "parameters": [
+          {
+            "name": "divisionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DivisionResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/League": {
       "post": {
         "tags": [
@@ -34,42 +111,6 @@
                 "schema": {
                   "type": "string",
                   "format": "uuid"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "League"
-        ],
-        "operationId": "GetLeagueSearch",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LeagueSearchRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/LeagueSearchRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/LeagueResponse"
-                  }
                 }
               }
             }
@@ -150,12 +191,93 @@
         }
       }
     },
+    "/League/search": {
+      "post": {
+        "tags": [
+          "League"
+        ],
+        "operationId": "PostLeagueSearch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LeagueSearchRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LeagueSearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeagueResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Member": {
       "post": {
         "tags": [
           "Member"
         ],
-        "operationId": "MemberSearch",
+        "operationId": "CreateMember",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Member/search": {
+      "post": {
+        "tags": [
+          "Member"
+        ],
+        "operationId": "PostMemberSearch",
         "requestBody": {
           "content": {
             "application/json": {
@@ -295,42 +417,6 @@
             }
           }
         }
-      },
-      "get": {
-        "tags": [
-          "Player"
-        ],
-        "operationId": "GetPlayerSearch",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PlayerSearchRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/PlayerSearchRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PlayerResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/Player/{memberId}": {
@@ -406,6 +492,51 @@
         }
       }
     },
+    "/Player/search": {
+      "post": {
+        "tags": [
+          "Player"
+        ],
+        "operationId": "PostPlayerSearch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayerSearchRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayerSearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlayerResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Score": {
       "get": {
         "tags": [
@@ -439,6 +570,334 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/Season": {
+      "post": {
+        "tags": [
+          "Season"
+        ],
+        "operationId": "CreateSeason",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SeasonRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SeasonRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Season/{seasonId}": {
+      "get": {
+        "tags": [
+          "Season"
+        ],
+        "operationId": "GetSeasonById",
+        "parameters": [
+          {
+            "name": "seasonId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SeasonResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Season"
+        ],
+        "operationId": "DeleteSeason",
+        "parameters": [
+          {
+            "name": "seasonId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Season/search": {
+      "post": {
+        "tags": [
+          "Season"
+        ],
+        "operationId": "PostSeasonSearch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SeasonSearchRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SeasonSearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SeasonResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Season/league/{leagueId}": {
+      "get": {
+        "tags": [
+          "Season"
+        ],
+        "operationId": "GetSeasonsByLeague",
+        "parameters": [
+          {
+            "name": "leagueId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SeasonResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Team": {
+      "post": {
+        "tags": [
+          "Team"
+        ],
+        "operationId": "CreateTeam",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TeamRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TeamRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Team/{teamId}": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "operationId": "GetTeamById",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeamResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Team"
+        ],
+        "operationId": "DeleteTeam",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Team/search": {
+      "post": {
+        "tags": [
+          "Team"
+        ],
+        "operationId": "PostTeamSearch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TeamSearchRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TeamSearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TeamResponse"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -572,20 +1031,26 @@
       }
     },
     "/Tournament/search": {
-      "get": {
+      "post": {
         "tags": [
           "Tournament"
         ],
-        "operationId": "GetTournamentSearch",
-        "parameters": [
-          {
-            "name": "tournamentName",
-            "in": "query",
-            "schema": {
-              "type": "string"
+        "operationId": "PostTournamentSearch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TournamentSearchRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TournamentSearchRequest"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -602,10 +1067,209 @@
           }
         }
       }
+    },
+    "/Venue": {
+      "post": {
+        "tags": [
+          "Venue"
+        ],
+        "operationId": "CreateVenue",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VenueRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VenueRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Venue/{venueId}": {
+      "get": {
+        "tags": [
+          "Venue"
+        ],
+        "operationId": "GetVenueById",
+        "parameters": [
+          {
+            "name": "venueId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VenueResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Venue"
+        ],
+        "operationId": "DeleteVenue",
+        "parameters": [
+          {
+            "name": "venueId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Venue/search": {
+      "post": {
+        "tags": [
+          "Venue"
+        ],
+        "operationId": "PostVenueSearch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VenueSearchRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VenueSearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VenueResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "DivisionRequest": {
+        "type": "object",
+        "properties": {
+          "divisionName": {
+            "type": "string"
+          },
+          "seasonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "leagueId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "divisionLevel": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "DivisionResponse": {
+        "type": "object",
+        "properties": {
+          "divisionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "divisionName": {
+            "type": "string"
+          },
+          "seasonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "leagueId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "divisionLevel": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
       "LeagueRequest": {
         "type": "object",
         "properties": {
@@ -639,6 +1303,12 @@
         "properties": {
           "memberName": {
             "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
           }
         }
       },
@@ -651,6 +1321,12 @@
           },
           "memberName": {
             "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
           }
         }
       },
@@ -658,6 +1334,12 @@
         "type": "object",
         "properties": {
           "memberName": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
             "type": "string"
           }
         }
@@ -673,7 +1355,14 @@
       "PlayerResponse": {
         "type": "object",
         "properties": {
+          "playerId": {
+            "type": "string",
+            "format": "uuid"
+          },
           "playerName": {
+            "type": "string"
+          },
+          "nickname": {
             "type": "string"
           }
         }
@@ -724,6 +1413,125 @@
           }
         }
       },
+      "SeasonRequest": {
+        "type": "object",
+        "properties": {
+          "seasonName": {
+            "type": "string"
+          },
+          "leagueId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SeasonResponse": {
+        "type": "object",
+        "properties": {
+          "seasonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "seasonName": {
+            "type": "string"
+          },
+          "leagueId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SeasonSearchRequest": {
+        "type": "object",
+        "properties": {
+          "seasonName": {
+            "type": "string"
+          }
+        }
+      },
+      "TeamRequest": {
+        "type": "object",
+        "properties": {
+          "teamName": {
+            "type": "string"
+          },
+          "leagueId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "captainId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "homeVenueId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          }
+        }
+      },
+      "TeamResponse": {
+        "type": "object",
+        "properties": {
+          "teamId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "teamName": {
+            "type": "string"
+          },
+          "leagueId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "captainId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "homeVenueId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TeamSearchRequest": {
+        "type": "object",
+        "properties": {
+          "teamName": {
+            "type": "string"
+          }
+        }
+      },
       "TournamentRequest": {
         "type": "object",
         "properties": {
@@ -743,10 +1551,113 @@
             "type": "string"
           }
         }
+      },
+      "TournamentSearchRequest": {
+        "type": "object",
+        "properties": {
+          "tournamentName": {
+            "type": "string"
+          }
+        }
+      },
+      "VenueRequest": {
+        "type": "object",
+        "properties": {
+          "venueName": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "postcode": {
+            "type": "string"
+          },
+          "contactPhone": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "contactEmail": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "numberOfBoards": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "VenueResponse": {
+        "type": "object",
+        "properties": {
+          "venueId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "venueName": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "postcode": {
+            "type": "string"
+          },
+          "contactPhone": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "contactEmail": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "numberOfBoards": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "VenueSearchRequest": {
+        "type": "object",
+        "properties": {
+          "venueName": {
+            "type": "string"
+          }
+        }
       }
     }
   },
   "tags": [
+    {
+      "name": "Divisions"
+    },
     {
       "name": "League"
     },
@@ -760,7 +1671,16 @@
       "name": "Score"
     },
     {
+      "name": "Season"
+    },
+    {
+      "name": "Team"
+    },
+    {
       "name": "Tournament"
+    },
+    {
+      "name": "Venue"
     }
   ]
 }

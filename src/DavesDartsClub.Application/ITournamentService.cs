@@ -6,7 +6,7 @@ namespace DavesDartsClub.Application;
 
 public interface ITournamentService
 {
-    Tournament? GetTournamentById(Guid tournamentId);
-    Tournament? GetTournamentByName(string tournamentName);
-    Task<Result<Tournament>> CreateTournament(Tournament tournament, CancellationToken cancellationToken);
+    Task<Tournament?> GetTournamentByIdAsync(Guid tournamentId, CancellationToken cancellationToken);
+    Task<Tournament?> GetTournamentByNameAsync(string tournamentName, CancellationToken cancellationToken);
+    Task<Result<Tournament>> CreateTournamentAsync(Tournament tournament, CancellationToken cancellationToken);
 }

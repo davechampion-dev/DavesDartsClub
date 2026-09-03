@@ -1,10 +1,10 @@
 ﻿using DavesDartsClub.Domain;
 using DavesDartsClub.Infrastructure.EntityFramework;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace DavesDartsClub.Infrastructure;
 
-internal class LeagueRepository : ILeagueRepository
+internal sealed class LeagueRepository : ILeagueRepository
 {
     private readonly AppDbContext _dbContext;
 
@@ -12,7 +12,7 @@ internal class LeagueRepository : ILeagueRepository
     {
         _dbContext = dbContext;
     }
-       
+
     public async Task<League> AddLeague(League league, CancellationToken cancellationToken)
     {
         var entity = new LeagueEntity()
@@ -23,9 +23,42 @@ internal class LeagueRepository : ILeagueRepository
         cancellationToken.ThrowIfCancellationRequested();
 
         _dbContext.Leagues.Add(entity);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
 
         return new League()
+        {
+            LeagueId = entity.LeagueId,
+            LeagueName = entity.LeagueName
+        };
+    }
+    public async Task<League?> GetLeagueByIdAsync(Guid leagueId, CancellationToken cancellationToken)
+    {
+        var entity = await _dbContext.Leagues
+            .FirstOrDefaultAsync(t => t.LeagueId == leagueId, cancellationToken)
+            .ConfigureAwait(ConfigureAwaitOptions.None);
+
+        if (entity == null) return null;
+
+        return new League
+        {
+            LeagueId = entity.LeagueId,
+            LeagueName = entity.LeagueName
+        };
+    }
+
+    public async Task<League?> GetLeagueByNameAsync(string name, CancellationToken cancellationToken)
+    {
+        var entity = await _dbContext.Leagues
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.LeagueName == name, cancellationToken)
+            .ConfigureAwait(ConfigureAwaitOptions.None);
+
+        if (entity is null)
+        {
+            return null;
+        }
+
+        return new League
         {
             LeagueId = entity.LeagueId,
             LeagueName = entity.LeagueName

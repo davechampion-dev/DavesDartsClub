@@ -1,9 +1,9 @@
 ﻿namespace DavesDartsClub.Website.ApiClient;
 
 using DavesDartsClub.SharedContracts.League;
+using DavesDartsClub.SharedContracts.Member;
 using DavesDartsClub.SharedContracts.Player;
 using DavesDartsClub.SharedContracts.Tournament;
-using DavesDartsClub.SharedContracts.Member;
 using Refit;
 
 //ToDo: Make controller Async 

@@ -3,7 +3,5 @@
 // Project-level suppressions either have no target or are given
 // a specific target and scoped to a namespace, type, member, etc.
 
-using System.Diagnostics.CodeAnalysis;
-
 [assembly: SuppressMessage("Critical Code Smell", "S4487:Unread \"private\" fields should be removed", Justification = "WIP Code", Scope = "member", Target = "~F:DavesDartsClub.Application.MemberService._memberValidator")]
 [assembly: SuppressMessage("Critical Code Smell", "S4487:Unread \"private\" fields should be removed", Justification = "<Required Logger>", Scope = "member", Target = "~F:DavesDartsClub.Application.PlayerService._playerValidator")]

@@ -22,13 +22,15 @@ public class ScoreController : ControllerBase
     {
         _logger = logger;
     }
+
     [HttpGet]
-    public IActionResult Get()
+    public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
         return Ok("Hello from ScoreController");
     }
+
     [HttpPost]
-    public IActionResult Post([FromBody] string score)
+    public async Task<IActionResult> Post([FromBody] string score, CancellationToken cancellationToken)
     {
         // Process the score here
         return Ok($"Score received: {score}");

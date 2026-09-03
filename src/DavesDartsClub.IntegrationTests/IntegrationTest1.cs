@@ -18,11 +18,13 @@ public class IntegrationTest1
         await app.StartAsync();
 
         // Act
-        var httpClient = app.CreateHttpClient("WebApi");
-        await resourceNotificationService.WaitForResourceAsync("WebApi", KnownResourceStates.Running).WaitAsync(TimeSpan.FromSeconds(30));
-        var response = await httpClient.GetAsync("/");
+        using (var httpClient = app.CreateHttpClient("WebApi"))
+        {
+            await resourceNotificationService.WaitForResourceAsync("WebApi", KnownResourceStates.Running).WaitAsync(TimeSpan.FromSeconds(30));
+            var response = await httpClient.GetAsync(new Uri("/"));
 
-        // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
     }
 }

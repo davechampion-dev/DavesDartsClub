@@ -6,7 +6,6 @@ using FluentValidation;
 
 namespace DavesDartsClub.Application;
 
-
 public class TournamentService : ITournamentService
 {
     private readonly IValidator<Tournament> _tournamentValidator;
@@ -18,8 +17,9 @@ public class TournamentService : ITournamentService
         _tournamnetRepository = tournamnetRepository;
     }
 
-    public Tournament? GetTournamentById(Guid tournamentId)
+    public async Task<Tournament?> GetTournamentByIdAsync(Guid tournamentId, CancellationToken cancellationToken)
     {
+        //ToDo: Add data access
         if (tournamentId == Guid.Empty)
             return null;
 
@@ -30,7 +30,7 @@ public class TournamentService : ITournamentService
         };
     }
 
-    public Tournament? GetTournamentByName(string tournamentName)
+    public async Task<Tournament?> GetTournamentByNameAsync(string tournamentName, CancellationToken cancellationToken)
     {
         // ToDo: implement real lookup when persistence is in place
 
@@ -42,14 +42,15 @@ public class TournamentService : ITournamentService
         };
     }
 
-    public async Task<Result<Tournament>> CreateTournament(Tournament tournament, CancellationToken cancellationToken)
+    public async Task<Result<Tournament>> CreateTournamentAsync(Tournament tournament, CancellationToken cancellationToken)
     {
-        var validationResult = await _tournamentValidator.ValidateAsync(tournament);
+        var validationResult = await _tournamentValidator.ValidateAsync(tournament, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
         if (!validationResult.IsValid)
         {
             return Result.Invalid(validationResult.AsErrors());
         }
 
-        return await _tournamnetRepository.AddTournament(tournament, cancellationToken); 
+        cancellationToken.ThrowIfCancellationRequested();
+        return await _tournamnetRepository.AddTournament(tournament, cancellationToken).ConfigureAwait(ConfigureAwaitOptions.None);
     }
 }
