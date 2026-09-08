@@ -4,23 +4,20 @@ using DavesDartsClub.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DavesDartsClub.Infrastructure.EntityFramework.Migrations
+namespace DavesDartsClub.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260308152852_1_Initial")]
-    partial class _1_Initial
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.3")
+                .HasAnnotation("ProductVersion", "10.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -154,7 +151,7 @@ namespace DavesDartsClub.Infrastructure.EntityFramework.Migrations
                     b.ToTable("Members", (string)null);
                 });
 
-            modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.PlayerProfileEntity", b =>
+            modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.PlayerEntity", b =>
                 {
                     b.Property<Guid>("MemberId")
                         .HasColumnType("uniqueidentifier");
@@ -403,11 +400,11 @@ namespace DavesDartsClub.Infrastructure.EntityFramework.Migrations
                     b.Navigation("SubmittedBy");
                 });
 
-            modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.PlayerProfileEntity", b =>
+            modelBuilder.Entity("DavesDartsClub.Infrastructure.EntityFramework.PlayerEntity", b =>
                 {
                     b.HasOne("DavesDartsClub.Infrastructure.EntityFramework.MemberEntity", "Member")
                         .WithOne("PlayerProfile")
-                        .HasForeignKey("DavesDartsClub.Infrastructure.EntityFramework.PlayerProfileEntity", "MemberId")
+                        .HasForeignKey("DavesDartsClub.Infrastructure.EntityFramework.PlayerEntity", "MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

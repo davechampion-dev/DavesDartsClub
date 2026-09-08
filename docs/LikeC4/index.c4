@@ -1,0 +1,161 @@
+specification {
+  element actor {
+    style {
+      shape person
+    }
+  }
+  element system
+  element container
+  element component
+  element database
+  element table {
+    style {
+      shape storage
+    }
+  }
+}
+
+model {
+  player = actor 'Player'
+  admin = actor 'Admin / Referee'
+
+  dartsSystem = system 'DavesDartsClub System' {
+
+    // 1. API Schema & Contracts
+    webApi = container 'Web API Layer' {
+      description 'Handles incoming HTTP requests via WebApi controllers.'
+
+      // Player Controller Endpoints
+      createPlayerApi = component 'POST /player' {
+        description 'Req: PlayerRequest -> Res: 201 Created (Guid)'
+        technology 'HTTP POST'
+      }
+      getPlayerApi = component 'GET /player/{memberId}' {
+        description 'Res: 200 OK (PlayerResponse) | 404 NotFound'
+        technology 'HTTP GET'
+      }
+      searchPlayerApi = component 'GET /player' {
+        description 'Req: PlayerSearchRequest -> Res: 200 OK (List<PlayerResponse>)'
+        technology 'HTTP GET'
+      }
+      deletePlayerApi = component 'DELETE /player/{memberId}' {
+        description 'Res: 204 NoContent | 404 NotFound'
+        technology 'HTTP DELETE'
+      }
+
+      // League Controller Endpoints
+      createLeagueApi = component 'POST /league' {
+        description 'Req: LeagueRequest -> Res: 201 Created (Guid)'
+        technology 'HTTP POST'
+      }
+      getLeagueApi = component 'GET /league/{leagueId}' {
+        description 'Res: 200 OK (LeagueResponse) | 404 NotFound'
+        technology 'HTTP GET'
+      }
+      searchLeagueApi = component 'GET /league' {
+        description 'Req: LeagueSearchRequest -> Res: 200 OK (List<LeagueResponse>)'
+        technology 'HTTP GET'
+      }
+      deleteLeagueApi = component 'DELETE /league/{leagueId}' {
+        description 'Res: 204 NoContent | 404 NotFound'
+        technology 'HTTP DELETE'
+      }
+
+      // Tournament Controller Endpoints
+      createTournamentApi = component 'POST /tournament' {
+        description 'Req: TournamentRequest -> Res: 201 Created (TournamentResponse) | 400 BadRequest'
+        technology 'HTTP POST'
+      }
+      getTournamentApi = component 'GET /tournament/{tournamentId}' {
+        description 'Res: 200 OK (TournamentResponse) | 404 NotFound'
+        technology 'HTTP GET'
+      }
+      searchTournamentApi = component 'GET /tournament/search' {
+        description 'Query: ?tournamentName=string -> Res: 200 OK (List<TournamentResponse>)'
+        technology 'HTTP GET'
+      }
+      deleteTournamentApi = component 'DELETE /tournament/{tournamentId}' {
+        description 'Res: 204 NoContent | 404 NotFound'
+        technology 'HTTP DELETE'
+      }
+    }
+
+    // 2. Business Rules & Services
+    coreLogic = container 'Application & Domain Layer' {
+      description 'Handles validation, domain logic, and application workflows.'
+
+      playerService = component 'IPlayerService' {
+        description 'Executes GetPlayerByName and player domain commands.'
+      }
+      leagueService = component 'ILeagueService' {
+        description 'Executes GetLeagueById and GetLeagueByName workflows.'
+      }
+      tournamentService = component 'ITournamentService' {
+        description 'Executes CreateTournament, GetTournamentById, and search operations.'
+      }
+
+      validationRules = component 'FluentValidation' {
+        description 'Rules: Mandatory names, max string lengths, valid ranges.'
+      }
+    }
+
+    // 3. Data Persistence & Tables
+    sqlDb = database 'SQL Database' {
+      description 'Relational storage'
+
+      playersTable = table 'Players Table' {
+        description 'PK: PlayerId | MemberId, Name, Nickname, CreatedAt'
+      }
+      leaguesTable = table 'Leagues Table' {
+        description 'PK: LeagueId | LeagueName, CreatedAt'
+      }
+      tournamentsTable = table 'Tournaments Table' {
+        description 'PK: TournamentId | FK: LeagueId | TournamentName, StartDate'
+      }
+      matchesTable = table 'Matches Table' {
+        description 'PK: MatchId | FK: TournamentId, HomePlayerId, AwayPlayerId | MatchDate'
+      }
+    }
+  }
+
+  // Actor Interactions
+  admin -> webApi.createPlayerApi 'Registers player'
+  admin -> webApi.deletePlayerApi 'Deletes player'
+  admin -> webApi.createLeagueApi 'Creates league'
+  admin -> webApi.deleteLeagueApi 'Deletes league'
+  admin -> webApi.createTournamentApi 'Creates tournament'
+  admin -> webApi.deleteTournamentApi 'Deletes tournament'
+
+  player -> webApi.getPlayerApi 'Fetches player by memberId'
+  player -> webApi.searchPlayerApi 'Searches players'
+  player -> webApi.getLeagueApi 'Fetches league details'
+  player -> webApi.searchLeagueApi 'Searches leagues'
+  player -> webApi.getTournamentApi 'Fetches tournament details'
+  player -> webApi.searchTournamentApi 'Searches tournaments'
+
+  // Controller -> Service Mapping
+  webApi.createPlayerApi -> coreLogic.playerService 'Invokes player creation'
+  webApi.searchPlayerApi -> coreLogic.playerService 'Calls GetPlayerByName()'
+  webApi.getLeagueApi -> coreLogic.leagueService 'Calls GetLeagueById()'
+  webApi.searchLeagueApi -> coreLogic.leagueService 'Calls GetLeagueByName()'
+  webApi.createTournamentApi -> coreLogic.tournamentService 'Calls CreateTournament()'
+  webApi.getTournamentApi -> coreLogic.tournamentService 'Calls GetTournamentById()'
+  webApi.searchTournamentApi -> coreLogic.tournamentService 'Calls GetTournamentByName()'
+
+  // Service -> Database Mapping
+  coreLogic.playerService -> sqlDb.playersTable 'Reads/Writes players'
+  coreLogic.leagueService -> sqlDb.leaguesTable 'Reads/Writes leagues'
+  coreLogic.tournamentService -> sqlDb.tournamentsTable 'Reads/Writes tournaments'
+
+  // Entity Relationships
+  sqlDb.leaguesTable -> sqlDb.tournamentsTable '1:N (League Tournaments)'
+  sqlDb.tournamentsTable -> sqlDb.matchesTable '1:N (Tournament Matches)'
+  sqlDb.playersTable -> sqlDb.matchesTable '1:N (Home / Away Players)'
+}
+
+views {
+  view index {
+    title 'System Overview - Controllers, Services & Database Schema'
+    include *
+  }
+}

@@ -17,6 +17,7 @@ public static class DiExtensions
         services.AddScoped<ISeasonRepository, SeasonRepository>();
         services.AddScoped<IFixtureRepository, FixtureRepository>();
         services.AddScoped<IDivisionRepository, DivisionRepository>();
+        services.AddScoped<IPlayerRepository, PlayerRepository>();
         return services;
     }
 

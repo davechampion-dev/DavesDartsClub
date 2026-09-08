@@ -4,6 +4,7 @@ using DavesDartsClub.Domain;
 using DavesDartsClub.Infrastructure;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace DavesDartsClub.UnitTests.Application;
 
@@ -17,9 +18,12 @@ public class LeagueServiceUnitTest
 
     private readonly LeagueService _leagueService;
 
+    private readonly Mock<IDistributedCache> _mockCache;
+
     public LeagueServiceUnitTest()
     {
-        _leagueService = new LeagueService(_mockLeagueRepository.Object, _mockLeagueValidator.Object);
+        _mockCache = new Mock<IDistributedCache>();
+        _leagueService = new LeagueService(_mockLeagueRepository.Object, _mockLeagueValidator.Object, _mockCache.Object);
     }
 
     [Fact]

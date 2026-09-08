@@ -2,13 +2,13 @@
 
 namespace DavesDartsClub.Domain.Validation;
 
-public class PlayerValidator : AbstractValidator<PlayerProfile>
+public class PlayerValidator : AbstractValidator<Player>
 {
     public PlayerValidator()
     {
         RuleFor(x => x.Nickname)
             .NotEmpty()
             .WithMessage("Nickname can't be empty")
-            .MaximumLength(PlayerProfile.PlayerNicknameMaxLength);
+            .MaximumLength(Player.PlayerNicknameMaxLength);
     }
 }

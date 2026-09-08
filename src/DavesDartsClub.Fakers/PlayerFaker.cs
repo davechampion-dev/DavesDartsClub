@@ -4,18 +4,18 @@ using DavesDartsClub.Domain;
 namespace DavesDartsClub.Fakers;
 
 
-public class PlayerFaker : BaseFaker<PlayerProfile>
+public class PlayerFaker : BaseFaker<Player>
 {
     private readonly MemberFaker _memberFaker = new MemberFaker();
 
-    public override Faker<PlayerProfile> CreateFaker()
+    public override Faker<Player> CreateFaker()
     {
-        return new Faker<PlayerProfile>()
+        return new Faker<Player>()
             .CustomInstantiator(f =>
             {
                 var member = _memberFaker.GenerateOne();
 
-                return new PlayerProfile
+                return new Player
                 {
                     MemberId = member.MemberId,
                     MemberName = member.MemberName,

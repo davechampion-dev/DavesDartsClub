@@ -218,10 +218,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/LeagueResponse"
-                  }
+                  "$ref": "#/components/schemas/LeagueResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -512,10 +519,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PlayerResponse"
-                  }
+                  "$ref": "#/components/schemas/PlayerResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1341,7 +1355,14 @@
       "PlayerResponse": {
         "type": "object",
         "properties": {
+          "playerId": {
+            "type": "string",
+            "format": "uuid"
+          },
           "playerName": {
+            "type": "string"
+          },
+          "nickname": {
             "type": "string"
           }
         }

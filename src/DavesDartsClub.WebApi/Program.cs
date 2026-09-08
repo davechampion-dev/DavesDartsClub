@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
+builder.AddRedisDistributedCache("cache");
 builder.AddDavesDartsClubAppDbContext();
 
 builder.Services.AddProblemDetails();

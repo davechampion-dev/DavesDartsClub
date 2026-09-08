@@ -22,6 +22,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\DavesDartsClub.Domain\DavesDartsClub.Domain.csproj" />
+		<ProjectReference Include="..\DavesDartsClub.SharedContracts\DavesDartsClub.SharedContracts.csproj" />
 	</ItemGroup>
 
 </Project>

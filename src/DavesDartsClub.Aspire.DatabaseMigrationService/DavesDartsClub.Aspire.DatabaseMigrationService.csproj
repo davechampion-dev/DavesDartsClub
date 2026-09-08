@@ -13,6 +13,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Hosting" />
 		<PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
 		<PackageReference Include="SonarAnalyzer.CSharp">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

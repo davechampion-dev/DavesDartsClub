@@ -1,5 +1,6 @@
 ﻿using Ardalis.Result;
 using DavesDartsClub.Domain;
+using DavesDartsClub.SharedContracts.Venue;
 
 namespace DavesDartsClub.Application;
 
