@@ -1,0 +1,8 @@
+{
+  "appHost": {
+    "path": "DavesDartsClub.Aspire.AppHost/DavesDartsClub.Aspire.AppHost.csproj"
+  },
+  "sdk": {
+    "version": "17.0.0"
+  }
+}

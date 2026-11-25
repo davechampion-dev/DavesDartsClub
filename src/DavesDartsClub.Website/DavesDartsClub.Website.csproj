@@ -13,6 +13,7 @@
 	<ItemGroup>
 		<PackageReference Include="MudBlazor" />
 		<PackageReference Include="Refit.HttpClientFactory" />
+		<PackageReference Include="Refit.HttpClientFactory.Reflection" />
 		<PackageReference Include="SonarAnalyzer.CSharp">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
