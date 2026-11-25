@@ -29,13 +29,13 @@
     <!--CommonTestPackages-->
     <PackageVersion Include="Refit.HttpClientFactory" Version="16.4.0" />
     <PackageVersion Include="xunit" Version="2.9.3" />
-    <PackageVersion Include="xunit.analyzers" Version="2.2.0" />
+    <PackageVersion Include="xunit.analyzers" Version="2.3.0" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.1" />
     <PackageVersion Include="Moq" Version="4.21.0" />
     <PackageVersion Include="Moq.Analyzers" Version="0.4.2" />
     <PackageVersion Include="Shouldly" Version="4.3.0" />
-    <PackageVersion Include="coverlet.collector" Version="10.1.0" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
+    <PackageVersion Include="coverlet.collector" Version="10.1.1" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.12.0" />
     <!--IntergrationTests-->
     <PackageVersion Include="Aspire.Hosting.Testing" Version="13.6.4" />
     <!--UnitTests-->
@@ -46,13 +46,13 @@
     <PackageVersion Include="Microsoft.OpenApi" Version="2.12.2" />
     <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.3.1" />
     <!--WebApp-->
-    <PackageVersion Include="MudBlazor" Version="9.11.0" />
+    <PackageVersion Include="MudBlazor" Version="9.14.0" />
     <!--Shared / Common-->
-    <PackageVersion Include="Microsoft.AspNetCore.Cors" Version="2.3.13" />
+    <PackageVersion Include="Microsoft.AspNetCore.Cors" Version="2.3.14" />
     <PackageVersion Include="Ardalis.Result.FluentValidation" Version="10.1.0" />
     <PackageVersion Include="FluentValidation" Version="12.2.0" />
     <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
-    <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.35.0.4138" />
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.37.0.15768" />
     <PackageVersion Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.14.15" />
   </ItemGroup>
 </Project>
